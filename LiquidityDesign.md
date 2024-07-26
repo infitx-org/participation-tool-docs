@@ -11,8 +11,8 @@ This toolkit begins with an introduction to the steps involved in a mojaloop cle
 ### Definition of steps Involved
 #### Prefunding
 All obligations inside the Mojaloop Scheme must be pre-funded. That means that before you can participate in a transaction as a payer DFSP, you will need to have pre-funded liquidity available to fund the transfer. Mojaloop will not allow the transfer to proceed unless there is sufficient pre-funded capital. This prefunding is shared across all obligations and institutions that are connected through Mojaloop, so is significantly more efficient than bilateral arrangements. Additionally, receiving funds as a  Payee DFSP does not require pre-funding and reduces the DFSP's obligation in the scheme. A DFSP is expected to be both a payer and payee. Mojaloop gives DFSPs liquidity credit for completed transfers where they are the credit party, and this means that liquidity cover, instead of being required for all transfers where the DFSP is the debtor, only covers the net of debits versus credits. Thus the net position of funds received less funds sent is available to make payments.
-|Note:|
-| - | 
+|Note: |
+|- | 
 Liquidity needs to be in the form which is explicitly recognised by the scheme to which the DFSP belongs. Each scheme will have rules for this and they are likely to be different. This design document does not describe the specific mechanism as these rules are better described in the rules of the scheme.|
 
 #### Real-time Clearing
@@ -36,16 +36,16 @@ Here the Payer DFSP must provide prefunded liquidity into the Mojaloop Scheme to
 The clearing process occurs when the transfer is made. The timing of the transfers are critical, but is not covered in this description, as this description is concentrating on the flow of funds. 
 The Payer DFSP moves funds out of the Payers account as either a withdrawal, or a transfer into the float account. Funds are moved in source currency from the Payer DFSP’s position account to the FXP’s position account. Funds are moved in target currency from the FXP’s target position account to the Payee DFSP position account. The Payee DFSP moves cleared funds into the Payee’s account either by transferring from the float account, or by depositing the funds using their working capital.
 
-![T-Accounts for Transfer clearing](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20clearing.png)
+![T-Accounts for Transfer clearing](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20Clearing.png)
 
-| Float Account: |
-| - |
+|Float Account: |
+|- |
 |The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system.|
 
 ### Settlement
 The settlement process is when mojaloop interacts with the external liquidity mechanisms of the scheme to change ownership of the pre-funded liquidity to be in line with the transaction that have been processed. While it is doing this, it updates the settlement accounts to reflect the new pre-funded liquidity ownership by moving funds between each participant's settlement account and their position accounts. The diagram represents Payer DFSP has funds moving from their settlement account into their position account. This is a simplified view, as the real fund flows occur in the externally linked accounts, and the settlement and position ledgers are updated to reflect the new position and prefunded liquidity available. In a similar simplified view, the FXP has funds moved from their position account into their settlement account in source currency, and from the settlement account into their position account in target currency. Similarly the Payee DFSP has funds moved from their position account into their settlement account. 
 
-![T-Accounts for Transfer settlement](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20settlement.png)
+![T-Accounts for Transfer settlement](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20Settlement.png)
 
 ### Capital Flows
 The capital flow is important to compensate for a net movement of funds from any particular organisation connected to the scheme. A net Payer DFSP would need to replenish their prefunded liquidity by either moving funds from their float account, or by moving working capital into mojaloop using the funds-in process. A net Payee DFSP would use mojaloop’s funds-out process to move pre-funded liquidity into their float account, or working capital for the organisation. If there is a net movement between currencies, then the FXP would need to withdraw pre-funded capital from the net receiver of currency using funds-out, and deposit funds into the net payer pre-funded currency account using funds-in. The timing of these flows are left to the discretion of each organisation.
@@ -63,8 +63,8 @@ As a Payer DFSP in a transfer, the DFSP will be required to provide pre-funded l
 
 ![T-Accounts for Transfer All](./images/SI_Toolkit-Payer%20DFSP.png)
 
-| Float Account: |
-| - |
+|Float Account: |
+|- |
 | The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layers on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
 
 ## Managing Liquidity Inflows
@@ -74,6 +74,6 @@ As a Payee DFSP in a transfer, the DFSP has to have working capital prefunded in
 ![T-Accounts for Transfer All](./images/SI_Toolkit-Payee%20DFSP.png)
 
 
-| Float Account: |
-| - |
+|Float Account: |
+|- |
 | The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layers on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
