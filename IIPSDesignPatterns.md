@@ -16,7 +16,7 @@ Both integration patterns discussed below show the reserve-commit integration as
 1. Rollback transfer into Payers Account → Reverse the transfer in step 1. which should return funds to Payer’s Account
 
 ### Number of Integration points with Core Banking system
-The payer DFSP integration can choose how many points of interaction are required with the core banking system. These points of integration align with the three phases of a mojaloop transfer, and allow the core-banking system to make checks and confirmations before proceeding with the final transfer phase. These can be described as integrations to:
+The payer DFSP integration can choose how many points of interaction are required with the core banking system. These points of integration align with the three phases of a Mojaloop transfer, and allow the core-banking system to make checks and confirmations before proceeding with the final transfer phase. These can be described as integrations to:
 1. Initiate the transfer
 1. Confirm the party
 1. Confirm the terms and conditions of the cross-currency conversion

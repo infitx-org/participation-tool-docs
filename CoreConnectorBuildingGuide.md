@@ -14,3 +14,7 @@ The [**core-connector template**](CoreConnectorTemplate.md) can be useful here a
 Run end-to-end testing, that include sending and receiving funds between connected organizations.<br>
 Run a Settlement test.
 
+## Open API references
+- [Mojaloop Connector Outbound API](https://github.com/mojaloop/api-snippets/blob/main/docs/sdk-scheme-adapter-outbound-v2_1_0-openapi3-snippets.yaml)
+- [Mojaloop Connector Backend API](https://github.com/mojaloop/api-snippets/blob/main/docs/sdk-scheme-adapter-backend-v2_1_0-openapi3-snippets.yaml)
+- [FSPIOP API v2.0](https://github.com/mojaloop/api-snippets/blob/main/docs/fspiop-rest-v2.0-openapi3-snippets.yaml)
