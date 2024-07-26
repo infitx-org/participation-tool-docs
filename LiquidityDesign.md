@@ -12,7 +12,7 @@ This toolkit begins with an introduction to the steps involved in a mojaloop cle
 #### Prefunding
 All obligations inside the Mojaloop Scheme must be pre-funded. That means that before you can participate in a transaction as a payer DFSP, you will need to have pre-funded liquidity available to fund the transfer. Mojaloop will not allow the transfer to proceed unless there is sufficient pre-funded capital. This prefunding is shared across all obligations and institutions that are connected through Mojaloop, so is significantly more efficient than bilateral arrangements. Additionally, receiving funds as a  Payee DFSP does not require pre-funding and reduces the DFSP's obligation in the scheme. A DFSP is expected to be both a payer and payee. Mojaloop gives DFSPs liquidity credit for completed transfers where they are the credit party, and this means that liquidity cover, instead of being required for all transfers where the DFSP is the debtor, only covers the net of debits versus credits. Thus the net position of funds received less funds sent is available to make payments.
 |Note: |
-|- | 
+|:- | 
 Liquidity needs to be in the form which is explicitly recognised by the scheme to which the DFSP belongs. Each scheme will have rules for this and they are likely to be different. This design document does not describe the specific mechanism as these rules are better described in the rules of the scheme.|
 
 #### Real-time Clearing
@@ -39,7 +39,7 @@ The Payer DFSP moves funds out of the Payers account as either a withdrawal, or 
 ![T-Accounts for Transfer clearing](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20Clearing.png)
 
 |Float Account: |
-|- |
+|:- |
 |The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system.|
 
 ### Settlement
@@ -64,7 +64,7 @@ As a Payer DFSP in a transfer, the DFSP will be required to provide pre-funded l
 ![T-Accounts for Transfer All](./images/SI_Toolkit-Payer%20DFSP.png)
 
 |Float Account: |
-|- |
+|:- |
 | The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layers on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
 
 ## Managing Liquidity Inflows
@@ -75,5 +75,5 @@ As a Payee DFSP in a transfer, the DFSP has to have working capital prefunded in
 
 
 |Float Account: |
-|- |
+|:- |
 | The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layers on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |

@@ -26,6 +26,10 @@ Here is the list of participation tool artifacts:
 1. [**IIPS Design Patterns**](./IIPSDesignPatterns.md) this resource help guide the integration designs. These design have detailed sequence diagrams illustrating API calls, and responsibilities carried out by the integration. Various generic scenarios are shown with the consequence of adapting an approach / pattern is discussed. At a high level the patterns include: 
    - patterns for building integrations as a Payer DFSP
    - patterns for building integrations as a Payee DFSP
+1. [**Core-Connector Testing Harness**](./CoreConnectorTestingHarness.md) this is a repository that can be downloaded to deploy and run the core-connector testing harness. It includes
+   - A docker-compose script for deploying the testing harness
+   - pre-configured TTK. This solution makes use of the Mojaloop testing tool kit
+   - Golden-Path core-connector test collection used to test core connectors.
 1. [**Core-Connector Template**](./CoreConnectorTemplate.md) this is a template repository for building core-connectors. It includes
    - a typescript code repository with pre-configured scripts and CI controls to support quick development that align with Mojaloop engineering best practices.
 1. [**Core-Connector Development Guide**](./CoreConnectorBuildingGuide.md) this provides a core-connector testing harness that can be used to locally test integrations as they are being built, and then to verify that all unhappy path requirements have been catered for.
