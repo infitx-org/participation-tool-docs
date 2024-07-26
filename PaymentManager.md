@@ -11,7 +11,7 @@ Payment Manager is made up of the following major components:
    - A Connection Manager Client, which simplifies and automates certificate creation, signing and exchange, as well as the configuration of the connections required to different environments.
 - **Business and Technical Portals:** Provide dashboards for monitoring transactions and service status. They also allow DFSPs to manage their security keys, certificates and endpoint configuration required for connecting to Mojaloop-based schemes.
 
-![Payment Manager Architecture](.\images\PM4ML_system_architecture.png)
+![Payment Manager Architecture](./images/pm4ml_system_architecture.png)
 
 Payment Manager abstracts away the complexity of the Mojaloop API and helps the DFSP understand their relationship with the scheme, focusing on the key business and technical areas.
 
