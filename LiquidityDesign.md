@@ -65,7 +65,7 @@ As a Payer DFSP in a transfer, the DFSP will be required to provide pre-funded l
 
 |Float Account: |
 |:- |
-| The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layers on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
+| The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layered on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
 
 ## Managing Liquidity Inflows
 ### Flows as a Payee DFSP and net creditor
@@ -76,4 +76,4 @@ As a Payee DFSP in a transfer, the DFSP has to have working capital prefunded in
 
 |Float Account: |
 |:- |
-| The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layers on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
+| The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layered on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
