@@ -21,7 +21,7 @@ Payment Manager an open sourced* tool is an example of this. Payment manager pro
 - As the SDK-Scheme-Adapter is maintained by the community, this tool provides an upgrade path for using new Mojaloop API versions.
 - Standardised solution for rapid onboarding
 - Core Connector developed jointly with System Integrators or Banking Software Vendors
-- Payment Manager UX has supporting Bussiness Operations and Security Onboarding and Maintenance automation
+- Payment Manager UX has supporting Business Operations and Security Onboarding and Maintenance automation
 
 | Open Source Components |
 | :-- |
