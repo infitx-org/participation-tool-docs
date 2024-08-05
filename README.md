@@ -1,4 +1,4 @@
-# Mojaloop Participantion Tools
+# Mojaloop Participation Tools
 The participation tools is an open sourced collection of artifacts and software solution to support the organizational participation in a Mojaloop switch.
 This includes:
  - financial service providers who provide account related services to customers (DFSPs). 
