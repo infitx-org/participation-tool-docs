@@ -1,5 +1,13 @@
+<div style="overflow: hidden;">
+<span style="float: left; margin: 0.00px 0.0px">
+<img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;" > </span>
+<span style="float: right; margin: 0.00px 0.0px">
+<img src="images/infitx-tech_logo.png" style="width: 144.50px; height: 55.35px">
+</span>
+</div>
 
 # Mojaloop connector
+
 A Mojaloop Connector is a service that interfaces between a Mojaloop API compliant switch and a DFSP backend platform that does not natively implement the Mojaloop API.
 
 The API between the Mojaloop Connector and the DFSP backend is synchronous HTTP while the interface between the Mojaloop Connector and the switch is native Mojaloop API. There is one exception to this, and that is the bulk integrations that can be configured to either be synchronous or asynchronous.

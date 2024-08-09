@@ -1,3 +1,11 @@
+<div style="overflow: hidden;">
+<span style="float: left; margin: 0.00px 0.0px">
+<img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;" > </span>
+<span style="float: right; margin: 0.00px 0.0px">
+<img src="images/infitx-tech_logo.png" style="width: 144.50px; height: 55.35px">
+</span>
+</div>
+
 # DFSP Liquidity Design
 ## Introduction
 All transactions that move through a Mojaloop payment gateway are prefunded. This removes systemic risk and allows the settlement of cleared funds between financial institutions to be fast and reliable. As only prefunded transactions are permitted, prefunding is also a mechanism for DFSP to control their exposure. Designing for liquidity for a DFSP must therefore cover both the mechanisms and procedures for managing the liquidity but also the controlling of exposure.

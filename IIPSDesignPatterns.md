@@ -1,3 +1,11 @@
+<div style="overflow: hidden;">
+<span style="float: left; margin: 0.00px 0.0px">
+<img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;" > </span>
+<span style="float: right; margin: 0.00px 0.0px">
+<img src="images/infitx-tech_logo.png" style="width: 144.50px; height: 55.35px">
+</span>
+</div>
+
 # Inclusive Instant Payment System (IIPS) Integration
 ## Introduction
 When integrating legacy core banking systems into a modern, real-time, push based transaction flow there can be some challenges. These are largely based on what vendor provided integration API's are on offer. This document discusses what an ideal integration should look like, some of the typical limitations seen in vendor API's, and flow patterns that are used to overcome some of these limitations. The mitigation mechanisms and implications of each approach are discussed.

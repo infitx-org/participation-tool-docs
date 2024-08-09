@@ -1,3 +1,11 @@
+<div style="overflow: hidden;">
+<span style="float: left; margin: 0.00px 0.0px">
+<img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;" > </span>
+<span style="float: right; margin: 0.00px 0.0px">
+<img src="images/infitx-tech_logo.png" style="width: 144.50px; height: 55.35px">
+</span>
+</div>
+
 # Development guide for building core-connectors
 ## Integration Development Steps
 Here are the typical steps that need to be taken to building an integration:
