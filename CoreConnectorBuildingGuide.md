@@ -1,6 +1,7 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;">
-    <img src="images/INFITX-TECH_LOGO.png" style="width: 144.50px; height: 55.35px;">
+<div >
+    <img src="images/cbc_logo.jpg" >
+    <img src="images/blank.png" >
+    <img src="images/INFITX-TECH_LOGO.png">
 </div>
 
 # Development guide for building core-connectors
