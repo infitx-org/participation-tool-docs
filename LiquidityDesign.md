@@ -1,8 +1,9 @@
-<div >
+<div style="display: flex; justify-content: space-between;">
     <img src="images/cbc_logo.jpg" >
-    <img src="images/blank.png" >
+    <img src="images/blank.png" style="width: 10px">
     <img src="images/INFITX-TECH_LOGO.png">
 </div>
+
 
 
 # DFSP Liquidity Design

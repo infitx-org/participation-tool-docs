@@ -1,6 +1,7 @@
 <div style="display: flex; justify-content: space-between;">
-    <img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;">
-    <img src="images/INFITX-TECH_LOGO.png" style="width: 144.50px; height: 55.35px;">
+    <img src="images/cbc_logo.jpg" >
+    <img src="images/blank.png" style="width: 10px">
+    <img src="images/INFITX-TECH_LOGO.png">
 </div>
 
 # Mojaloop Participation Tools
