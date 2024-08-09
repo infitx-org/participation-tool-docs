@@ -1,9 +1,6 @@
-<div style="overflow: hidden;">
-<span style="float: left; margin: 0.00px 0.0px">
-<img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;" > </span>
-<span style="float: right; margin: 0.00px 0.0px">
-<img src="images/infitx-tech_logo.png" style="width: 144.50px; height: 55.35px">
-</span>
+<div style="display: flex; justify-content: space-between;">
+    <img src="images/cbc_logo.jpg" style="width: 88.90px; height: 63.50px;">
+    <img src="images/INFITX-TECH_LOGO.png" style="width: 144.50px; height: 55.35px;">
 </div>
 
 # Inclusive Instant Payment System (IIPS) Integration
