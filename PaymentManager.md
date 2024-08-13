@@ -56,3 +56,5 @@ Payment Manager provides the following components:
 
 - **Portals:** Provide dashboards for monitoring transactions and service status. They also allow DFSPs to manage their security keys, certificates, and endpoint configuration required for connecting to a Mojaloop-based scheme in a guided way.
 
+   - [**Transfers Overview Guide**](./PM4ML_TransferOverview.md)
+
