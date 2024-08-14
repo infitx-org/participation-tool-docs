@@ -1,8 +1,11 @@
 <div style="display: flex; justify-content: space-between;">
-    <img src="images/cbc_logo.jpg" >
-    <img src="images/blank.png" style="width: 70%" >
-    <img src="images/INFITX-TECH_LOGO.png" >
+    <img src="./images/cbc_logo.jpg" >
+    <img src="./images/blank.png" style="width: 20%" >
+   <img src="./images/mojaloop-foundation.png" height = 40>
+    <img src="./images/blank.png" style="width: 20%" >
+    <img src="./images/INFITX-TECH_LOGO.png" >
 </div>
+
 
 
 # Inclusive Instant Payment System (IIPS) Integration
@@ -43,10 +46,14 @@ The integration can now return this validated information back to the core banki
 
 ![Payer DFSP Consent Integration Pattern](./images/PayerDFSPConsentIntegrationPattern-Consent.png)
 
+<div style="page-break-after: always"></div>
+
 ### Executing the Transfer
 The executing the transfer part of this integration pattern begins when the Payer accepts the terms of the transfer. A reservation of the funds in the Payer’s account must be made before transfer is initiated. When notification of the transfer state is received, then the transfer from the Payer’s account should either be  finalized or rolled back based on whether the transfer state is committed or not.
 
 ![PayerDFSPConsentIntegrationPattern-Transfer](./images/PayerDFSPConsentIntegrationPattern-Transfer.png)
+
+<div style="page-break-after: always"></div>
 
 ## Payer DFSP Single Integration
 The single payer DFSP integration pattern is appropriate if the core-banking system is not able to ask for payers consent before proceeding with the transfer. This is not ideal when fees are involved, as this is a level-one principle that is not being addressed. So all attempts to not use this pattern, should be made. There are however some use cases where the use of this pattern is unavoidable. In those cases, the premise that the integration should take, is to then take on the responsibility for those checks in the integration. I.e. The checks on the payee details, terms of the conversion, terms of the transfer still need to be taken, however they are made based on an agreement with the payer to be within certain parameters that the integration design is configured to enforce. The question that need to be answered are:
@@ -56,6 +63,7 @@ The single payer DFSP integration pattern is appropriate if the core-banking sys
 
 ![Payer DFSP Single Integration Api Pattern](./images/PayerDFSPSingleIntegrationApiPattern.png)
 
+<div style="page-break-after: always"></div>
 
 ## Payee DFSP Integration Patterns
 Three points of Integration points with Core Banking system
@@ -67,6 +75,8 @@ In Agreement the payee DFSP must perform all validations required to perform the
 3. **Transfer** <br>
 If the payer DFSP’s customer agrees to the terms of the transfer, then the transfer phase is started. The payee DFSP is most at risk during this phase, as it is the payee DFSP that releases funds to the Payee. The payee DFSP is required to provide the cryptographic fulfillment of the terms to the hub before the transfer timeout. If these conditions are met, then the hub will allocate the pre-funded liquidity to cover that transfer which gets distributed into the liquidity accounts during the settlement process.
 
+<div style="page-break-after: always"></div>
+
 ### Payee DFSP Discovery Integration Pattern
 There is a single pattern for building payee DFSP Discovery integrations. 
 
@@ -77,6 +87,8 @@ The function that need to be catered for are:
 1. Extracting Account Information from the Payment Identifiers
 1. Validate the account by checking that it exists, is active and can receive funds in the configured currency
 1. Query the client details for that account
+
+<div style="page-break-after: always"></div>
 
 ### Payee DFSP Agreement Integration Pattern
 There is a single pattern for building payee DFSP Agreement integrations. Here it is.
@@ -92,15 +104,21 @@ The Payer DFSP is required to:
 
 The terms of the transfer are then returned.
 
+<div style="page-break-after: always"></div>
+
 ### Payee DFSP Transfer Integration Pattern
 The ideal pattern for completing a transfer as Payee DFSP includes a reservation step that aligns with the Transfer phase, and then a commit phase that aligns with the notification that the transfer has been completed. Please see the details below.
 
 ![Payee DFSP Ideal Pattern Transfer](./images/PayeeDFSPIdealPatternTransfer.png)
 
+<div style="page-break-after: always"></div>
+
 ### Payee DFSP Single integration on PATCH notification
 If the DFSPs core banking system only supports a single transfer integration, then this pattern is the preferred integration. The approach only initiates the transfer on the patch notification after the transfer is committed in Mojaloop. This approach has the benefit of only releasing funds after the transaction has been completed and the position ledgers in Mojaloop set to fund the transfer. The disadvantage of this integration pattern is when executing the transfer in the core-banking system fails. If this integration approach is chosen, then effort should go into designing the mitigation steps that must be made if the transfer fails, in order to prevent reconciliation errors. 
 
 ![Payee DFSP Single Integration Api On Patch Pattern](./images/PayeeDFSPSingleIntegrationApiOnPatchPattern.png)
+
+<div style="page-break-after: always"></div>
 
 ### Anti-pattern: Payee DFSP Single integration on transfer
 

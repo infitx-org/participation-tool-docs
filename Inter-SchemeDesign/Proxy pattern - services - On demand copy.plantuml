@@ -1,0 +1,100 @@
+@startuml
+
+title Multi-Scheme Get Services - On Demand 
+
+participant "Payer DFSP" as payerDFSP
+box "Scheme A"
+    participant "Services Handler" as services_A
+    participant "Proxy Cache\nScheme A" as pc_A
+end box
+participant "Proxy AB" as xnp
+box "Scheme B"
+    participant "ALS\nScheme B" as services_B
+    participant "Proxy Cache\nScheme B" as pc_B    
+end box
+
+autonumber 1 "<b>[0]"
+
+payerDFSP ->> services_A: GET /services/{Type}/{currency}/{currency}
+note left
+ header source = payerDFSP
+end note
+  services_A -->> payerDFSP: 202 OK
+  services_A -> services_A: Retrieve Services registered in Scheme A
+  services_A ->> services_A: Are there any proxies in Scheme A?
+alt if proxies in Scheme A
+  services_A ->> services_A: Add Scheme A Services to return cache
+  services_A ->> services_A: Cache Proxy that will receive messages
+   note left
+     SentToProxies[{ID}] = {['Proxy AB', 'Proxy CD', 'Proxy EF']}
+   end note
+
+  loop for all Proxys in Scheme A and not source    
+    services_A ->> xnp: GET /services/{Type}/{currency}/{currency}      
+    xnp -->> services_A: 202 OK
+
+    xnp->xnp: Add header
+    note left
+    fxpiop-proxy = "Proxy AB"
+    end note
+
+    xnp ->> services_B: GET /services/{Type}/{currency}/{currency}
+    services_B -->> xnp: 202 OK
+    xnp -->> services_A: 202 OK
+note left
+Payer DFSP : Proxy AB
+end note        
+
+    services_B->services_B: Are there any proxies in Scheme B?\n **No**
+    services_B-> services_B: Retrieve Services registered in Scheme B
+    services_B -> pc_B: Lookup payerDFSP proxy
+    services_B ->> xnp: PUT /services
+note right
+header desitination = payerDFSP
+source = 'Scheme B'
+{
+  "providers": [FXP2]
+}
+end note    
+    xnp -->> services_B: 200 OK
+    xnp->xnp: Add header
+    note left
+    fxpiop-proxy = "Proxy AB"
+    end note
+    
+    xnp ->> services_A: PUT /services
+    services_A -->> xnp: 200 OK
+    xnp -->> services_B: 200 OK
+    services_A ->> services_A: Add services to return cache
+     note left
+       remove other Proxy from list SentToProxies[{ID}]
+     end note
+
+    alt if SentToProxies[{ID}] is empty
+        services_A-> services_A: Retrieve Services from cache
+        services_A ->> payerDFSP: PUT /services
+
+        note right
+          header desitination = payerDFSP
+          source = 'Scheme A'
+          {
+            "providers": [FXP1, FXP2, FXP3]
+          }
+        end note
+        payerDFSP -->> services_A: 200 OK
+   end
+  end loop
+else if no proxies in Scheme A
+  services_A ->> payerDFSP: PUT /services
+   note right
+    header desitination = payerDFSP
+    source = 'Scheme A'
+    {
+      "providers": [FXP1]
+    }
+   end note
+   payerDFSP -->> services_A: 200 OK
+end
+
+
+@enduml

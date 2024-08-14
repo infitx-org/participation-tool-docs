@@ -1,6 +1,8 @@
 <div style="display: flex; justify-content: space-between;">
     <img src="../images/cbc_logo.jpg" >
-    <img src="../images/blank.png" style="width: 70%" >
+    <img src="../images/blank.png" style="width: 20%" >
+   <img src="../images/mojaloop-foundation.png" height = 40>
+    <img src="../images/blank.png" style="width: 20%" >
     <img src="../images/INFITX-TECH_LOGO.png" >
 </div>
 
@@ -28,6 +30,8 @@ Below is a detailed sequence diagram that shows the complete flow, and includes 
 
 !["Payer Conversion SEND"](./FXAPI_POC_payer_conversion_SEND.svg)
 
+<div style="page-break-after: always"></div>
+
 ## Making a payment in another currency
 For this use case, the Payer DFSP will specify the transfer with amount type **RECEIVE** and define the transfer amount in the **Payee's local currency** (the target currency).
 An secondary use case example for this is a cross boarder Merchant Payment.
@@ -35,6 +39,8 @@ An secondary use case example for this is a cross boarder Merchant Payment.
 Below is a detailed sequence diagram that shows the complete flow, and includes the Mojaloop connector and integration APIs for all participant organizations.
 
 !["Payer Conversion RECEIVE"](./FXAPI_POC_payer_conversion_RECEIVE.svg)
+
+<div style="page-break-after: always"></div>
 
 ## Abort flows
 This sequence diagram show how the design implements abort messages.

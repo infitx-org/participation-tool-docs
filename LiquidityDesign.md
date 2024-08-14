@@ -1,8 +1,11 @@
 <div style="display: flex; justify-content: space-between;">
-    <img src="images/cbc_logo.jpg" >
-    <img src="images/blank.png" style="width: 70%" >
-    <img src="images/INFITX-TECH_LOGO.png" >
+    <img src="./images/cbc_logo.jpg" >
+    <img src="./images/blank.png" style="width: 20%" >
+   <img src="./images/mojaloop-foundation.png" height = 40>
+    <img src="./images/blank.png" style="width: 20%" >
+    <img src="./images/INFITX-TECH_LOGO.png" >
 </div>
+
 
 
 # DFSP Liquidity Design
@@ -34,10 +37,14 @@ Mojaloop supports both deferred net settlement, and continuous gross settlement;
 
 Next this chapter goes through each of the phases required to operate separately, I.e. the prefunding, the clearing, the settlement, and then the capital flows, before showing them all together.
 
+<div style="page-break-after: always"></div>
+
 ### Prefunding
 Here the Payer DFSP must provide prefunded liquidity into the Mojaloop Scheme to be held as collateral. This is done through a funds-in process inside mojaloop, and the Payer DFSP settlement account is updated to reflect the amount. The Payee DFSP must provide liquidity in their float account, or have that liquidity available to be deposited into a payee’s account. Similarly the Foreign exchange provider needs to have prefunded liquidity in the target currency. This is done through a funds-in process in mojaloop, and their target currency settlement account is updated to reflect the total. There is now sufficient liquidity to support a cross-currency transaction.
 
 ![T-Accounts for Transfer prefunding](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20prefunding.png)
+
+<div style="page-break-after: always"></div>
 
 ### Clearing
 The clearing process occurs when the transfer is made. The timing of the transfers are critical, but is not covered in this description, as this description is concentrating on the flow of funds. 
@@ -49,20 +56,28 @@ The Payer DFSP moves funds out of the Payers account as either a withdrawal, or 
 |:- |
 |The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system.|
 
+<div style="page-break-after: always"></div>
+
 ### Settlement
 The settlement process is when mojaloop interacts with the external liquidity mechanisms of the scheme to change ownership of the pre-funded liquidity to be in line with the transaction that have been processed. While it is doing this, it updates the settlement accounts to reflect the new pre-funded liquidity ownership by moving funds between each participant's settlement account and their position accounts. The diagram represents Payer DFSP has funds moving from their settlement account into their position account. This is a simplified view, as the real fund flows occur in the externally linked accounts, and the settlement and position ledgers are updated to reflect the new position and prefunded liquidity available. In a similar simplified view, the FXP has funds moved from their position account into their settlement account in source currency, and from the settlement account into their position account in target currency. Similarly the Payee DFSP has funds moved from their position account into their settlement account. 
 
 ![T-Accounts for Transfer settlement](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20Settlement.png)
+
+<div style="page-break-after: always"></div>
 
 ### Capital Flows
 The capital flow is important to compensate for a net movement of funds from any particular organisation connected to the scheme. A net Payer DFSP would need to replenish their prefunded liquidity by either moving funds from their float account, or by moving working capital into mojaloop using the funds-in process. A net Payee DFSP would use mojaloop’s funds-out process to move pre-funded liquidity into their float account, or working capital for the organisation. If there is a net movement between currencies, then the FXP would need to withdraw pre-funded capital from the net receiver of currency using funds-out, and deposit funds into the net payer pre-funded currency account using funds-in. The timing of these flows are left to the discretion of each organisation.
 
 ![T-Accounts for Transfer Capital Flows](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20capitalFlows.png)
 
+<div style="page-break-after: always"></div>
+
 ### Summary
 This diagram illustrates all the flows together.
 
 ![T-Accounts for Transfer All](./images/SI_Toolkit-T-Accounts%20for%20FX%20Transfer%20-%20All.png)
+
+<div style="page-break-after: always"></div>
 
 ## Managing Liquidity Outflows
 ### Flows as a Payer DFSP and net debtor
@@ -73,6 +88,8 @@ As a Payer DFSP in a transfer, the DFSP will be required to provide pre-funded l
 |Float Account: |
 |:- |
 | The float account in this diagram at each of the DFSPs, is a representative of the accounting mechanism that is used to manage the liquidity leaving and returning the DFSPs core banking system. The core banking system of the DFSP may have a built-in mechanism for this e.g. a Deposit or Withdraw function. Alternatively the functionality can be layered on by making use of a dedicated ledger/s/account to keep track of incoming and outgoing funds. |
+
+<div style="page-break-after: always"></div>
 
 ## Managing Liquidity Inflows
 ### Flows as a Payee DFSP and net creditor

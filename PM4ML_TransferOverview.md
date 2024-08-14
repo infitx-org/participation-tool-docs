@@ -1,8 +1,11 @@
 <div style="display: flex; justify-content: space-between;">
-    <img src="images/cbc_logo.jpg" >
-    <img src="images/blank.png" style="width: 70%" >
-    <img src="images/INFITX-TECH_LOGO.png" >
+    <img src="./images/cbc_logo.jpg" >
+    <img src="./images/blank.png" style="width: 20%" >
+   <img src="./images/mojaloop-foundation.png" height = 40>
+    <img src="./images/blank.png" style="width: 20%" >
+    <img src="./images/INFITX-TECH_LOGO.png" >
 </div>
+
 
 # Payment Manager's Transfers Overview Guide
 
@@ -11,6 +14,8 @@ The Business Dashboard page (accessible from the left-hand navigation pane) curr
 The Transfers Overview page provides visualization of transaction details and the ability to query and observe each transfer’s status.
 
 ![Transfers Overview](./images/transfers_overview.png)
+
+<div style="page-break-after: always"></div>
 
 ## Find a Transfer
 The **Find a Transfer** button ![Find a Transfer Button](./images/find_a_transfer_button.png) find a transfer button at the top of the page allows you to find a particular transfer.
@@ -73,6 +78,8 @@ In addition to party information, details about the transfer message sequence ar
 
 ![quote response](./images/quote_response.png)
 
+<div style="page-break-after: always"></div>
+
 ### Find a transfer using multiple search criteria
 Use the Advanced Filtering tab to find a transfer when you do not know its Transfer ID. You can search for a transfer based on:
 - the approximate time when the transfer occurred
@@ -92,6 +99,8 @@ To find a transfer:
    - A Technical Details tab with low-level technical details, such as the actual party lookup, quote, or transfer messages. This is useful for technical personnel performing a debug.
 
 For further information on the details that the Transfer Details pop-up window provides, see the descriptions and screenshots in Find a transfer based on its Transfer ID.
+
+<div style="page-break-after: always"></div>
 
 ## Successful Transfers
 
@@ -113,6 +122,8 @@ To return to selection zoom mode, click the Selection Zoom button ![selection zo
 
 To download a chart in .svg, .png, or .csv format, click the **Menu** button ![menu button](./images/menu_button.png).
 
+<div style="page-break-after: always"></div>
+
 # Average Transfer Time (E2E)
 The Average Transfer Time (E2E) graph is showing your transfer latency with the Hub.
 
@@ -125,6 +136,8 @@ The **Total Transfer Statuses** widgets display the total number of successful, 
 
 ![total transfer statuses](./images/total_transfer_statuses_new.png)
 
+<div style="page-break-after: always"></div>
+
 # Transfers Errors Overview
 The **Transfers Errors Overview** pie chart shows a breakdown of the types of errors that caused failed transfers.
 
@@ -133,5 +146,4 @@ The **Transfers Errors Overview** pie chart shows a breakdown of the types of er
 The table below the pie chart lists failed transfers. If there are more than four errors, then a **View All Errors** button is displayed, which allows you to check the full list of errors. To get the complete list of errors, click the **View All Errors** button. The **Transfers Errors** window pops up.
 
 ![transfers errors popup 4](./images/transfers_errors_popup_4.png)
-Transfers Errors pop-up window
 

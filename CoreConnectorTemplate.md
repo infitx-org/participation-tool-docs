@@ -1,8 +1,11 @@
 <div style="display: flex; justify-content: space-between;">
-    <img src="images/cbc_logo.jpg" >
-    <img src="images/blank.png" style="width: 70%" >
-    <img src="images/INFITX-TECH_LOGO.png" >
+    <img src="./images/cbc_logo.jpg" >
+    <img src="./images/blank.png" style="width: 20%" >
+   <img src="./images/mojaloop-foundation.png" height = 40>
+    <img src="./images/blank.png" style="width: 20%" >
+    <img src="./images/INFITX-TECH_LOGO.png" >
 </div>
+
 
 # Core-Connector template
 To communicate with Payment Manager or Mojaloop Connector, DFSPs are required to implement Core Connector in alignment with their backend technology so that their backend can talk to the Payment Manager API. To help API implementation efforts, DFSPs are provided with:
