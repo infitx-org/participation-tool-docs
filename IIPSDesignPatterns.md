@@ -127,3 +127,17 @@ This pattern is considered an anti-pattern and where possible avoided. This desi
 There is one use case where this integration pattern may be used, and that is if the account involved is a loan and there is no release of funds but rather an acknowledgement of a debt payment. 
 
 ![Payee DFSP Single Integration Api On Transfer Pattern](./images/PayeeDFSPSingleIntegrationApiOnTransferPattern.png)
+
+
+## Foreign Exchange Provider Integration Patterns
+
+The foreign exchange provider participant in a Mojaloop scheme, must provide quotes and conversions to support the transfers. This is inline with DFSP integrations with one major different. The conversion is only confirmed after the dependent transfer is committed. This means that the conversion can only be committed after the fxTransfer PATCH notification.
+### FX Quote Integration
+![FXP Integration Pattern - Quote](./images/FXPIntegrationPattern-Quote.png)
+
+The ILP is provided to the DFSP as the digital signed terms of the conversion.
+
+### FX Transfer Integration
+![FXP Integration Pattern - Conversion](./images/FXPIntegrationPattern-Conversion.png)
+
+The ILP fulfullment is release to the DFSP to indicate commitment to the transfer. Transfer is only committed to after PATCH notification is received.
