@@ -39,7 +39,7 @@ note right
 end note
 Switch->>MC: **PATCH** /fxTransfer/{ID}
 MC-->>Switch: HTTP 200 OK
-MC->CC: **PATCH** /fxTransfer/{ID}
+MC->CC: **PUT** /fxTransfer/{ID}
 activate CC #DarkBlue
 alt If State is Committed
 CC->CBS: Commit funds for conversion 
