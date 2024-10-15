@@ -1,48 +1,45 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="./images/cbc_logo.jpg" >
-    <img src="./images/blank.png" style="width: 20%" >
-   <img src="./images/mojaloop-foundation.png" height = 40>
-    <img src="./images/blank.png" style="width: 20%" >
-    <img src="./images/INFITX-TECH_LOGO.png" >
-</div>
+# Mojaloop SI Toolkit
 
-# Mojaloop Participation Tools
-The participation tools is an open sourced collection of artifacts and software solution to support the organizational participation in a Mojaloop switch.
-This includes:
- - financial service providers who provide account related services to customers (DFSPs). 
- - financial technology providers who initiate payments and payment requests (PISPs).
- - foreign exchange providers who sell currency to support payments.
+An FSP integration toolkit for DFSPs, Hub Operators and any concerned stakeholders.
 
-These Participation tools are open sourced to support collaboration between Mojaloop scheme implementations, with the aim of building best practice integrations. If any of these artifacts need improving or customization, in the spirit of open source, make these adjustments in a general way and contribute changes back. 
-
-Here is the list of participation tool artifacts:
-
-1. [**Mojaloop Connector**](./MojaloopConnector.md) the main participation tool component. This 
-   - abstracts the Mojaloop FSPIOP api supporting easy upgrades to newer API versions
-   - provides a synchronous API experience simplifying integrations
-   - manages the Mojaloop security
-   - provides optional support for large scale bulk transfers to support the G2P use case.
-1. [**Payment Manager**](./PaymentManager.md) the component that support the running/deployment and configuring of the Mojaloop Connector
-   - automatically on-boards the Mojaloop Security using best practice
-   - provides docker and helm deployments of Mojaloop connector and other supportive microservices
-   - provides configurable best practice RBAC security
-   - provides the ability to trace and inspect a transfer through a UI
-   - provides technical operational metrics to support management of the connection
-1. [**DFSP liquidity Design Guide**](./LiquidityDesign.md) this is a guide to support understanding and business operational design for a DFSP connecting to Mojaloop. This guide includes a:
-   - description of the Mojaloop process that control the flow of funds
-   - description of how this requirement translates into process for managing DFSP flow of funds as both a net debtor, or a net creditor.
-1. [**IIPS Design Patterns**](./IIPSDesignPatterns.md) this resource help guide the integration designs. These design have detailed sequence diagrams illustrating API calls, and responsibilities carried out by the integration. Various generic scenarios are shown with the consequence of adapting an approach / pattern is discussed. At a high level the patterns include: 
-   - patterns for building integrations as a Payer DFSP
-   - patterns for building integrations as a Payee DFSP
-1. [**Core-Connector Testing Harness**](./CoreConnectorTestingHarness.md) this is a repository that can be downloaded to deploy and run the core-connector testing harness. It includes
-   - A docker-compose script for deploying the testing harness
-   - pre-configured TTK. This solution makes use of the Mojaloop testing tool kit
-   - Golden-Path core-connector test collection used to test core connectors.
-1. [**Core-Connector Template**](./CoreConnectorTemplate.md) this is a template repository for building core-connectors. It includes
-   - a typescript code repository with pre-configured scripts and CI controls to support quick development that align with Mojaloop engineering best practices.
-1. [**Core-Connector Development Guide**](./CoreConnectorBuildingGuide.md) this provides a core-connector testing harness that can be used to locally test integrations as they are being built, and then to verify that all unhappy path requirements have been catered for.
-   - a docker compose repository and Golden Path Core-Connector test collection.
+# Table of Contents
+- [Introduction](#introduction)
+- [What is Mojaloop](#what-is-mojaloop)
+- [Connecting to a Mojaloop Scheme](#connecting-to-a-mojaloop-scheme)
+- [DFSP Onboarding Guide and Roadmap](#dfsp-onboarding-guide-and-roadmap)
+    - Customer Journey
+    - Mojaloop Connector
+    - Payment Manager
+    - Payment Manager Transfers Overview
+    - Integration Patterns
+    - Core Connector Development 
+    - Core Connector Testing Harness
+- FXP Onboarding Guide and Roadmap
+- Liquidity Design
+- Settlement 
 
 
+# Introduction 
+The goal of this SI toolkit is to give System Integrators, Digital Financial Service providers, Hub operators, any policy stakeholders and any concerned parties a central location for all information regarding connecting to a Mojaloop scheme. This documentation provides both policy and technical integration information to answer most if not all questions around what it takes to integrate to a Mojaloop Scheme.
 
+
+# What is Mojaloop
+Mojaloop is an open-source software platform designed to help financial institutions, mobile network operators, and fintech companies create interoperable digital payment systems. It was originally developed by the Mojaloop Foundation, with support from the Bill & Melinda Gates Foundation, and its goal is to advance financial inclusion by enabling low-cost, real-time payment services, especially in underbanked and unbanked regions.
+
+Key features of Mojaloop include:
+
+- Interoperability: Mojaloop allows different financial service providers, including banks, mobile wallets, and payment processors, to connect and interact with each other seamlessly.
+
+- Real-time payments: It facilitates immediate payments between participants in the system.
+
+- Open-source: The platform's code is freely available, making it adaptable to various local contexts and reducing the cost of building payment infrastructure.
+
+- DFSP inclusion: The platform supports digital financial service providers (DFSPs), making it easier for more people to access formal financial services, particularly in developing economies.
+
+Mojaloop is often seen as a framework to build national or regional payment infrastructures, which can improve the financial ecosystem's efficiency and drive down transaction costs.
+
+# Connecting to a Mojaloop Scheme
+
+
+# DFSP Onboarding Guide and Roadmap
 
