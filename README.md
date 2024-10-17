@@ -12,11 +12,15 @@ An FSP integration toolkit for DFSPs, Hub Operators and any concerned stakeholde
     - Payment Manager
     - Payment Manager Transfers Overview
     - Integration Patterns
+    - Secure Connection From DFSP and Core Banking API
+    - Uploading Identifiers from DFSP to Account Lookup Service. (ALS) 
     - Core Connector Development 
     - Core Connector Testing Harness
+    - Operational Readiness
 - FXP Onboarding Guide and Roadmap
 - Liquidity Design
 - Settlement 
+- Glossary
 
 
 # Introduction 
