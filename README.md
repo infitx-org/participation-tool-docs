@@ -1,68 +1,24 @@
-# Mojaloop SI Toolkit
+# System Integrator (SI) Toolkit
+[![Mojaloop](https://img.shields.io/badge/SI-Toolkit-blue)](https://github.com/infitx-org/participation-tool-docs)
 
-An FSP integration toolkit for DFSPs, Hub Operators and any concerned stakeholders.
+Everything you need to know about Mojaloop System Integration.
 
-# Table of Contents
-- [Introduction](#introduction)
-- [What is Mojaloop](#what-is-mojaloop)
-- [Connecting to a Mojaloop Scheme](#connecting-to-a-mojaloop-scheme)
-- [DFSP Onboarding Guide and Roadmap](./md-docs/DfspGuide.md)
-    - [Overview](./md-docs/DfspGuide.md#overview)
-    - Customer Journey
-    - Integration Accounts
-    - Technical Requirements 
-        - Mojaloop Connector
-        - Payment Manager
-        - Payment Manager Transfers Overview
-        - Integration Patterns
-        - Secure Connection From DFSP and Core Banking API
-        - Uploading Identifiers from DFSP to Account Lookup Service. (ALS) 
-        - Core Connector Development 
-        - Core Connector Testing Harness
-        - Operational Readiness
-- FXP Onboarding Guide and Roadmap
-- Liquidity Design
-- Settlement 
-- Glossary
+# Introduction
+The goal of this SI toolkit is to provide documentation to support integration of an organization to an instant and inclusive payment system based on Mojaloop. Here you will find resources desgined for specific stakeholders who would be interested in an integration both from the business and technical perspective. As such the documentation has been seperated into different separate sections that each address a specific issues that are specific to the various stake holder groups involved in a typical integration. From business management, business operations , technical integrators to the technical operations.
+
+Here we have a provided links to the documentation that will be relevant to specific stakeholders in a typical financial systems integration. The stakeholder groups are
+
+## Management
+This stakeholder group includes anyone in the business leadership and is responsible for business strategy and commercial decisions of the business. They usually are interested in the value proposition of a project and the commercial vaibility of the integration.  [Learn more](./md-docs/BusinessComercial.md)
+
+## Business Operations
+This stakeholder group is usually interested in how the integration will work from a financial perspective. They are interested in the business operations that will be involved to bring the integration alive. They will be interested in the accouting schema, integration rules, settlement and fees implementation. There is definitely an intersection between this group and what management would because the business operations team implements the priorities of management. [Learn more](./md-docs/BusinessOperations.md)
+
+## Technical Operations
+This stakeholder group is usually interested in the technological details involved in the integration and how to develop the integration. They will be interested in issues concerning API integration, security, technical operation of the integration, account creation. [Learn more](./md-docs/TechnicalIntegration.md)
+
+## Conclusion 
+There is an interesection between the interests of management, business operations and technical operations when it comes to an integration but a separation of concerns is important as it is easier to locate exactly what you are looking for depending on where it is documented. 
 
 
-# Introduction 
-The goal of this SI toolkit is to give System Integrators, Digital Financial Service providers, Hub operators, any policy stakeholders and any concerned parties a central location for all information regarding connecting to a Mojaloop scheme. This documentation provides both policy and technical integration information to answer most if not all questions around what it takes to integrate to a Mojaloop Scheme.
 
-> For any acronyms used, please check the [glossary](#glossary) section for the full forms.
-
-# What is Mojaloop
-Mojaloop is an open-source software platform designed to help financial institutions, mobile network operators, and fintech companies create interoperable digital payment systems. It was originally developed by the Mojaloop Foundation, with support from the Bill & Melinda Gates Foundation, and its goal is to advance financial inclusion by enabling low-cost, real-time payment services, especially in underbanked and unbanked regions.
-
-Key features of Mojaloop include:
-
-- Interoperability: Mojaloop allows different financial service providers, including banks, mobile wallets, and payment processors, to connect and interact with each other seamlessly.
-
-- Real-time payments: It facilitates immediate payments between participants in the system.
-
-- Open-source: The platform's code is freely available, making it adaptable to various local contexts and reducing the cost of building payment infrastructure.
-
-- DFSP inclusion: The platform supports digital financial service providers (DFSPs), making it easier for more people to access formal financial services, particularly in developing economies.
-
-Mojaloop is often seen as a framework to build national or regional payment infrastructures, which can improve the financial ecosystem's efficiency and drive down transaction costs.
-
-# Connecting to a Mojaloop Scheme
-Connecting to a Mojaloop Scheme requires both technical and political engagements inorder to arrive at a successful integration. From a business perspective
-
-# Policy Requirements
-Before connecting to a Mojaloop Scheme, some pre-requisites must be in place from a policy perspective. The Central Bank of the jurisdiction must be in the know of the payment switch which is to be implemented and they must have approved the implementation of the scheme.
-
-It is imperative that prior to implementing the scheme the Central Bank is in the know to prevent any friction in the future during the operation of the scheme.
-
-From a DFSP point of view, the stakeholders of the company are supposed to be in agreement and in support of the integration to the mojaloop switch.
-
-
-# Technical Requirements
-The Mojaloop Community has come up with tools to allow potential participants build integrations into a mojaloop Switch.
-
-To understand more about the Technical Requirements, please read through section for [technical requirements](./md-docs/TechnicalRequirements.md)
-
-
-# Glossary
-
-- DFSP - Digital Financial Service Provider.
