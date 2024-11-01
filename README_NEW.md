@@ -1,4 +1,5 @@
-# Mojaloop SI Toolkit
+# System Integrator (SI) Toolkit
+[![Mifos](https://img.shields.io/badge/SI-Toolkit-blue)](https://github.com/infitx-org/participation-tool-docs)
 
 Everything you need to know about Mojaloop System Integration.
 
