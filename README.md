@@ -1,48 +1,24 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="./images/cbc_logo.jpg" >
-    <img src="./images/blank.png" style="width: 20%" >
-   <img src="./images/mojaloop-foundation.png" height = 40>
-    <img src="./images/blank.png" style="width: 20%" >
-    <img src="./images/INFITX-TECH_LOGO.png" >
-</div>
+# System Integrator (SI) Toolkit
+[![Mojaloop](https://img.shields.io/badge/SI-Toolkit-blue)](https://github.com/infitx-org/participation-tool-docs)
 
-# Mojaloop Participation Tools
-The participation tools is an open sourced collection of artifacts and software solution to support the organizational participation in a Mojaloop switch.
-This includes:
- - financial service providers who provide account related services to customers (DFSPs). 
- - financial technology providers who initiate payments and payment requests (PISPs).
- - foreign exchange providers who sell currency to support payments.
+Everything you need to know about Mojaloop System Integration.
 
-These Participation tools are open sourced to support collaboration between Mojaloop scheme implementations, with the aim of building best practice integrations. If any of these artifacts need improving or customization, in the spirit of open source, make these adjustments in a general way and contribute changes back. 
+# Introduction
+The goal of this SI toolkit is to provide documentation to support integration of an organization to an instant and inclusive payment system based on Mojaloop. Here you will find resources desgined for specific stakeholders who would be interested in an integration both from the business and technical perspective. As such the documentation has been seperated into different separate sections that each address a specific issues that are specific to the various stake holder groups involved in a typical integration. From business management, business operations , technical integrators to the technical operations.
 
-Here is the list of participation tool artifacts:
+Here we have a provided links to the documentation that will be relevant to specific stakeholders in a typical financial systems integration. The stakeholder groups are
 
-1. [**Mojaloop Connector**](./MojaloopConnector.md) the main participation tool component. This 
-   - abstracts the Mojaloop FSPIOP api supporting easy upgrades to newer API versions
-   - provides a synchronous API experience simplifying integrations
-   - manages the Mojaloop security
-   - provides optional support for large scale bulk transfers to support the G2P use case.
-1. [**Payment Manager**](./PaymentManager.md) the component that support the running/deployment and configuring of the Mojaloop Connector
-   - automatically on-boards the Mojaloop Security using best practice
-   - provides docker and helm deployments of Mojaloop connector and other supportive microservices
-   - provides configurable best practice RBAC security
-   - provides the ability to trace and inspect a transfer through a UI
-   - provides technical operational metrics to support management of the connection
-1. [**DFSP liquidity Design Guide**](./LiquidityDesign.md) this is a guide to support understanding and business operational design for a DFSP connecting to Mojaloop. This guide includes a:
-   - description of the Mojaloop process that control the flow of funds
-   - description of how this requirement translates into process for managing DFSP flow of funds as both a net debtor, or a net creditor.
-1. [**IIPS Design Patterns**](./IIPSDesignPatterns.md) this resource help guide the integration designs. These design have detailed sequence diagrams illustrating API calls, and responsibilities carried out by the integration. Various generic scenarios are shown with the consequence of adapting an approach / pattern is discussed. At a high level the patterns include: 
-   - patterns for building integrations as a Payer DFSP
-   - patterns for building integrations as a Payee DFSP
-1. [**Core-Connector Testing Harness**](./CoreConnectorTestingHarness.md) this is a repository that can be downloaded to deploy and run the core-connector testing harness. It includes
-   - A docker-compose script for deploying the testing harness
-   - pre-configured TTK. This solution makes use of the Mojaloop testing tool kit
-   - Golden-Path core-connector test collection used to test core connectors.
-1. [**Core-Connector Template**](./CoreConnectorTemplate.md) this is a template repository for building core-connectors. It includes
-   - a typescript code repository with pre-configured scripts and CI controls to support quick development that align with Mojaloop engineering best practices.
-1. [**Core-Connector Development Guide**](./CoreConnectorBuildingGuide.md) this provides a core-connector testing harness that can be used to locally test integrations as they are being built, and then to verify that all unhappy path requirements have been catered for.
-   - a docker compose repository and Golden Path Core-Connector test collection.
+## Management
+This stakeholder group includes anyone in the business leadership and is responsible for business strategy and commercial decisions of the business. They usually are interested in the value proposition of a project and the commercial vaibility of the integration.  [Learn more](./md-docs/BusinessComercial.md)
 
+## Business Operations
+This stakeholder group is usually interested in how the integration will work from a financial perspective. They are interested in the business operations that will be involved to bring the integration alive. They will be interested in the accouting schema, integration rules, settlement and fees implementation. There is definitely an intersection between this group and what management would because the business operations team implements the priorities of management. [Learn more](./md-docs/BusinessOperations.md)
+
+## Technical Operations
+This stakeholder group is usually interested in the technological details involved in the integration and how to develop the integration. They will be interested in issues concerning API integration, security, technical operation of the integration, account creation. [Learn more](./md-docs/TechnicalIntegration.md)
+
+## Conclusion 
+There is an interesection between the interests of management, business operations and technical operations when it comes to an integration but a separation of concerns is important as it is easier to locate exactly what you are looking for depending on where it is documented. 
 
 
 
