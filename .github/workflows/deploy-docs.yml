@@ -1,47 +1,43 @@
-
-name: Deploy Docs
-
+name: Build Vuepress Docs and Host with Gitpages
 on:
+  # Runs on pushes targeting the default branch
   push:
-    branches:
-      # make sure this is the branch you are using
-      - main
+    branches: ["vuepress"]
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
+  pages: write
+  id-token: write
 
+# Allow one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 jobs:
-  deploy-gh-pages:
+  build-and-deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-          # if your docs needs submodules, uncomment the following line
-          # submodules: true
+    - name: Checkout
+      uses: actions/checkout@master
 
-
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-          cache: npm
-
-      - name: Install Deps
-        run: npm ci
-
-      - name: Build Docs
-        env:
-          NODE_OPTIONS: --max_old_space_size=8192
-        run: |-
-          npm run docs:build
-          > .vuepress/dist/.nojekyll
-
-      - name: Deploy Docs
-        uses: JamesIves/github-pages-deploy-action@v4
-        with:
-          # This is the branch where the docs are deployed to
-          branch: gh-pages
-          folder: .vuepress/dist
+    - name: Build and Deploy
+      uses: jenkey2011/vuepress-deploy@master
+      env:
+        ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        TARGET_REPO: sp-convergence/payments-interoperability-layer
+        TARGET_BRANCH: gh_pages
+        BUILD_SCRIPT: npm install && npm run build
+        BUILD_DIR: .vuepress/dist/
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: '.vuepress/dist/'
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
