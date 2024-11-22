@@ -27,4 +27,10 @@ jobs:
           npm run docs:build
           > .vuepress/dist/.nojekyll
       - run: echo 'build run again'
+      - name: Deploy Docs
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          # This is the branch where the docs are deployed to
+          branch: gh-pages
+          folder: .vuepress/dist
 
