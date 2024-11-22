@@ -10,7 +10,7 @@ export default defineUserConfig({
   title: 'System Integrator (SI) Toolkit',
   tagline: 'Everything you need to know about Mojaloop System Integration',
   description: 'Everything you need to know about Mojaloop System Integration',
-  base: '/',
+  base: '/participation-tool-docs/',
 
   
   theme: defaultTheme({
