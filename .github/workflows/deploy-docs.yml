@@ -22,10 +22,13 @@ jobs:
           cache: 'npm'
           cache-dependency-path: subdir/package-lock.json
       - run: npm ci
+      - run: echo 'npm ci run'
       - run: npm run docs:build
+      - run: echo 'build run'
       - run: |-
           npm run docs:build
           > .vuepress/dist/.nojekyll
+      - run: echo 'build run again'
 
       - name: Deploy Docs
         uses: JamesIves/github-pages-deploy-action@v4
