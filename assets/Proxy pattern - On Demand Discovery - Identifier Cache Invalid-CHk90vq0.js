@@ -1,0 +1,1 @@
+const t="/system-integrator-toolkit/assets/Proxy%20pattern%20-%20On%20Demand%20Discovery%20-%20using%20Oracles-B-BEKnUa.png",s="/system-integrator-toolkit/assets/Proxy%20pattern%20-%20On%20Demand%20Discovery%20-%20Identifier%20Cache%20Invalid-BEVo6XAn.png";export{t as _,s as a};
