@@ -3,9 +3,9 @@
 An FSP integration toolkit for DFSPs, Hub Operators and any concerned stakeholders.
 
 # Table of Contents
-- [Introduction](#introduction)
-- [What is Mojaloop](#what-is-mojaloop)
-- [Connecting to a Mojaloop Scheme](#connecting-to-a-mojaloop-scheme)
+- Introduction
+- What is Mojaloop
+- Connecting to a Mojaloop Scheme
 - [DFSP Onboarding Guide and Roadmap](./md-docs/DfspGuide.md)
     - [Overview](./md-docs/DfspGuide.md#overview)
     - Customer Journey

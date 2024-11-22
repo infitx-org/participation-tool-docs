@@ -1,11 +1,3 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="../images/cbc_logo.jpg" >
-    <img src="../images/blank.png" style="width: 20%" >
-   <img src="../images/mojaloop-foundation.png" height = 40>
-    <img src="../images/blank.png" style="width: 20%" >
-    <img src="../images/INFITX-TECH_LOGO.png" >
-</div>
-
 # Inter scheme using national switches Design
 The proxy implementation method to connect schemes does the following.
 1. Leverages the trust relationship between scheme so that a transaction only has a single pre-funding requirement at the Payer's scheme.
