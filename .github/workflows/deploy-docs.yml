@@ -30,7 +30,7 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         TARGET_REPO: sp-convergence/payments-interoperability-layer
         TARGET_BRANCH: gh_pages
-        BUILD_SCRIPT: npm install && npm run build
+        BUILD_SCRIPT: npm install && npm run docs:build
         BUILD_DIR: .vuepress/dist/
     - name: Setup Pages
       uses: actions/configure-pages@v2
