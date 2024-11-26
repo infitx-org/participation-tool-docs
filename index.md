@@ -23,7 +23,7 @@ features:
     link: /md-docs/BusinessComercial
     details: This stakeholder group is usually interested in the technological details involved in the integration and how to develop the integration. They will be interested in issues concerning API integration, security, technical operation of the integration, account creation.
 
-footer: Apache 2.0 | Copyright © 2024-present Mojaloop Community
+footer:  THIS SITE IS A WORK IN PROGRESS AND WILL BE UPDATED REGULARLY
 ---
 # Introduction
 The goal of this SI toolkit is to provide documentation to support integration of an organization to an instant and inclusive payment system based on Mojaloop. Here you will find resources designed for specific stakeholders who would be interested in an integration both from the business and technical perspective. As such the documentation has been separated into different separate sections that each address a specific issues that are specific to the various stake holder groups involved in a typical integration. From business management, business operations , technical integrators to the technical operations.
