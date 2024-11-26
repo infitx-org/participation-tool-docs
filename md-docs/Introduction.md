@@ -9,13 +9,13 @@ The goal of this SI toolkit is to provide documentation to support integration o
 Here we have a provided links to the documentation that will be relevant to specific stakeholders in a typical financial systems integration. The stakeholder groups are
 
 ## Management
-This stakeholder group includes anyone in the business leadership and is responsible for business strategy and commercial decisions of the business. They usually are interested in the value proposition of a project and the commercial vaibility of the integration.  [Learn more](./md-docs/BusinessComercial.md)
+This stakeholder group includes anyone in the business leadership and is responsible for business strategy and commercial decisions of the business. They usually are interested in the value proposition of a project and the commercial vaibility of the integration.  [Learn more](/md-docs/BusinessComercial.md)
 
 ## Business Operations
-This stakeholder group is usually interested in how the integration will work from a financial perspective. They are interested in the business operations that will be involved to bring the integration alive. They will be interested in the accouting schema, integration rules, settlement and fees implementation. There is definitely an intersection between this group and what management would because the business operations team implements the priorities of management. [Learn more](./md-docs/BusinessOperations.md)
+This stakeholder group is usually interested in how the integration will work from a financial perspective. They are interested in the business operations that will be involved to bring the integration alive. They will be interested in the accouting schema, integration rules, settlement and fees implementation. There is definitely an intersection between this group and what management would because the business operations team implements the priorities of management. [Learn more](/md-docs/LiquidityDesign.md)
 
 ## Technical Operations
-This stakeholder group is usually interested in the technological details involved in the integration and how to develop the integration. They will be interested in issues concerning API integration, security, technical operation of the integration, account creation. [Learn more](./md-docs/TechnicalIntegration.md)
+This stakeholder group is usually interested in the technological details involved in the integration and how to develop the integration. They will be interested in issues concerning API integration, security, technical operation of the integration, account creation. [Learn more](/md-docs/TechnicalIntegration.md)
 
 ## Conclusion 
 There is an interesection between the interests of management, business operations and technical operations when it comes to an integration but a separation of concerns is important as it is easier to locate exactly what you are looking for depending on where it is documented. 

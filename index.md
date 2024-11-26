@@ -9,7 +9,7 @@ actions:
     type: primary
 
   - text: Introduction
-    link: /md-docs/
+    link: /md-docs/Introduction
     type: secondary
 
 features:
