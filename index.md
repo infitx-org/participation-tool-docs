@@ -16,9 +16,9 @@ features:
   - title: Management
     link: /md-docs/BusinessComercial
     details: Documentation about the value proposition of the project, the commercial viability of the integration. The intended audience is the business leadership responsible for strategic and commercial decisions. 
-  - title: Business Operations
+  - title: Financial Operations
     link: /md-docs/BusinessOperations
-    details: Documentation about business operations of the integration. The target audience is DFSP staff who are focused on how the integration will work from an accounting point of view. They will be interested in the accounting schema, integration rules, settlement and fees implementation. 
+    details: Documentation about financial operations of the integration. The target audience is DFSP staff who are focused on how the integration will work from an accounting point of view. They will be interested in the accounting schema, integration rules, settlement and fees implementation. 
   - title: Technical Operations
     link: /md-docs/TechnicalIntegration
     details: Documentation about how to technically integrate the DFSP by implementing a core connection to the DFSP sandbox and also how to prepare for production. This documentation has information to be used by developers.
