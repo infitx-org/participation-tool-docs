@@ -8,7 +8,7 @@ actions:
     link: /md-docs/DRPPOverview.md
     type: primary
 
-  - text: Introduction
+  - text: Getting Started
     link: /md-docs/Introduction
     type: secondary
 
