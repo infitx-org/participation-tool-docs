@@ -1,26 +1,17 @@
-# Mojaloop SI Toolkit
+# Technical Integration 
 
-An FSP integration toolkit for DFSPs, Hub Operators and any concerned stakeholders.
+Technical Integration documentation for System integration engineers.
 
-# Table of Contents
-- Introduction
-- What is Mojaloop
-- Connecting to a Mojaloop Scheme
-- [DFSP Onboarding Guide and Roadmap](./md-docs/DfspGuide.md)
-    - [Overview](./md-docs/DfspGuide.md#overview)
-    - Customer Journey
-    - Integration Accounts
-    - Technical Requirements 
-        - Mojaloop Connector
-        - Payment Manager
-        - Payment Manager Transfers Overview
-        - Integration Patterns
-        - Secure Connection From DFSP and Core Banking API
-        - Uploading Identifiers from DFSP to Account Lookup Service. (ALS) 
-        - Core Connector Development 
-        - Core Connector Testing Harness
-        - Operational Readiness
-- FXP Onboarding Guide and Roadmap
-- Liquidity Design
-- Settlement 
-- Glossary
+
+## Overview
+This is the technical part of this documentaion. Here you will find information about the tools required to integrate a DFSP using the Mojaloop Connector and also how to develop a core connector using the core connector template.
+
+
+## Customer Journey
+The customer journey is the set of steps a customer of a DFSP would go through to be able to make a transfer from their account to a beneficiary in another DFSP. The customer journey provided here is generic inorder to give an idea of what the customer facing application is supposed to collect. [Learn more](/md-docs/CustomerJourney.md)
+
+## Implementing an integration.
+
+To implement an integration to Mojaloop , a core connector needs to be implemented to interface the api of the DFSP's core banking api with the Mojaloop
+connector. A core connector template has been developed to speed up the process of developing core connectors. [Learn more](/md-docs/CoreConnectorTemplateDocs.md)
+
