@@ -1,11 +1,3 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="./images/cbc_logo.jpg" >
-    <img src="./images/blank.png" style="width: 20%" >
-   <img src="./images/mojaloop-foundation.png" height = 40>
-    <img src="./images/blank.png" style="width: 20%" >
-    <img src="./images/INFITX-TECH_LOGO.png" >
-</div>
-
 
 # Payment Manager OSS
 Building, validating, and operating a service that connects a Digital Financial Service Provider’s (DFSP’s) core systems to a Mojaloop real-time payments network requires a detailed understanding of the business, technical, and operational requirements of that network. Payment Manager makes the integration path to Mojaloop easier.
