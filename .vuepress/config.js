@@ -62,9 +62,25 @@ export default defineUserConfig({
             'TechnicalIntegration',
             'IIPSDesignPatterns.md',
             'CoreConnectorBuildingGuide.md',
-            'CoreConnectorTemplate.md',
+            // 'CoreConnectorTemplate.md',
             'CoreConnectorTestingHarness.md',
             'CoreConnectorTemplateDocs.md',
+          ]
+        },
+        {
+          text: 'Technical Reference',
+          collapsible: true,
+          children: [
+            'Service.md',
+            'RoutingAndApiSpecifications.md',
+            'Networking.md',
+            'CBSClient.md',
+            'SDKClient.md',
+            'Configuration.md',
+            'CoreConnectorAggregate.md',
+            'ErrorHandling.md',
+            'IntegrationAccounts.md',
+            'RequestHandling.md'
           ]
         },
         {

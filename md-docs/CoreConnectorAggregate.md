@@ -1,4 +1,4 @@
-# Core Connector Template Docs
+# Core Connector Aggregate (Business Logic)
 All business logic is specified inside the core connector aggregate. The core connector aggregate is a class inside the `coreConnectorAgg.ts` file located inside the `src/domain` folder of the core connector template. This is where all the different pieces of the puzzles are tied together. The route handlers in the routes class invoke functions in the core connector aggregate class to execute functionality associated with a particular endpoint. The data returned by an aggregate function is returned to the route handler which in turn returns the data as a json response back to the client that made the request.
 
 # Aggregate Attributes

@@ -5,7 +5,7 @@ If the financial service provider we were integrating is a Mobile Network Operat
 
 The CBS Client is responsible for setting up request resources that are required to effectively communicate with the Core Banking Solution of the Financial Service Provider.
 
-# CBS Client
+## CBS Client
 The CBS Client is defined in a `CBSClient.ts` file located in `core-connector-template/src/domain/CBSClient`
 
 The CBS Client is a typescript class that implements an interface that is special for every DFSP. This interface should be defined in the `types.ts` file so that the concrete class implements all methods of this interface.
@@ -16,7 +16,7 @@ Depending on whether the core banking solution api is RESTFUL, SOAP based or eve
 - Crediting a customer's account for payee scenarios 
 - Debiting a customer's account for payer scenarios
 
-# Types
+## Types
 The CBS Client module has a types `types.ts` file that defines all types that are used in the CBS Client. It is important that all request and response bodies are typed to allow easy use of the returned entities when a programming the response and request handling logic. In this types file, you can specify enums, interfaces and normal types in typescript.
 
 The CBS Client interface for the DFSP being integrated should be defined in this file.
@@ -39,7 +39,7 @@ This type will eventually be used in the configuration module to enforce which e
 To learn more about how configuration is managed in this template, please read through [Configuration](./Configuration.md).
 
 All types in this file are typescript types. For more information on types in typescript, read more from [here](https://www.typescriptlang.org/docs/handbook/basic-types.html)
-# Errors
+## Errors
 All errors that are thrown with in the CBS Client should be implemented in the errors file `errors.ts`. 
 
 The errors file contains a class that extends a `Basic Error` which defines the attributes all errors should have.
@@ -70,7 +70,7 @@ if(response.status !== 200){
 
 For more information about what Mojaloop Error codes to return for what error cases, please refer to this [documentation](https://docs.mojaloop.io/api/fspiop/logical-data-model.html#error-codes)
 
-# Factory
+## Factory
 The CBS Client Factory is a class that has a static method that is used for creating instances of the CBS Client class.
 
 It is a manifestation of the factory design pattern.
