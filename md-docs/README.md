@@ -1,10 +1,3 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="./images/cbc_logo.jpg" >
-    <img src="./images/blank.png" style="width: 20%" >
-   <img src="./images/mojaloop-foundation.png" height = 40>
-    <img src="./images/blank.png" style="width: 20%" >
-    <img src="./images/INFITX-TECH_LOGO.png" >
-</div>
 
 # Mojaloop Participation Tools
 The participation tools is an open sourced collection of artifacts and software solution to support the organizational participation in a Mojaloop switch.
