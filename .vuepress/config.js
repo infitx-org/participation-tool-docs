@@ -88,8 +88,8 @@ export default defineUserConfig({
           collapsible: true,
           // prefix will be prepended to relative paths
           children: [
-            '/CurrencyConversionDesign/Cross-border (FX) Design.md',
-            '/Inter-SchemeDesign/Readme.md',
+            'CurrencyConversionDesign/Cross-border (FX) Design.md',
+            'Inter-SchemeDesign/Readme.md',
           ]
         },
       ],
