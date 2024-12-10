@@ -1,4 +1,4 @@
-# COMESA Digital Retail PaymentsPlatform (DRPP) Solution Overview
+# COMESA Digital Retail Payments Platform (DRPP) Solution Overview
 
 # Preface
 This document is written to help share and evolve the common vision behind INFITX’s implementation of the COMESA’s Digital Retail Payment Platform. This provides a high level overview and signposting the key characteristics and milestones. There is a companion presentation deck that provides additional diagrams and process information.These two documents are references for understanding what the solution is and how the solution is to be realised. The rationale for implementation decisions are included, these are the“why”s for the particular implementation details, the program level “why” is answered in COMESA’s own documentation and the journey they have taken to get to this point.A good understanding of the concepts here will derisk program communication and allow for elements, such as the DRPP Schematic alongside a functionality matrix will be used to report program progress
