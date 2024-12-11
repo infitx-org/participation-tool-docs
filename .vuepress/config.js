@@ -22,7 +22,7 @@ export default defineUserConfig({
       },
       {
         text: 'Management',
-        link: '/md-docs/BusinessComercial',
+        link: '/md-docs/DRPPOverview',
       },
       {
         text: 'Financial Operations',
@@ -48,7 +48,7 @@ export default defineUserConfig({
         },
         {
           text: 'Management',
-          link: '/md-docs/BusinessComercial.md',
+          link: '/md-docs/DRPPOverview.md',
         },
         {
           text: 'Business Operations',

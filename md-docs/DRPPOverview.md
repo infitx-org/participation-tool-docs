@@ -1,35 +1,35 @@
 # COMESA Digital Retail Payments Platform (DRPP) Solution Overview
 
-# Preface
-This document is written to help share and evolve the common vision behind INFITX’s implementation of the COMESA’s Digital Retail Payment Platform. This provides a high level overview and signposting the key characteristics and milestones. There is a companion presentation deck that provides additional diagrams and process information.These two documents are references for understanding what the solution is and how the solution is to be realised. The rationale for implementation decisions are included, these are the“why”s for the particular implementation details, the program level “why” is answered in COMESA’s own documentation and the journey they have taken to get to this point.A good understanding of the concepts here will derisk program communication and allow for elements, such as the DRPP Schematic alongside a functionality matrix will be used to report program progress
+## Preface
+This document is written to help share and evolve the common vision behind INFITX’s implementation of the COMESA’s Digital Retail Payment Platform. This provides a high level overview and signposting the key characteristics and milestones. There is a companion presentation deck that provides additional diagrams and process information.These two documents are references for understanding what the solution is and how the solution is to be realised. The rationale for implementation decisions are included, these are the “why”s for the particular implementation details, the program level “why” is answered in COMESA’s own documentation and the journey they have taken to get to this point.A good understanding of the concepts here will derisk program communication and allow for elements, such as the DRPP Schematic alongside a functionality matrix will be used to report program progress
 
-# Introduction
-In an increasingly interconnected global economy, the need for efficient and inclusive cross-border payment solutions has never been more pressing. The Instant and InclusivePayment Scheme2(IIPS) addresses this need by creating a robust, standardised, and accessible framework for seamless financial transactions across COMESA borders and diverse financial service providers. The proposed solution leverages the power of the Mojaloop open-source platform to establish a comprehensive network. This network connects DigitalFinancial Service Providers (DFSPs), financial institutions, and end-users, facilitating real-time,low-cost transactions regardless of their geographical location or preferred payment method(end-to-end). Scale can be accelerated by supporting IIPS compliant national payment schemes(NPS) to onboard their entire jurisdiction, thus ensuring jurisdictional sovereignty and compliance. Where the NPS is not yet IIPS compliant, an emulated NPS (aka Emulated NIIPS) will be used to provide the optimal scaling solution.By streamlining onboarding processes, ensuring regulatory compliance, and prioritising interoperability, the proposed IIPS solution empowers DFSPs in the COMESA region to expand their reach, enhance their service offerings, and foster financial inclusion for millions of individuals and businesses. This interconnected ecosystem not only simplifies cross-border transactions but also paves the way for greater economic connectivity, trade, and financial empowerment on a global scale
+## Introduction
+In an increasingly interconnected global economy, the need for efficient and inclusive cross-border payment solutions has never been more pressing. The Instant and Inclusive Payment Scheme2(IIPS) addresses this need by creating a robust, standardized, and accessible framework for seamless financial transactions across COMESA borders and diverse financial service providers. The proposed solution leverages the power of the Mojaloop open-source platform to establish a comprehensive network. This network connects Digital Financial Service Providers (DFSPs), financial institutions, and end-users, facilitating real-time,low-cost transactions regardless of their geographical location or preferred payment method(end-to-end). Scale can be accelerated by supporting IIPS compliant national payment schemes(NPS) to onboard their entire jurisdiction, thus ensuring jurisdictional sovereignty and compliance. Where the NPS is not yet IIPS compliant, an emulated NPS (aka Emulated NIIPS) will be used to provide the optimal scaling solution.By streamlining onboarding processes, ensuring regulatory compliance, and prioritising interoperability, the proposed IIPS solution empowers DFSPs in the COMESA region to expand their reach, enhance their service offerings, and foster financial inclusion for millions of individuals and businesses. This interconnected ecosystem not only simplifies cross-border transactions but also paves the way for greater economic connectivity, trade, and financial empowerment on a global scale
 
 As considering the
 
-# The objectives and expected outcomes 
+## The objectives and expected outcomes 
 - Design and develop a comprehensive COMESA Digital Retail Payments platform with aFraud Management Module that aligns with the specified key system requirements
     - We strive to offer a trusted cross-border digital payment solution for a real-time digital payments platform based on Mojaloop integrated with a Fraud and Risk Management Module based on Tazama that enables seamless cross-border transactions between MSMEs across the eight (8) pilot COMESA member states. The design and local skill capacity-building program will extend this to all 21 COMESA member states.
-- The selected firm(s) shall be responsible for designing and implementing the COMESA Digital Retail Payments Platform in eight (8) COMESA Member States, with its key system features and functionalities in a production environment in line with Level One DesignPrinciples.
+- The selected firm(s) shall be responsible for designing and implementing the COMESA Digital Retail Payments Platform in eight (8) COMESA Member States, with its key system features and functionalities in a production environment in line with Level One Design Principles.
     - We aim to engage four DFSPs in each of the eight countries to participate, with local technical and operational teams trained through hands-on collaboration with INFITX and CBC, ensuring adherence to best practices for financial inclusion
 - The firm(s) shall ensure robust fraud detection and enhance security for cross-border payments by identifying scams, detecting money laundering, and preventing terrorist financing activities
      - Collaborating with the contracted organisation for the FRMS Component while leveraging on Tazama, we will strive to strengthen the DRPP to create a highly secure payment landscape,effectively mitigating the risks of fraud, money laundering, and terrorism financing. Our approach prioritises domestic data sovereignty and minimal data sharing, ensuring compliance and trust. With our track record of successful DFSP collaborations, we guarantee a scalable and reliable system.
 - The firm(s) shall conduct rigorous testing and analysis of the payment platform to assure its performance, security measures, efficiency, and scalability across cross-border payment platforms to ensure its reliability and resilience.2
 Our unique advantage lies in building and rigorously testing production-ready platform son-prem, ensuring proven reliability and scalability for cross-border transactions through comprehensive performance and capacity analysis
 - The firm(s) shall collaborate with a nominated service operator or CBC/CCH team to enable the handover of a live service to that operator, supported by knowledge transfer to develop the appropriate capacity in the operator’s staff.
-     - Leveraging our extensive experience, as demonstrated by previous assignments in platform development and management and engagement with Hub operators and system integrators,we are committed to a seamless transition of the COMESA platform to the designated CBCservice operators, including detailed training to empower staff for autonomous operation and management.
+     - Leveraging our extensive experience, as demonstrated by previous assignments in platform development and management and engagement with Hub operators and system integrators,we are committed to a seamless transition of the COMESA platform to the designated CBC service operators, including detailed training to empower staff for autonomous operation and management.
 - The firm(s) shall develop a ‘Post-Implementation Support and Maintenance Plan’ that maximises independence and does not require the implementing consultants to be involved in future maintenance. Support and maintenance should be localised
     - Our support model is designed for sustainability, promoting long-term platform independence while empowering local teams for ongoing maintenance and support, as demonstrated through our commitments to open-source software and building community capacity.
 
-# Scope
+## Scope
 The platform being developed for COMESA is a cutting-edge Cross-Border Digital Retail Payments Scheme aimed at revolutionizing financial transactions within the COMESA region. This initiative focuses on enhancing financial inclusion, economic growth, and security through seamless digital payment solutions.
 - Design and development of the COMESA DRPP based on the Mojaloop open-source framework.
 - Integration with existing financial institutions, mobile network operators, and other relevant stakeholders.
 - Deployment of the platform in eight pilot COMESA member states.To start, 8 countries will be part of the regional hub: Egypt, Ethiopia, Rwanda, Kenya, Malawi, Mauritius, Uganda, and Zambia
 - Comprehensive training and knowledge transfer to local teams and system integrators.
 
-# Key Stakeholders
+## Key Stakeholders
 - Common Market for Eastern and Southern Africa(COMESA): As the regional economic community overseeing the project, COMESA plays a crucial role in providing strategic direction, governance, and support for the initiative. The COMESA Business
 Council (CBC)l and its DFI 4 SME program will oversee the implementation of the Digital Retail Payment Platform.
 - Some Member States have domestic switches operated under the guidance of their local regulator and central bank.
@@ -50,8 +50,8 @@ The platform being developed for COMESA is a cutting-edge Cross-Border Digital R
 - Mojaloop Foundation: oversee the product management of the solution ensuring that the algorithms meet the inclusivity objectives.
 - Tazama Project (Linux Foundation): oversee the product management of the FRMS module.
 
-# The Solution
-![Fig 2. Digital Retail Payment Platform (DRPP) Schematic](/md-docs/images/TheSolution.png)
+## The Solution
+![Fig 2. Digital Retail Payment Platform (DRPP) Schematic](/md-docs/images/Solution.png)
 
 >Fig 2. Digital Retail Payment Platform (DRPP) Schematic
 
@@ -91,10 +91,10 @@ To minimise dependencies between parallel streams the following implementation s
 - The harmonisation of the API content and messaging standards of jurisdictional schemes with the regional platform, specifically using ISO 20022 for IIPS messages.
 - Uncontested settlements are enabled through validation of message integrity and security and alignment to IIPS ISO 20022 standardisation.
 
-# Realising the Solution
+## Realising the Solution
 ![](/md-docs/images/RealisingTheSolution.png)
 
-# Core Components
+## Core Components
 - Country-Level Jurisdictional Switches: These represent the national payment infrastructures of participating countries. They serve as switches for domestic transactions and gateways to connect to the broader network.
 - Mojaloop: This open-source software platform forms the backbone of the regional system. It enables real-time, low-value transactions across different payment service providers and financial institutions. Mojaloop's API-driven architecture promotes interoperability and ease of integration.
 - ISO 20022 for IIPS: This international messaging standard optimised for IIPS real-time transactions ensures standardised communication between financial institutions and systems. It facilitates seamless data exchange and transaction processing, regardless of the underlying technologies or protocols.
@@ -102,15 +102,15 @@ To minimise dependencies between parallel streams the following implementation s
 - TAZAMA: An Open Source Real-Time Transaction Monitoring Software built to support any Financial Services Provider (FSP) that requires Transaction Monitoring for Fraud and Money Laundering detection.
 - Payment Manager: Comprehensive software solution designed to streamline and secure the integration of Digital Financial Service Providers (DFSPs) with Mojaloop Real-Time Payment (RTP) systems. It acts as a bridge between your core banking system and the Mojaloop Switch, simplifying complex processes and ensuring robust security.
 
-# Connectors and Adapters
+## Connectors and Adapters
 - Mojaloop Connector: This interface facilitates communication between the Mojaloop platform and external systems like core banking platforms or payment gateways. It ensures seamless integration and data exchange, allowing financial institutions to connect to the Mojaloop network. In the first instance, we expect this to use the existing Mojaloop FSPIOP protocol, but this will be replaced by a protocol using ISO 20022 definitions when it is agreed by all participants.
 - Core Connector: This generic connector serves as a bridge between the Mojaloop platform and various financial institutions' core banking systems. It enables the exchange of transaction data, account information, and other relevant details, ensuring seamless integration.
 
-# Additional Elements
+## Additional Elements
 - FI Backend: This represents the backend systems of various financial institutions participating in the network. It includes core banking systems, transaction processing engines, and other infrastructure necessary for providing financial services.
 - API Gateway (Enterprise Service Bus): This component provides a centralised point of integration for different applications and services. It helps manage message routing, protocol translation, and security, ensuring efficient communication between various components of the system.
 
-# How It Works
+## How It Works
 ![](/md-docs/images/HowItWorks.png)
 The existing national hub will connect to the regional hub via a mapping layer that will manage the format conversion.
 Note: Today, none of the national IPS are IIPS.
@@ -122,8 +122,8 @@ If there is a non-IIPS compliant jurisdictional scheme, the DFSPs will be connec
 
 Through an intermediate switch within the Administrative Boundary of the DRPP (or emulated NIIPS) which is used to simulate international gateway features of a jurisdictional scheme.
 
-# A
-# Country Level DFSP 
+## A
+## Country Level DFSP 
 - Initiation: A customer initiates a payment or transfer using their preferred digital financial service (e.g., mobile money wallet, bank app) provided by their local DFSP.
 - Customer Authentication and Authorization: The DFSP's systems authenticate the customer's identity and authorise the transaction based on available funds and security protocols.
 - Message Formatting: Using the participation tools, the DFSP formats the transaction details into an ISO 20022 message, ensuring standardised communication across the network.
@@ -131,29 +131,29 @@ Through an intermediate switch within the Administrative Boundary of the DRPP (o
 - Transmission: The DFSP transmits the ISO 20022 message to the designated scheme, acting as an intermediary between the DFSP and the broader network.
 - Currency Conversion: where currency conversion is required, the DFSP will manage the provision and execution of currency conversion.
 
-# Emulated National Inclusive Instant Payement Scheme (emulated NIIPS)
+## Emulated National Inclusive Instant Payement Scheme (emulated NIIPS)
 - Message Reception and Validation: The intermediary scheme receives the ISO 20022 message from the DFSP and validates its integrity and adherence to standards.
 - Transaction Routing: The intermediary scheme determines the appropriate destination for the transaction based on the recipient's information and the routing rules configured in the Mojaloop system.
 - Security and Risk Management: The intermediary scheme may also perform additional security checks and risk assessments to prevent fraud and ensure the safety of transactions.
 - Forwarding: The intermediary scheme forwards the validated transaction message to the designated proxy.
 
-# Proxy
+## Proxy
 - Message Reception and Validation: The proxy receives the transaction message from the intermediary scheme and performs its own validation checks.
 - Routing to Regional Switch: The proxy switch forwards the processed transaction message to the regional switch responsible for connecting different countries and their respective financial ecosystems.
 
-# Regional Switch
+## Regional Switch
 - Message Reception and Validation: The regional switch receives the transaction message from the proxy switch and conducts further validation checks.
 - Clearing and Settlement: The regional switch coordinates the clearing and settlement process, ensuring that funds are transferred between the relevant financial institutions securely and efficiently. This may involve interaction with local clearinghouses or settlement systems.
 - Status Updates: The regional switch sends status updates back to the proxy, which then relays the information to the intermediary scheme and ultimately to the originating DFSP.
 - Completion: Upon successful clearing and settlement, the transaction is considered complete, and the recipient's account is credited with the funds.
 
-# Interconnectedness and Benefits
+## Interconnectedness and Benefits
 
 The interconnectedness of these components creates a robust and efficient payment ecosystem. The use of standardised messaging (ISO 20022 for IIPS) and open-source software (Mojaloop) promotes interoperability, allowing different financial service providers to seamlessly connect and transact. This fosters financial inclusion by enabling individuals and businesses in underserved areas to access a wider range of financial services, regardless of their chosen provider or location.
 
 The system's real-time processing capabilities and efficient clearing and settlement processes ensure fast and secure transactions, benefiting both consumers and businesses. Additionally, the integration of FXP facilitates cross-border payments, enabling greater economic connectivity and facilitating international trade and remittances.
 
-# GLOSSARY
+## GLOSSARY
 This section introduces specific terminology and concepts that may be new within the CBC DFI program's context. It is designed not to replicate the existing CBC DFI acronyms and definitions but to serve as a guide to the open-source programs and initiatives mentioned throughout our bid document. This approach ensures clarity for the DFI Phase III initiative, emphasising our commitment to an open solution framework where product enhancements occur within a transparent, open-source ecosystem.
 
 - SDG	1,5,
