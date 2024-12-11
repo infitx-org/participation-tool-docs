@@ -4,24 +4,24 @@ title: Home
 #heroImage: https://www.infitx.com/wp-content/uploads/2022/11/INFITX-Name-and-Text-Cropped--1024x344.png
 
 actions:
-  - text: DRPP Introduction
-    link: /md-docs/DRPPOverview.md
-    type: primary
-
   - text: Getting Started
     link: /md-docs/Introduction
+    type: primary
+
+  - text: DRPP Introduction
+    link: /md-docs/DRPPOverview.md
     type: secondary
 
 features:
-  - title: Management
+  - title: Centralized Knowledge
     link: /md-docs/BusinessComercial
-    details: Documentation about the value proposition of the project, the commercial viability of the integration. The intended audience is the business leadership responsible for strategic and commercial decisions. 
-  - title: Financial Operations
+    details: Access all System Integrator resources in one place to streamline your integration journey. 
+  - title: Step-by-Step Guidance
     link: /md-docs/BusinessOperations
-    details: Documentation about financial operations of the integration. The target audience is DFSP staff who are focused on how the integration will work from an accounting point of view. They will be interested in the accounting schema, integration rules, settlement and fees implementation. 
-  - title: Technical Operations
-    link: /md-docs/TechnicalIntegration
-    details: Documentation about how to technically integrate the DFSP by implementing a core connection to the DFSP sandbox and also how to prepare for production. This documentation has information to be used by developers.
+    details: Follow detailed steps to begin and successfully complete your Mojaloop integration process. 
+  - title: Financial Operations  
+    link: /md-docs/BusinessOperations  
+    details: Resources on accounting schemas, settlement rules, and fee implementation for financial staff overseeing integration.  
 
 footer:  THIS SITE IS A WORK IN PROGRESS AND WILL BE UPDATED REGULARLY
 ---
