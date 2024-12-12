@@ -52,7 +52,7 @@ export default defineUserConfig({
         },
         {
           text: 'Business Operations',
-          link: '/md-docs/LiquidityDesign.md'
+          link: '/md-docs/BusinessOperations.md'
         },
         {
           text: 'Technical Integration Guide',
