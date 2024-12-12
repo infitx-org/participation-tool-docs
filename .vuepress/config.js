@@ -25,8 +25,8 @@ export default defineUserConfig({
         link: '/md-docs/DRPPOverview',
       },
       {
-        text: 'Financial Operations',
-        link: '/md-docs/LiquidityDesign',
+        text: 'Business Operations',
+        link: '/md-docs/BusinessOperations',
       },
       {
         text: 'Technical Integration Guide',
