@@ -26,9 +26,11 @@ features:
 footer:  THIS SITE IS A WORK IN PROGRESS AND WILL BE UPDATED REGULARLY
 ---
 # Introduction
-The goal of this SI toolkit is to provide documentation to support integration of an organization to an instant and inclusive payment system based on Mojaloop. Here you will find resources designed for specific stakeholders who would be interested in an integration both from the business and technical perspective. As such the documentation has been separated into different separate sections that each address a specific issues that are specific to the various stake holder groups involved in a typical integration. From business management, business operations , technical integrators to the technical operations.
+Welcome to the System Integrator (SI) Toolkit, your essential resource for integrating with an instant and inclusive payment system powered by Mojaloop. Designed for system integrators collaborating with stakeholders in Digital Financial Service Providers (DFSPs), this toolkit provides comprehensive guidance for successful implementation.
 
-Use the navigation bar at the top to navigate to the section of this documentation you would like to read.
+The documentation is organized into clear sections, covering key aspects such as business strategy, operational workflows, and technical integration. Whether you are addressing business requirements, ensuring operational readiness, or implementing technical connections, this toolkit equips you with the information and tools you need.
+
+Use the navigation bar at the top to quickly access the section most relevant to your integration tasks.
 
 
 [default-theme-home]: https://www.infitx.com/wp-content/uploads/2022/11/cropped-INFITX-Icon-White-Cropped-270x270.png#home-page
