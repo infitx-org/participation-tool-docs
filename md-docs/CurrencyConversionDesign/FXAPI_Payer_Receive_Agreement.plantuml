@@ -1,0 +1,271 @@
+@startuml
+
+!$simplified = false
+!$shortCutSingleFXP = false
+!$hideSwitchDetail = false
+!$senderName = "Keeya"
+!$receiverName = "Yaro"
+!$payerCurrency = "BWP"
+!$payeeCurrency = "TZS"
+!$payerFSPID = "PayerFSP"
+!$payeeFSPID = "PayeeFSP"
+!$payerMSISDN = "26787654321"
+!$payeeMSISDN = "2551234567890"
+!$payeeReceiveAmount = "50000"
+!$payeeFee = "4000"
+!$targetAmount = "54000"
+!$fxpChargesSource = "33"
+!$fxpChargesTarget = "6000"
+!$fxpSourceAmount = "330"
+!$fxpTargetAmount = "54000"
+!$totalChargesSourceCurrency = "55"
+
+
+title Cross Currency Payment using Mojaloop FX APIs POC\nPayer DFSP requests conversion with RECEIVE amount
+actor "$senderName" as A1
+box "Payer DFSP" #LightBlue  
+  participant "Payer CBS" as PayerCBS
+  participant "Payer\nMojaloop\nConnector" as D1
+end box
+
+participant "Mojaloop Switch" as S1
+
+box "Discovery Service" #LightYellow
+  participant "ALS Oracle" as ALS
+end box
+
+box "FX provider"  
+  participant "FXP\nConnector" as FXP
+  participant "Backend FX API" as FXPBackend
+end box
+
+box "Payee DFSP" #LightBlue   
+  participant "Payee\nMojaloop\nConnector" as D2
+  participant "Payee CBS" as PayeeCBS
+end box
+
+actor "$receiverName" as A2
+autonumber
+
+== Agreement Phase ==
+D1->>S1:Please quote for a payment of $payeeReceiveAmount $payeeCurrency.\n**POST /quotes**
+note left
+ This is a standard Mojaloop quote.
+ No development required
+end note
+!if ($simplified != true)
+note over D1
+    POST /quotes
+    {
+        "quoteId": "382987a8-75ce-4037-b500-c475e08c1727"
+        ,"transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
+        , "payee": {
+            "partyIdInfo": {
+            "partyIdType": "MSISDN"
+            , "partyIdentifier": "$payeeMSISDN"
+            }
+        }
+        , "payer": {
+            "partyIdInfo": {
+                "partyIdType": "MSISDN"
+                , "partyIdentifier": "$payerMSISDN"
+            }
+        },
+        "amountType": **"RECEIVE"**
+        , "amount": {
+            "currency": "$payeeCurrency"
+            , "amount": "$payeeReceiveAmount"
+        }
+        , "validity": "2021-08-25T14:17:09.663+01:00"
+    }
+end note
+!endif
+!if ($simplified != true)
+S1-->>D1:202 I'll get back to you
+!endif
+deactivate D1
+S1->>D2:**POST /quotes**
+activate D2
+!if ($simplified != true)
+D2-->>S1:202 I'll get back to you
+deactivate S1
+!endif
+D2->D2: Let me get a quote to do the conversion
+!if ($shortCutSingleFXP != true)
+
+
+D2->D2:OK, so I will charge $payeeFee $payeeCurrency for this.\nNow I create terms of the transfer and sign the transaction object
+D2->>S1:Here's the signed quote
+note over D2
+    **put /quotes/382987a8-75ce-4037-b500-c475e08c1727**
+
+    {
+        "transferAmount": {
+            "currency": "$payeeCurrency"
+            , "amount": "$targetAmount"
+        }
+        , "payeeReceiveAmount": {
+            "currency": "$payeeCurrency"
+            , "amount": "$payeeReceiveAmount"
+        },
+        "payeeFspFee": {
+            "currency": "$payeeCurrency"
+            , "amount": "$payeeFee"
+        }
+        , "expiration": "2021-08-25T14:17:09.663+01:00
+        , "transaction": {
+            , "transactionId": "d9ce59d4-3598-4396-8630-581bb0551451"
+            , "quoteId": "382987a8-75ce-4037-b500-c475e08c1727"
+            , "payee": {
+                "fspId": "$payeeFSPID"
+                , "partyIdInfo": {
+                    "partyIdType": "MSISDN"
+                    , "partyIdentifier": "$payeeMSISDN"
+                }
+            }
+            , "payer": {
+                "fspId": "$payerFSPID"
+                , "partyIdInfo": {
+                    "partyIdType": "MSISDN"
+                    , "partyIdentifier": "$payerMSISDN"
+                }
+            }
+            , "amount": {
+                "currency": "$payeeCurrency"
+                "amount": "$targetAmount"
+            }
+            , "payeeReceiveAmount": {
+                "currency": "$payeeCurrency"
+                , "amount": "$payeeReceiveAmount"
+            }
+            , "converter": "PAYER"
+        }
+        , "condition": "BfNFPRgfKF8Ke9kpoNAagmcI4/Hya5o/rq9/fq97ZiA="
+    }
+
+end note
+activate S1
+!if ($simplified != true)
+S1-->>D2:200 Gotcha
+!endif
+deactivate D2
+S1->>D1:Here's the signed quote\n**PUT /quotes/382987a8-75ce-4037-b500-c475e08c1727**
+activate D1
+!if ($simplified != true)
+D1-->>S1:200 Gotcha
+!endif
+deactivate S1
+D1->D1:OK, I can see that there are going to be $payeeFee $payeeCurrency in charges and I need send $targetAmount $payeeCurrency to make this transfer
+
+group Currency Conversion 
+D1->D1:Now I need to find out what the exchange rate is
+deactivate S1
+D1->D1:I'll ask FDH FX to perform my conversion
+
+!if ($shortCutSingleFXP != true)
+D1->>S1:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.
+!else
+D1->>FXP:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.
+!endif
+note over D1
+    **post /fxQuotes**
+    {
+    "conversionRequestId": "828cc75f-1654-415e-8fcd-df76cc9329b9"
+    , "conversionTerms": {
+        "conversionId": "581f68ef-b54f-416f-9161-ac34e889a84b",
+        , "counterPartyFsp": "FDH_FX"
+        , "amountType": "RECEIVE"
+        , "sourceAmount": {
+            "currency": "$payerCurrency"
+        }
+        , "targetAmount": {
+            "currency": "$payeeCurrency"
+            , "amount": "$targetAmount"
+        }
+        , "validity": "2021-08-25T14:17:09.663+01:00"
+    }
+    }
+
+end note
+!if ($shortCutSingleFXP != true)
+activate S1
+!if ($simplified != true)
+S1-->>D1:202 I'll get back to you
+!endif
+deactivate D1
+S1->>FXP:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.\n**POST /fxQuote**
+activate FXP
+!if ($simplified != true)
+FXP-->>S1:202 I'll get back to you
+!endif
+deactivate S1
+!else
+!endif
+FXP->FXPBackend:Lookup FX rate
+FXPBackend-->FXP:Return FX rate
+' !if ($shortCutSingleFXP != true)
+
+note over FXP
+    I will add a $fxpChargesSource $payerCurrency fee for undertaking the conversion.
+    Now I'll set an expiry time, sign the quotation object,
+    create an ILP prepare packet and return it in the intermediary object.
+
+    NOTE: the ILP prepare packet contains the following items, all encoded:
+    - The amount being sent (i.e. in the source currency)
+    - An expiry time
+    - The condition
+    - The name of the FXP
+    - The content of the conversion terms
+
+    ** PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
+    {
+        "condition": "bdbcf517cfc7e474392935781cc14043602e53dc2e8e8452826c5241dfd5e7ab"
+        , "conversionTerms": {
+            "conversionId": "581f68ef-b54f-416f-9161-ac34e889a84b"
+            , "initiatingFsp": "$payerFSPID"
+            "sourceAmount": {
+                "currency": "$payerCurrency",
+                "amount": "$fxpSourceAmount"
+            }
+            , "targetAmount": {
+                "currency": "$payeeCurrency"",
+                "amount": "$fxpTargetAmount"
+            }
+            , "charges": [
+                {
+                    "chargeType": "Conversion fee"
+                    , "sourceAmount": {
+                        "currency": "$payerCurrency"
+                        , "amount": "$fxpChargesSource"
+                    }
+                    , "targetAmount": {
+                        "currency": "$payeeCurrency"
+                        , "amount": "$fxpChargesTarget"
+                    }
+                }
+            ]
+        , "validity": "2021-08-25T14:17:09.663+01:00"
+        }
+    }
+end note
+!if ($shortCutSingleFXP != true)
+FXP->>S1:Here's the signed conversion object
+activate S1
+!if ($simplified != true)
+S1-->>FXP:200 Gotcha
+!endif
+deactivate FXP
+S1->>D1:Here's the signed conversion object\n**PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
+activate D1
+!if ($simplified != true)
+D1-->>S1:Gotcha
+!endif
+deactivate S1
+!else
+FXP-->>D1:Here's the signed conversion object\n**PUT /fxQuotes/828cc75f-1654-415e-8fcd-df76cc9329b9**
+activate D1
+!endif
+
+end group
+
+@enduml
