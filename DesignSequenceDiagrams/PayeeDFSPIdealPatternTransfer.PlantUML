@@ -29,14 +29,15 @@ end note
     Switch->MC: **POST** /transfers
     MC->CC: Create & Reserve Transfer\n **POST** /transfers 
     activate CC #DarkBlue
-    CC->CBS: Reserve float funds 
+    CC->CBS: Reserve transfer into payee account 
 note right 
-  Replace with CBS API
-  to reserve funds 
-  in the float account 
-  from which the funds 
-  will be moved to the 
-  Payees account
+  The reserve transfer into the 
+  payee's account ensures that 
+  all necessary account validations 
+  are completed to confirm there 
+  are no impediments to 
+  successfully completing 
+  the transfer.
 end note
     CBS-->CC: response (homeTransactionId)
     CC-->MC: response (homeTransactionId)

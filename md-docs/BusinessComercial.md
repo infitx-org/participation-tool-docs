@@ -34,66 +34,9 @@ digital payments, fraud management, and regulatory compliance, strengthening
 capabilities and competitiveness.
 
 ## Risks 
-<table>
-    <tr>
-        <th>Risks </th>
-        <th> Mitigation</th>
-    </tr>
-    <tr>
-        <td><strong>Technical Complexity:</strong> The integration of
-        diverse systems and technologies can be
-        complex and challenging. Integrators
-        need to possess strong technical
-        expertise and experience in integrating
-        payment systems, APIs and security
-        protocols.</td>
-        <td>
-        Thoroughly assess technical
-        requirements, conduct comprehensive
-        testing, and leverage the support and
-        guidance provided by INFITX and the
-        Mojaloop community.</td>
-    </tr>
-    <tr>
-        <td><strong>Regulatory Compliance:</strong> Adhering to
-        various regulatory requirements across
-        COMESA member states can be a
-        daunting task. There is a need to stay
-        updated on the evolving regulatory
-        landscape and ensure solutions comply
-        with relevant standards.</td>
-        <td>
-        Engage with regulatory bodies early in
-        the process, seek legal counsel if
-        needed, and utilise compliance tools
-        and resources provided by the DRPP.</td>
-    </tr>
-    <tr>
-        <td><strong>Security Risks</strong> The digital payments
-        landscape is prone to security threats,
-        such as fraud, data breaches, and
-        cyberattacks. We need to implement
-        robust security measures to protect
-        sensitive data and ensure the integrity of
-        transactions.</td>
-        <td>
-        Adopt industry best practices for
-        security, implement multi-factor
-        authentication, encryption, and fraud
-        detection mechanisms, and conduct
-        regular security audits.</td>
-    </tr>
-    <tr>
-        <td><strong>Competition:</strong> The DRPP market may
-        attract numerous actors, leading to
-        increased competition. Hence, we need
-        to differentiate through expertise,
-        quality of service, and innovative
-        solutions.</td>
-        <td>
-        Focus on niche areas, develop
-        specialised expertise, offer value-added
-        services, and build strong relationships
-        with clients and partners.</td>
-    </tr>
-</table>
+|Risks | Mitigation |
+|-- |-- |
+| **Technical Complexity:** The integration of diverse systems and technologies can be complex and challenging. Integrators need to possess strong technical expertise and experience in integrating payment systems, APIs and security protocols.| Thoroughly assess technical requirements, conduct comprehensive testing, and leverage the support and guidance provided by INFITX and the Mojaloop community.|
+| **Regulatory Compliance:** Adhering to various regulatory requirements across COMESA member states can be a daunting task. There is a need to stay updated on the evolving regulatory landscape and ensure solutions comply with relevant standards. | Engage with regulatory bodies early in the process, seek legal counsel if needed, and utilise compliance tools and resources provided by the DRPP.|
+| **Security Risks** The digital payments landscape is prone to security threats, such as fraud, data breaches, and cyberattacks. We need to implement robust security measures to protect sensitive data and ensure the integrity of transactions.| Adopt industry best practices for security, implement multi-factor authentication, encryption, and fraud detection mechanisms, and conduct regular security audits.|
+| **Competition:** The DRPP market may attract numerous actors, leading to increased competition. Hence, we need to differentiate through expertise, quality of service, and innovative solutions.| Focus on niche areas, develop specialised expertise, offer value-added services, and build strong relationships with clients and partners.|
