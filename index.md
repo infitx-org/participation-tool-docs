@@ -8,7 +8,7 @@ actions:
     link: /md-docs/Introduction
     type: primary
 
-  - text: DRPP Introduction
+  - text: SI Toolkit Introduction
     link: /md-docs/DRPPOverview.md
     type: secondary
 
