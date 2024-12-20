@@ -38,7 +38,7 @@ Customer support channels available for queries or issues that arise during the 
 - Engaging with visual confirmations and digital receipts to verify and record transactions.
 
 ## 7. System Actions
-- iscovery of account details through Mojaloop’s directory services.
+- Discovery of account details through Mojaloop’s directory services.
 
 - Processing and routing of transactions between financial institutions.
 
