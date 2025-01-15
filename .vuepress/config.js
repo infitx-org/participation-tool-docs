@@ -31,6 +31,14 @@ export default defineUserConfig({
       {
         text: 'Technical Integration Guide',
         link: '/md-docs/TechnicalIntegration',
+      },
+      {
+        text: 'Technical Reference',
+        link: '/md-docs/Service',
+      },
+      {
+        text: 'Scheme Designs',
+        link: '/md-docs/CurrencyConversionDesign/Cross-border (FX) Design',
       }
     ],
     sidebar: {
