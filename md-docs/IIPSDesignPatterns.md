@@ -1,12 +1,3 @@
-<div style="display: flex; justify-content: space-between;">
-    <img src="./images/cbc_logo.jpg" >
-    <img src="./images/blank.png" style="width: 20%" >
-   <img src="./images/mojaloop-foundation.png" height = 40>
-    <img src="./images/blank.png" style="width: 20%" >
-    <img src="./images/INFITX-TECH_LOGO.png" >
-</div>
-
-
 
 # Inclusive Instant Payment System (IIPS) Integration
 ## Introduction
@@ -109,7 +100,7 @@ The terms of the transfer are then returned.
 ### Payee DFSP Transfer Integration Pattern
 The ideal pattern for completing a transfer as Payee DFSP includes a reservation step that aligns with the Transfer phase, and then a commit phase that aligns with the notification that the transfer has been completed. Please see the details below.
 
-![Payee DFSP Ideal Pattern Transfer](./images/PayeeDFSPIdealPatternTransfer.png)
+![Payee DFSP Ideal Pattern Transfer](./images/PayeeDFSPIdealPatternTransfer.svg)
 
 <div style="page-break-after: always"></div>
 
