@@ -73,6 +73,7 @@ export default defineUserConfig({
             // 'CoreConnectorTemplate.md',
             'CoreConnectorTestingHarness.md',
             'CoreConnectorTemplateDocs.md',
+            'ISO20022AndMerchantPayments.md'
           ]
         },
         {

@@ -23,7 +23,7 @@ features:
     link: /md-docs/BusinessOperations  
     details: Resources on accounting schemas, settlement rules, and fee implementation for financial staff overseeing integration.  
 
-footer:  THIS SITE IS A WORK IN PROGRESS AND WILL BE UPDATED REGULARLY
+footer:  v1.1 WIP
 ---
 # Introduction
 Welcome to the System Integrator (SI) Toolkit, your essential resource for integrating with an instant and inclusive payment system powered by Mojaloop. Designed for system integrators collaborating with stakeholders in Digital Financial Service Providers (DFSPs), this toolkit provides comprehensive guidance for successful implementation.

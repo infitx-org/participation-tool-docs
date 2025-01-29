@@ -1,5 +1,3 @@
-
-
 # Core Connector template
 To communicate with Payment Manager or Mojaloop Connector, DFSPs are required to implement Core Connector in alignment with their backend technology so that their backend can talk to the Payment Manager API. To help API implementation efforts, DFSPs are provided with:
 - the specification of the Mojaloop Connector API
