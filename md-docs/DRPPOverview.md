@@ -95,16 +95,16 @@ The DRPP supports two payment use cases. They include
 #### Customer Journey
 There are 2 use cases the DRPP intends to support and offer to customers. P2P and P2B. Here is a generic customer journey.
 
-1 Customer Opens application or dials USSD code.
-2 Customer enters payee identifier
-3 Customer enters amount to send
-4 Customer initiates the transfer by submitting the data
-5 Application responds with transfer terms and name of the payee.
-6 Customer reviews payment terms and payee details
-7 Customer proceeds to abort or approve the transfer
-8 If the customer approves, the funds are deducted from their account.
+1. Customer Opens application or dials USSD code.
+2. Customer enters payee identifier
+3. Customer enters amount to send
+4. Customer initiates the transfer by submitting the data
+5. Application responds with transfer terms and name of the payee.
+6. Customer reviews payment terms and payee details
+7. Customer proceeds to abort or approve the transfer
+8. If the customer approves, the funds are deducted from their account.
 
-Step 4 represents the initial step of triggering the payment and step 7 represents the Confirm Send Money Step The approaches provided in the Confirm Send Money Approaches section address options for handling events from step 7 onwards.
+Step `4` represents the initial step of triggering the payment and step `7` represents the Confirm Send Money Step The approaches provided in the Confirm Send Money Approaches section address options for handling events from step 7 onwards.
 
 #### Initial Step
 The send-money customer journey begins when the customer expresses interest to send funds by specifying details about the payee and amount to send. This initiation step applies to both approaches going to be presented in this documentation.
