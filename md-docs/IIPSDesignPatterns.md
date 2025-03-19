@@ -35,14 +35,14 @@ Secondly, currency conversion terms should be validated. The foreign exchange pr
 Thirdly, the transfer terms should be validated. The payee DFSP organization should be validated. I.e. check to ensure that this agreement is being made with the organization that you expect. The transfer amount should be checked. This is the amount that will be deducted from the pre-funded liquidity and ultimately transferred to the FXP and Payee organization. The fees charged should be checked. I.e. to ensure that they are reasonable and within expectations.
 The integration can now return this validated information back to the core banking system to ask for confirmation of the transfer terms.
 
-![Payer DFSP Consent Integration Pattern](./images/PayerDFSPConsentIntegrationPattern-Consent.png)
+![Payer DFSP Consent Integration Pattern](./images/PayerDFSPConsentIntegrationPattern-Consent.svg)
 
 <div style="page-break-after: always"></div>
 
 ### Executing the Transfer
 The executing the transfer part of this integration pattern begins when the Payer accepts the terms of the transfer. A reservation of the funds in the Payer’s account must be made before transfer is initiated. When notification of the transfer state is received, then the transfer from the Payer’s account should either be  finalized or rolled back based on whether the transfer state is committed or not.
 
-![PayerDFSPConsentIntegrationPattern-Transfer](./images/PayerDFSPConsentIntegrationPattern-Transfer.png)
+![PayerDFSPConsentIntegrationPattern-Transfer](./images/PayerDFSPConsentIntegrationPattern-Transfer.svg)
 
 <div style="page-break-after: always"></div>
 
@@ -52,7 +52,7 @@ The single payer DFSP integration pattern is appropriate if the core-banking sys
 1. How is the conversion rate validated?
 1. How do I judge whether the fees are appropriate, and what checks must be made to validate the transfer amount.
 
-![Payer DFSP Single Integration Api Pattern](./images/PayerDFSPSingleIntegrationApiPattern.png)
+![Payer DFSP Single Integration Api Pattern](./images/PayerDFSPSingleIntegrationApiPattern.svg)
 
 <div style="page-break-after: always"></div>
 
@@ -71,7 +71,7 @@ If the payer DFSP’s customer agrees to the terms of the transfer, then the tra
 ### Payee DFSP Discovery Integration Pattern
 There is a single pattern for building payee DFSP Discovery integrations. 
 
-![Payee DFSP Discovery Pattern](./images/PayeeDFSPDiscoveryPattern.png)
+![Payee DFSP Discovery Pattern](./images/PayeeDFSPDiscoveryPattern.svg)
 
 The function that need to be catered for are:
 1. Validating Supported Scheme Payment Identifiers
@@ -83,7 +83,7 @@ The function that need to be catered for are:
 
 ### Payee DFSP Agreement Integration Pattern
 There is a single pattern for building payee DFSP Agreement integrations. Here it is.
-![Payee DFSP Ideal Pattern Agreement](./images/PayeeDFSPIdealPatternAgreement.png)
+![Payee DFSP Ideal Pattern Agreement](./images/PayeeDFSPIdealPatternAgreement.svg)
 
 The Payer DFSP is required to: 
 1. Validate the Payer DFSP organization.
@@ -107,7 +107,7 @@ The ideal pattern for completing a transfer as Payee DFSP includes a reservation
 ### Payee DFSP Single integration on PATCH notification
 If the DFSPs core banking system only supports a single transfer integration, then this pattern is the preferred integration. The approach only initiates the transfer on the patch notification after the transfer is committed in Mojaloop. This approach has the benefit of only releasing funds after the transaction has been completed and the position ledgers in Mojaloop set to fund the transfer. The disadvantage of this integration pattern is when executing the transfer in the core-banking system fails. If this integration approach is chosen, then effort should go into designing the mitigation steps that must be made if the transfer fails, in order to prevent reconciliation errors. 
 
-![Payee DFSP Single Integration Api On Patch Pattern](./images/PayeeDFSPSingleIntegrationApiOnPatchPattern.png)
+![Payee DFSP Single Integration Api On Patch Pattern](./images/PayeeDFSPSingleIntegrationApiOnPatchPattern.svg)
 
 <div style="page-break-after: always"></div>
 
@@ -117,7 +117,7 @@ This pattern is considered an anti-pattern and where possible avoided. This desi
 
 There is one use case where this integration pattern may be used, and that is if the account involved is a loan and there is no release of funds but rather an acknowledgement of a debt payment. 
 
-![Payee DFSP Single Integration Api On Transfer Pattern](./images/PayeeDFSPSingleIntegrationApiOnTransferPattern.png)
+![Payee DFSP Single Integration Api On Transfer Pattern](./images/PayeeDFSPSingleIntegrationApiOnTransferPattern.svg)
 
 <div style="page-break-after: always"></div>
 
@@ -125,13 +125,13 @@ There is one use case where this integration pattern may be used, and that is if
 
 The foreign exchange provider participant in a Mojaloop scheme, must provide quotes and conversions to support the transfers. This is inline with DFSP integrations with one major different. The conversion is only confirmed after the dependent transfer is committed. This means that the conversion can only be committed after the fxTransfer PATCH-PUT notification.
 ### FX Quote Integration
-![FXP Integration Pattern - Quote](./images/FXPIntegrationPattern-Quote.png)
+![FXP Integration Pattern - Quote](./images/FXPIntegrationPattern-Quote.svg)
 
 The ILP is provided to the DFSP as the digital signed terms of the conversion.
 
 <div style="page-break-after: always"></div>
 
 ### FX Transfer Integration
-![FXP Integration Pattern - Conversion](./images/FXPIntegrationPattern-Conversion.png)
+![FXP Integration Pattern - Conversion](./images/FXPIntegrationPattern-Conversion.svg)
 
 The ILP fulfullment is release to the DFSP to indicate commitment to the transfer. Transfer is only committed to after PATCH-PUT notification is received.

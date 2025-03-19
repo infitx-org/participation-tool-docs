@@ -24,8 +24,14 @@ MC-->>Switch: HTTP 202 Response
 MC->CC: **GET** /parties/{Type}/{Id}
 activate CC #DarkBlue
 CC->CC: Validate Identifier
+note left
+ Validate request
+end note
 CC->CC: Extract account reference
 CC->CBS: **GET** [account lookup]
+note left
+ Validate account
+end note
 note right 
   Replace with CBS API
   to validate payee account
@@ -33,9 +39,15 @@ end note
 CBS-->CC: Response
 CC->CC: Validate account and \nstatus to accept payments
 CC->CBS: **GET** [client information] 
+note left
+ Retrieve Payee Name
+   Minimum identification 
+   details of account holder
+   for Payer to verify account
+end note
 note right 
   Replace with CBS API
-  to retrive client details for account
+  to retrieve client details for account
 end note
 CBS-->CC: Response [Payee's Name]
 CC-->MC: Response

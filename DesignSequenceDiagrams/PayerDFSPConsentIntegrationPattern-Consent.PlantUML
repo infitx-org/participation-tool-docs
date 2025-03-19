@@ -19,11 +19,18 @@ note left CC
   If not already supported by CBS, 
   this API to be defined by System Integrator.
     - include Scheme data requirements
-    - align with Comesa use case    
+    - align with Comesa use case  
+    - include Payer Regulatory requirements
 end note
 CBS->CC: **POST** /sendMoney 
+
 activate CC #DarkBlue
 CC->MC: **POST** /transfers \n(AUTO_ACCEPT_PARTY = **true**, \nAUTO_ACCEPT_QUOTES = **false**)
+note left
+Include Payer Regulatory requirements in 
+   1. Quote extension 
+   2. Transfer extension 
+end note
 MC->>Switch: **GET** /parties/{Type}/{ID}/{SubId}
 Switch-->>MC: HTTP 202 response
 Switch->Switch: Determine Payee DFSP\n using oracle
@@ -60,6 +67,7 @@ note left
  --> transfer amount and currency
  --> fees 
  --> payee DFSP
+ --> regulatory requirements for Payee
 end note
 CC-->CBS: Response
 deactivate CC

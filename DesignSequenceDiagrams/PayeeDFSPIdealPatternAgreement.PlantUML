@@ -24,7 +24,13 @@ MC-->>Switch: HTTP 202 Response
 MC->CC: **POST** /quoterequest
 activate CC #DarkBlue
 CC->CC: Validate Identifier
+note left
+ Validate request
+end note
     CC->CC: Extract account reference
+note left
+ Validate account
+end note
     CC->CC: Validate account and \nstatus to accept payments
     CC->CBS: **GET** [account lookup]
     note right 
@@ -33,20 +39,36 @@ CC->CC: Validate Identifier
     end note
     CBS-->CC: Response
     CC->CBS: **GET** [AML check]
+note left
+ Verify that transfer can be made
+end note
     note right 
     If AML check can be made 
     here then they should.
     Validate that the account can accept 
-    the transfered amount.   
+    the transferred amount.   
     end note
     CBS-->CC: Response
+    CC->CC: Review Regulatory Information \nprovided by Payer DFSP
     CC->CBS: **Calculate Fees**
+note left
+ Build the transfer terms
+end note
     note right 
     Replace with CBS API
         to calculate fees
     end note
     CBS-->CC: Response
     CC->CC: Build the transfer terms
+    CC->CBS: Obtain Unique Customer \nReference
+note left
+ Add Regulatory Information
+end note
+    note right 
+    Replace with CBS API
+        to calculate fees
+    end note
+    CBS-->CC: Response
 
 CC-->MC: Response
 deactivate CC
