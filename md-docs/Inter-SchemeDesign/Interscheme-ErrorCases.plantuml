@@ -1,14 +1,14 @@
-@startuml
+@startuml Interscheme-ErrorCases
 
-title Proxy Patterns - Unhappy Path 
+title Interscheme - Error Cases
 
 participant "Payer DFSP" as payerDFSP
-box "Scheme A"
+box "Scheme A" #LightBlue
     participant "ALS\nScheme A" as schemeA
     participant "Proxy Cache\nScheme A" as pc_A
 end box
 participant "Proxy AB" as xnp
-box "Scheme B"
+box "Scheme B" #d1e0c3
     participant "ALS\nScheme B" as schemeB
     participant "Proxy Cache\nScheme B" as pc_B
 end box
@@ -50,15 +50,15 @@ schemeA-->>payerDFSP: 202 OK
     alt if error in xnp
       xnp -->> schemeA: 503 { ErrorCode: 3100}
 
-'        xnp ->> schemeA: PUT /xxx/{ID}/error
-'        note right
-'        header 
-'        source: Proxy AB
-'        destination: payerDFSP
-'        JWS Signed by Proxy AB  
-'        Error Codes: 3100
-'        end note
-'        schemeA -->> xnp: 200 OK
+        xnp ->> schemeA: PUT /xxx/{ID}/error
+        note right
+        header 
+        source: Proxy AB
+        destination: payerDFSP
+        JWS Signed by Proxy AB  
+        Error Codes: 3100
+        end note
+        schemeA -->> xnp: 200 OK
         schemeA ->> payerDFSP: PUT /xxx/{ID}/error
         payerDFSP -->> schemeA: 200 OK
     end

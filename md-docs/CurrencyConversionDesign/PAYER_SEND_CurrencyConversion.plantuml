@@ -1,8 +1,9 @@
-@startuml
+@startuml PAYER_SEND_CurrencyConversion
 
 !$simplified = true
 !$hideSwitchDetail = false
 !$advancedCoreConnectorFlow = true
+!$senderName = "John"
 !$senderLastName = ""
 !$senderDOB = "1966-06-16"
 !$receiverName = "Yaro"
@@ -27,21 +28,22 @@
 !$fxpTargetAmount = "48000"
 !$totalChargesSourceCurrency = "55"
 !$totalChargesTargetCurrency = "10000"
-!$conversionRequestId = "828cc75f-1654-415e-8fcd-df76cc9329b9"
-!$conversionId = "581f68ef-b54f-416f-9161-ac34e889a84b"
+!$conversionRequestId = "828cc75f1654415e8fcddf76cc"
+!$conversionId = "581f68efb54f416f9161ac34e8"
 !$homeTransactionId = "string"
-!$quoteId = "382987a8-75ce-4037-b500-c475e08c1727"
-!$transactionId = "d9ce59d4-3598-4396-8630-581bb0551451"
+!$quoteId = "382987a875ce4037b500c475e0"
+!$transactionId = "d9ce59d4359843968630581bb0"
 !$quotePayerExpiration = "2021-08-25T14:17:09.663+01:00"
 !$quotePayeeExpiration = "2021-08-25T14:17:09.663+01:00"
-!$commitRequestId = "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
-!$determiningTransferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$transferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$fxCondition = "GRzLaTP7DJ9t4P-a_BA0WA9wzzlsugf00-Tn6kESAfM"
-!$condition = "HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks"
+!$commitRequestId = "77c9d78dc26a44748b3c99b96a"
+!$determiningTransferId = "d9ce59d4359843968630581bb0"
+!$transferId = "d9ce59d4359843968630581bb0"
+!$fxCondition = "GRzLaTP7DJ9t4P-a_B..."
+!$condition = "HOr22-H3AfTDHrSkP..."
 
-title Remittance Transfer using Mojaloop FX APIs POC\nPayer DFSP requests conversion with SEND amount
-actor "$senderName" as A1
+
+title Payer DFSP requests conversion with SEND amount
+' actor "$senderName" as A1
 box "Payer DFSP" #LightBlue  
   participant "Payer DFSP" as D1
 end box
@@ -56,48 +58,22 @@ box "FX provider"
   participant "FXP\nConnector" as FXP
 end box
 
-box "Payee DFSP" #LightBlue   
-  participant "Payee\nMojaloop\nConnector" as D2
-end box
+'box "Payee DFSP" #LightBlue   
+'  participant "Payee\nMojaloop\nConnector" as D2
+'end box
 
-actor "$receiverName" as A2
+'actor "$receiverName" as A2
 autonumber
 
-== Currency conversion ==
 
 D1->D1:Hmmm. I can only send in $payerCurrency.\nI need to get some currency conversion
-
-D1->>S1:What FXPs do you know about?\n**GET /services/FXP**
-activate S1
-!if ($simplified != true)
-S1-->>D1:202 I'll get back to you
-!endif
-deactivate D1
-
-S1->>D1:Here are the available FXPs:FDH FX
-note left of S1
-    PUT /services/FXP
-    {
-        "providers": [
-            "$fxpID"
-        ]
-    }
-end note
-activate D1
-!if ($simplified != true)
-D1-->>S1:200 Gotcha
-!endif
-
-
+D1->D1: Look up the local cached FXPs\n that can provide the conversion
 D1->D1:I'll ask FDH FX to perform my conversion
-
-
-deactivate S1
 
 
 D1->>S1:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.
 
-note right of D1
+note left
     **post /fxQuotes**
     {
         "conversionRequestId": "$conversionRequestId",
@@ -108,27 +84,25 @@ note right of D1
             "amountType": "SEND",
             "sourceAmount": {
                 "currency": "$payerCurrency",
-                "amount": "$payerSendAmount"
-            },
+                "amount": "$payerSendAmount"},
             "targetAmount": {
-                "currency": "$payeeCurrency"
-            },
+                "currency": "$payeeCurrency"},
             "expiration": "2021-08-25T14:17:09.663+01:00"
         }
     }
 end note
 
+deactivate D1
 activate S1
 !if ($simplified != true)
 S1-->>D1:202 I'll get back to you
 !endif
-deactivate D1
 S1->>FXP:Here is the initial version of the transfer.\nPlease quote me for the currency conversion.\n**POST /fxQuote**
+deactivate S1
 activate FXP
 !if ($simplified != true)
 FXP-->>S1:202 I'll get back to you
 !endif
-deactivate S1
 
 note over FXP
     I will add a $fxpChargesSource $payerCurrency fee for undertaking the conversion.
@@ -144,27 +118,21 @@ note right of FXP
             "amountType": "SEND",
             "sourceAmount": {
                 "currency": "$payerCurrency",
-                "amount": "$fxpSourceAmount"
-            },
+                "amount": "$fxpSourceAmount"},
             "targetAmount": {
                 "currency": "$payeeCurrency",
-                "amount": "$fxpTargetAmount"
-            },
+                "amount": "$fxpTargetAmount"},
             "expiration": "2021-08-25T14:17:09.663+01:00"
             "charges": [
                 {
                     "chargeType": "string",
                     "sourceAmount": {
                         "currency": "$payerCurrency",
-                        "amount": "$fxpChargesSource"
-                    },
+                        "amount": "$fxpChargesSource"},
                     "targetAmount": {
                         "currency": "$payeeCurrency",
-                        "amount": "$fxpChargesTarget"
-                    }
-                }
-            ]
-        }
+                        "amount": "$fxpChargesTarget"}
+                }]}
     }
 end note
 !endif
@@ -173,7 +141,7 @@ note over FXP
     Now I'll sign the quotation object,
     create an ILP prepare packet and return it in the intermediary object.
 
-    NOTE: the ILP prepare packet contains the following items, all encoded:
+    **NOTE:** the ILP prepare packet contains the following items, all encoded:
     - The amount being sent (i.e. in the source currency)
     - An expiry time
     - The condition
@@ -181,7 +149,9 @@ note over FXP
     - The content of the conversion terms
 end note
 
-note left of FXP
+
+FXP->>S1:Here's the signed conversion object
+note right
     **PUT /fxQuotes/$conversionRequestId**
     {
         "condition": "$fxCondition",
@@ -192,40 +162,32 @@ note left of FXP
             "amountType": "SEND",
             "sourceAmount": {
                 "currency": "$payerCurrency",
-                "amount": "$fxpSourceAmount"
-            },
+                "amount": "$fxpSourceAmount"},
             "targetAmount": {
                 "currency": "$payeeCurrency",
-                "amount": "$fxpTargetAmount"
-            },
+                "amount": "$fxpTargetAmount"},
             "expiration": "2021-08-25T14:17:09.663+01:00"
             "charges": [
                 {
                     "chargeType": "string",
                     "sourceAmount": {
                         "currency": "$payerCurrency",
-                        "amount": "$fxpChargesSource"
-                    },
+                        "amount": "$fxpChargesSource"},
                     "targetAmount": {
                         "currency": "$payeeCurrency",
-                        "amount": "$fxpChargesTarget"
-                    }
-                }
-            ]
-        }
+                        "amount": "$fxpChargesTarget"}
+                }]}
     }
 end note
-
-FXP->>S1:Here's the signed conversion object
+deactivate FXP
 activate S1
 !if ($simplified != true)
 S1-->>FXP:200 Gotcha
 !endif
-deactivate FXP
 S1->>D1:Here's the signed conversion object\n**PUT /fxQuotes/$conversionRequestId**
+deactivate S1
 activate D1
 !if ($simplified != true)
 D1-->>S1:Gotcha
 !endif
-deactivate S1
 @enduml

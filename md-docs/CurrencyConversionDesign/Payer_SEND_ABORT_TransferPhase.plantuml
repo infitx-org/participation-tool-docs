@@ -1,8 +1,9 @@
-@startuml
+@startuml Payer_SEND_ABORT_TransferPhase
 
 !$simplified = true
 !$hideSwitchDetail = false
 !$advancedCoreConnectorFlow = true
+!$senderName = "John"
 !$senderLastName = ""
 !$senderDOB = "1966-06-16"
 !$receiverName = "Yaro"
@@ -27,20 +28,21 @@
 !$fxpTargetAmount = "48000"
 !$totalChargesSourceCurrency = "55"
 !$totalChargesTargetCurrency = "10000"
-!$conversionRequestId = "828cc75f-1654-415e-8fcd-df76cc9329b9"
-!$conversionId = "581f68ef-b54f-416f-9161-ac34e889a84b"
+!$conversionRequestId = "828cc75f16..."
+!$conversionId = "581f68efb..."
 !$homeTransactionId = "string"
-!$quoteId = "382987a8-75ce-4037-b500-c475e08c1727"
-!$transactionId = "d9ce59d4-3598-4396-8630-581bb0551451"
+!$quoteId = "382987a875..."
+!$transactionId = "d9ce59d435..."
 !$quotePayerExpiration = "2021-08-25T14:17:09.663+01:00"
 !$quotePayeeExpiration = "2021-08-25T14:17:09.663+01:00"
-!$commitRequestId = "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
-!$determiningTransferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$transferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$fxCondition = "GRzLaTP7DJ9t4P-a_BA0WA9wzzlsugf00-Tn6kESAfM"
-!$condition = "HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks"
+!$commitRequestId = "77c9d78dc2..."
+!$determiningTransferId = "d9ce59d43..."
+!$transferId = "d9ce59d435..."
+!$fxCondition = "GRzLaTP7DJ9t4P-a_B..."
+!$condition = "HOr22-H3AfTDHrSkP..."
 
-title Remittance Transfer using Mojaloop FX APIs POC\nPayer DFSP requests conversion with SEND amount
+
+title Currency Conversion Transfer Phase ABORT flows
 actor "$senderName" as A1
 box "Payer DFSP" #LightBlue  
   participant "Payer DFSP" as D1
@@ -63,26 +65,22 @@ end box
 actor "$receiverName" as A2
 autonumber
 
-== Transfer Phase ==
-activate D1
 D1->>S1:Please confirm your part of the transfer
-note right of D1
+note left
 **POST /fxTransfers**
 {
-    "commitRequestId": "$commitRequestId",
-    "determiningTransferId": "$determiningTransferId",
-    "initiatingFsp": "$payerFSPID",
-    "counterPartyFsp": "$fxpID",
-    "amountType": "SEND",
-    "sourceAmount": {
-        "currency": "$payerCurrency",
-        "amount": "$fxpSourceAmount"
-    },
-    "targetAmount": {
-        "currency": "$payeeCurrency",
-        "amount": "$fxpTargetAmount"
-    },
-    "condition": "$fxCondition"
+  "commitRequestId": "$commitRequestId",
+  "determiningTransferId": "$determiningTransferId",
+  "initiatingFsp": "$payerFSPID",
+  "counterPartyFsp": "$fxpID",
+  "amountType": "SEND",
+  "sourceAmount": {
+    "currency": "$payerCurrency",
+    "amount": "$fxpSourceAmount"},
+  "targetAmount": {
+    "currency": "$payeeCurrency",
+    "amount": "$fxpTargetAmount"},
+  "condition": "$fxCondition"
 }
 end note
 activate S1
@@ -102,55 +100,48 @@ Reservations:
 **$payerFSPID has a reservation of $fxpSourceAmount $payerCurrency**
 end note
 !endif
-S1->>FXP:Please confirm the currency conversion part of the transfer\n** POST /fxTransfers**
+S1->>FXP:Please confirm the currency\n conversion part of the transfer\n **POST /fxTransfers**
+deactivate S1
 activate FXP
 !if ($simplified != true)
 FXP-->>S1:202 I'll get back to you
 !endif
-deactivate S1
 alt conversion failed
   FXP->>S1:Failed.
-  note left of FXP
+  note right
   **PUT /fxTransfers/$commitRequestId**/error
   {
     "errorInformation": {
       "errorCode": "5100",
-      "errorDescription": "error message"
-    }
+      "errorDescription": "error message"}
   }
   ( **or** )
   **PUT /fxTransfers/$commitRequestId**
   {
     "conversionState": "ABORTED",
-    "extensionList": {
-      "extension": [
-        {
-          "key": "reason",
-          "value": "some reason"
-        }
-      ]
-    }
+    "extensionList": {"extension": [{"key": "reason","value": "some reason"}]}
   }
   end note
 else conversion success
   FXP->FXP:Reserve funds for FX conversion
   FXP->>S1:Confirmed. Here's the fulfilment
-  note left of FXP
+  note right
   **PUT /fxTransfers/$commitRequestId**
   {
-  "fulfilment": "188909ceb6cd5c35d5c6b394f0a9e5a0571199c332fbd013dc1e6b8a2d5fff42",
-  "completedTimestamp": "2021-08-25T14:17:08.175+01:00",
-  "conversionState": "RESERVED"
+    "fulfilment": "188909ceb6cd5...",
+    "completedTimestamp": "2021-08-25T14:17:08.175+01:00",
+    "conversionState": "RESERVED"
   }
   end note
+  deactivate FXP
   S1->S1:Check fulfilment matches and cancel if not.
   alt Conversion failed
       S1->FXP:Sorry. Conversion failed
-      note over FXP
+      note left
       **PATCH /fxTransfers/$commitRequestId**
       {
-      "completedTimestamp": "2021-08-25T14:17:08.175+01:00",
-      "conversionState": "ABORTED"
+        "completedTimestamp": "2021-08-25T14:17:08.175+01:00",
+        "conversionState": "ABORTED"
       }
       end note
       activate FXP
@@ -165,56 +156,55 @@ S1-->>FXP:200 Gotcha
 deactivate FXP
 
 alt Conversion failed
-  S1->S1: Abort the fxTransfer. Revert the position changes involved in this fxTransfer.
-  S1->S1: Incase of payee side conversion, there will be dependent transfer. \nBut do not cancel that transfer as DFSP can try currency conversion with another FXP. \nBut make sure that while processing the fulfilment of the original transfer, it shouldn't pickup this fxTransfer as the dependent transfer. \n(Maybe by removing the entry from watchlist)
-  S1->>D1:Sorry. Conversion failed
+  S1->S1: Abort the fxTransfer. Revert \nthe position changes involved in this\n fxTransfer.
   note over S1
+   **Note:**
+   Incase of payee side conversion, there will be dependent transfer. 
+   But do not cancel that transfer as DFSP can try currency conversion with 
+   another FXP. But make sure that while processing the fulfilment of the original 
+   transfer, it shouldn't pickup this fxTransfer as the dependent transfer. 
+   (Maybe by removing the entry from watchlist)
+  end note 
+  S1->>D1:Sorry. Conversion failed
+  note right
   **PUT /fxTransfers/$commitRequestId/error**
   {
     "errorInformation": {
       "errorCode": "5100",
-      "errorDescription": "error message"
-    }
+      "errorDescription": "error message"}
   }
   ( **or** )
   **PUT /fxTransfers/$commitRequestId**
   {
     "conversionState": "ABORTED",
-    "extensionList": {
-      "extension": [
-        {
-          "key": "reason",
-          "value": "some reason"
-        }
-      ]
-    }
+    "extensionList": {"extension": [{"key": "reason","value": "some reason"}]}
   }
   end note
 else Conversion succeeded
-    S1->D1:Conversion succeeded subject to transfer success\n**PUT /fxTransfers/77c9d78d-c26a-4474-8b3c-99b96a814bfc**
+    S1->D1:Conversion succeeded subject to\n transfer success\n**PUT /fxTransfers/77c9d78dc26a...**
+   activate D1
 end
 
 !if ($simplified != true)
 D1-->S1:200 Gotcha
 !endif
-deactivate D1
 D1->D1:OK, so that's all right\nNow I can send the transfer itself
 
-D1->S1:Please do the transfer **POST /transfers**
+D1->S1:Please do the transfer\n **POST /transfers**
+deactivate D1
 !if ($simplified != true)
 note over D1
-POST /transfers
+**POST /transfers**
 {
-    "transferId": "$transferId",
-    "payeeFsp": "$payeeFSPID",
-    "payerFsp": "$payerFSPID",
-    "amount": {
-        "currency": "$payeeCurrency",
-        "amount": "$targetAmount"
-    },
-    "ilpPacket": "<Encoded transaction object>",
-    "condition": "$condition",
-    "expiration": "2016-05-24T08:38:08.699-04:00"
+  "transferId": "$transferId",
+  "payeeFsp": "$payeeFSPID",
+  "payerFsp": "$payerFSPID",
+  "amount": {
+   "currency": "$payeeCurrency",
+   "amount": "$targetAmount"},
+  "ilpPacket": "<Encoded transaction object>",
+  "condition": "$condition",
+  "expiration": "2016-05-24T08:38:08.699-04:00"
 }
 end note
 !endif
@@ -235,25 +225,24 @@ $payerFSPID has a reservation of $fxpSourceAmount $payerCurrency
 end note
 
 S1->D2:Please do the transfer\n**POST /transfers**
+deactivate S1
 activate D2
 !if ($simplified != true)
 D2-->S1:202 I'll get back to you
 !endif
-deactivate S1
-D2->D2:Let me check that the terms of the dependent transfer\nare the same as the ones I agreed to\nand that the fulfilment and condition match
+D2->D2:Let me check that the terms \nof the dependent transfer are \nthe same as the ones I agreed\n to and that the fulfilment and \ncondition match
 
-D2->A2: Hi $receiverName's, you got inbound transfer $payeeReceiveAmount $payeeCurrency
+D2->A2: Hi $receiverName's, you got inbound \ntransfer $payeeReceiveAmount $payeeCurrency
 deactivate D2
 
 alt transfer failed
   D2->>S1:Transfer is rejected
-  note over D2
+  note right
   **PUT /transfers/$commitRequestId**/error
   {
     "errorInformation": {
       "errorCode": "5100",
-      "errorDescription": "error message"
-    }
+      "errorDescription": "error message"}
   }
   ( **or** )
   {
@@ -266,11 +255,11 @@ alt transfer failed
   S1-->>D2:200 Gotcha
   !endif
   
-  S1->S1: Revert the position changes involved in this transfer
-  S1->S1: If there are dependency fxTransfers, abort the fxTransfers as well and revert the position changes involved in those fxTransfers
+  S1->S1: Revert the position changes \ninvolved in this transfer
+  S1->S1: If there are dependency fxTransfers,\n abort the fxTransfers as well and \nrevert the position changes involved \nin those fxTransfers
 
   S1->>FXP: The linked transfer is failed.\nRemove any reservations or obligations
-  note over S1
+  note left
   **PATCH /fxTransfers/$commitRequestId**
   {
       "completedTimestamp": "2021-08-25T14:17:08.227+01:00",
@@ -291,11 +280,11 @@ alt transfer failed
   deactivate D1
 else transfer success
   D2->>S1:Transfer is confirmed, here's the fulfilment
-  note over D2
+  note right
   **PUT /transfers/$commitRequestId**
   {
       "completedTimestamp": "2021-08-25T14:17:08.227+01:00",
-      "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
+      "fulfilment": "mhPUT9ZAwd...",
       "transferState": "COMMITTED"
   }
   end note
@@ -306,19 +295,19 @@ else transfer success
   
   !if ($hideSwitchDetail != true)
   S1->S1:Is there a dependent transfer?\nYes, there is.
-  S1->S1:Is this dependency against the debtor party to the transfer?\nYes, it is.
-  S1->S1:Create an obligation from the debtor party to the party named in the dependency (the FXP)
-  S1->S1:Is the transfer denominated in the currency of the payee receive amount?\nYes, it is.
-  S1->S1:Create an obligation from the party named in the dependency\nto the creditor party for the transfer
+  S1->S1:Is this dependency against the\n debtor party to the transfer?\nYes, it is.
+  S1->S1:Create an obligation from the \ndebtor party to the party named \nin the dependency (the FXP)
+  S1->S1:Is the transfer denominated in \nthe currency of the payee receive\n amount?\nYes, it is.
+  S1->S1:Create an obligation from the \nparty named in the dependency\nto the creditor party for the transfer
   !else
   S1->S1:Create obligations from the payer to the FXP and from FXP to the payee
   !endif
   S1->>FXP:The transfer succeeded.\nYou can clear it in your ledgers
-  note over S1
+  note left
   **PATCH /fxTransfers/$commitRequestId**
   {
       "completedTimestamp": "2021-08-25T14:17:08.227+01:00",
-      "fulfilment": "mhPUT9ZAwd-BXLfeSd7-YPh46rBWRNBiTCSWjpku90s",
+      "fulfilment": "mhPUT9ZAwd...",
       "transferState": "COMMITTED"
   }
   end note
@@ -328,7 +317,7 @@ else transfer success
   FXP-->>S1:200 Gotcha
   deactivate FXP
   note over S1
-      Ledger positions:
+      **Ledger positions:**
       $payerFSPID has a debit of $fxpSourceAmount $payerCurrency
       $fxpID has a credit of $fxpSourceAmount $payerCurrency
       $fxpID has a debit of $fxpTargetAmount $payeeCurrency

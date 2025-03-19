@@ -1,99 +1,118 @@
+# Foreign Exchange - Currency Conversion
 
-# Cross-border (FX) Design
+The Mojaloop currency conversion functionality enables foreign exchange (FX) transactions, supporting multiple approaches for currency conversion within the ecosystem. Currently, the system implements **Payer DFSP currency conversion**, where the Payer DFSP (Digital Financial Services Provider) coordinates with a foreign exchange provider (FXP) to obtain liquidity in another currency to facilitate a transfer.
 
-The Mojaloop currency conversion functional implementation includes support for Payer DFSP currency conversion. In this scenario, it is the Payer DFSP that comes to an agreement with the foreign exchange provider, to provide another currency liquidity in order to fund the transfer.
-There are two variation of the implementation. 
- - Sending funds from a local currency
- - Making a payment in a foreign currency
+Future enhancements to the currency conversion design include:
+1. **Payee DFSP conversion**<br> The Payee DFSP arranges for foreign exchange conversion.
+1. **Reference currency conversion**<br> Both the Payer and Payee DFSPs engage with FXPs to convert funds via a reference currency.
+1. **Bulk conversion**<br> DFSPs can procure currency liquidity from an FXP in bulk.
 
-The difference between these use case concerns the amount Type that is specified when making the transfer.
+## Role of the Foreign Exchange Provider (FXP)
 
-## Sending funds to an account in another currency
-For this use case, the Payer DFSP will specify the transfer with amount type **SEND** and define the transfer amount in the **Payer's local currency** (the source currency).
-An secondary use case example for this is a P2P remittance transfer.
+A core feature of Mojaloop's currency conversion capability is its support for a competitive FX marketplace, where multiple FXPs can provide real-time exchange rate quotes. This design fosters an open and dynamic environment for foreign exchange transactions.
 
-### Simplified Send Money Diagram
-Below is a simplified sequence diagram showing the flows between the Participant organizations, the foreign exchange providers and the Mojaloop switch.
+The currency conversion process follows a three-step workflow:
+1. **Quote Request**<br> The Payer DFSP requests a quote from an FXP. For example, a Zambian DFSP can obtain a conversion quote for a specific transfer.
+1. **Quote Agreement**<br> The Payer DFSP reviews the exchange rate and terms provided by the FXP. Once accepted, the FXP locks in the rate.
+1. **Transfer Finalization**<br> Upon notification from the Mojaloop scheme that the dependent transfer has been completed, the conversion process is finalized.
+
+This streamlined approach ensures transparency and competitiveness in FX transactions, benefiting both DFSPs and end users.
+
+## Impact of Amount Type on Currency Conversion
+
+The Payer DFSP conversion implementation supports two distinct scenarios based on the amount type specified in the transaction:
+1. **Sending funds in the source (local) currency**
+1. **Making a payment in target (a foreign) currency**
+
+### Sending Funds to an Account in Another Currency
+In this use case, the **Payer DFSP** initiates a transfer using the amount type **SEND**, specifying the transfer amount in the payer's local currency (source currency). This method is commonly used for **P2P remittance** transfers, where the sender transfers funds in their local currency, and the recipient receives the equivalent amount in their respective currency after conversion.
+
+### Currency Conversion Transfer (source currency)
+Below is a simplified sequence diagram showing the flows between the Participant organizations, the foreign exchange providers and the Mojaloop switch for a currency conversion transfer specified in source currency. 
+
+The flow is divided up into:
+1. [Discovery Phase](#discovery-phase)
+1. [Agreement Phase - Currency Conversion](#agreement-phase---currency-conversion)
+1. [Agreement Phase](#agreement-phase)
+1. [Payer DFSP presents terms to Payer](#payer-dfsp-presents-terms-to-payer)
+1. [Transfer Phase](#transfer-phase)
 
 #### Discovery Phase
-![Discovery Phase](/md-docs/images/Payer_SEND_Discovery/Payer_SEND_Discovery.svg)
+The Payer DFSP identifies the Payee DFSP organization and confirms the account validity and currency.
 
-#### Currency Conversion
-![Currency Conversion](/md-docs/images/PAYER_SEND_CurrencyConversion/PAYER_SEND_CurrencyConversion.svg)
+![Discovery Phase](./Payer_SEND_Discovery.svg)
+
+#### Agreement Phase - Currency Conversion
+The Payer DFSP makes a request to the FXP for liquidity cover for transfer. The currency conversion terms are returned.
+![Currency Conversion](./PAYER_SEND_CurrencyConversion.svg)
 
 #### Agreement Phase 
-![Agreement](/md-docs/images/PAYER_SEND_Agreement/PAYER_SEND_Agreement.svg)
+The Payer DFSP makes a request to the Payee DFSP for the transfer terms.
+![Agreement](./PAYER_SEND_Agreement.svg)
 
-#### Send Confirmation
-![Send Confirmation](/md-docs/images/PAYER_SEND_Confirmation/PAYER_SEND_Confirmation.svg)
+#### Payer DFSP presents terms to Payer
+At this point the party information, the conversion terms, and the transfer terms have been provided to the Payer DFSP. The Payer DFSP presents these terms to the Payer and asks wether to proceed or not.
+![Send Confirmation](./PAYER_SEND_Confirmation.svg)
 
-#### Transfer 
-![Transfer](/md-docs/images/PAYER_SEND_Transfer/PAYER_SEND_Transfer.svg)
+#### Transfer Phase
+Now that the terms of the transfer have been agreed to, the transfer can proceed.
+Both the Conversion and the transfer terms are comitted together.
+![Transfer](./PAYER_SEND_Transfer.svg)
 
 
-### Detailed Send Money Diagram
+### Mojaloop Connector Integration for Currency Conversion
 
 Below is a detailed sequence diagram that shows the complete flow, and includes the **Mojaloop Connector** and integration APIs for all participant organizations. (This is a useful view if you are building integrations as a participant organization.)
 
-#### Discovery
-![Discovery Phase](/md-docs/images/FXAPI_Discovery/FXAPI_Discovery.svg)
+#### Discovery phase - Mojaloop Connector
+Mojaloop make use of an Oracle to identify the DFSP organization associated with the Party identifier. The Payee DFSP must respond to the GET /parties to confirm that the account exists and is active for that Party identifier. The supported currencies for that account are returned.
+![Discovery Phase](./FXAPI_Discovery.svg)
 
 
-#### Currency Conversion
-![Currecny Conversion](/md-docs/images/FXAPI_Payer_CurrencyConversion/FXAPI_Payer_CurrencyConversion.svg)
+#### Agreement Phase Currency Conversion - Mojaloop Connector
+The Payer DFSP does not transact in any of the Payee DFPSs supported currencies. This triggers the requirement for currency conversion inside the Mojaloop Connector. The Payer DFSP uses it's local cache of FXPs to select and makes a request to the Foreign Exchange provider for liquidity cover and a conversion rate.
+![Currecny Conversion](./FXAPI_Payer_CurrencyConversion.svg)
 
-#### Agreement Phase 
-![Agreement Phase](/md-docs/images/FXAPI_Payer_Agreement/FXAPI_Payer_Agreement.svg)
+#### Agreement Phase - Mojaloop Connector
+Liquidity in target currency has been secured. The Payer DFSP can now proceed to request an agreement of terms from the Payee DFSP. These terms are in target currency.
+![Agreement Phase](./FXAPI_Payer_Agreement.svg)
 
 #### Sender Confirmation
-![Confirmatiom](/md-docs/images/FXAPI_Payer_SenderConfirmation/FXAPI_Payer_SenderConfirmation.svg)
+All the terms for the currency conversion and transfer have been obtained by the Payer DFSP and FXP. It is now time to collate those terms and present them to the Payer for confirmation.
+![Confirmatiom](./FXAPI_Payer_SenderConfirmation.svg)
 
 #### Transfer Phase
-![Transfer](/md-docs/images/FXAPI_Payer_Transfer/FXAPI_Payer_Transfer.svg)
+The terms of the transfer have been accepted. The transfer phase can now commence. 
+![Transfer](./FXAPI_Payer_Transfer.svg)
 
-
-<div style="page-break-after: always"></div>
-
-## Making a payment in another currency
+## Currency Conversion Transfer (target currency)
 For this use case, the Payer DFSP will specify the transfer with amount type **RECEIVE** and define the transfer amount in the **Payee's local currency** (the target currency).
 An secondary use case example for this is a cross boarder Merchant Payment.
 
 Below is a detailed sequence diagram that shows the complete flow, and includes the Mojaloop connector and integration APIs for all participant organizations.
 
 #### Discovery 
-![Discovery](/md-docs/images/FXAPI_Payer_Receive_Discovery/FXAPI_Payer_Receive_Discovery.svg)
+Mojaloop make use of an Oracle to identify the DFSP organization associated with the Party identifier. The Payee DFSP must respond to the GET /parties to confirm that the account exists and is active for that Party identifier. The supported currencies for that account are returned.
+![Discovery](./FXAPI_Payer_Receive_Discovery.svg)
 
-#### Get FX Providers
-![Get FXPs](/md-docs/images/FXAPI_Payer_Receive_GetFXPs/FXAPI_Payer_Receive_GetFXPs.svg)
 
 #### Agreement
-![Agreement](/md-docs/images/FXAPI_Payer_Receive_Agreement/FXAPI_Payer_Receive_Agreement.svg)
+The Payer DFSP does not support any of the Payee DFSP's currencies, requiring currency conversion within the Mojaloop Connector. Since the payment request is in the target currency, an agreement with the Payee DFSP must be established before initiating a liquidity request with the foreign exchange provider. The Payer DFSP first negotiates the transfer terms with the Payee DFSP, then uses its local cache of foreign exchange providers to select one and request liquidity coverage and a conversion rate.
+![Agreement](./FXAPI_Payer_Receive_Agreement.svg)
 
 #### Sender Confirmation
-![Sender Confirmation](/md-docs/images/FXAPI_Payer_Receive_SenderConfirmation/FXAPI_Payer_Receive_SenderConfirmation.svg)
+All the terms for the currency conversion and transfer have been obtained by the Payer DFSP and FXP. It is now time to collate those terms and present them to the Payer for confirmation.
+![Sender Confirmation](./FXAPI_Payer_Receive_SenderConfirmation.svg)
 
 #### Transfer 
-![Transfer](/md-docs/images/FXAPI_Payer_Receive_TransferPhase/FXAPI_Payer_Receive_TransferPhase.svg)
+The terms of the transfer have been accepted. The transfer phase can now commence. 
+![Transfer](./FXAPI_Payer_Receive_TransferPhase.svg)
 
-<div style="page-break-after: always"></div>
 
 ## Abort flows
-This sequence diagram show how the design implements abort messages.
+This sequence diagram show how the design implements abort messages during the currency conversion transfer phase.
 
-### Discovery 
-![Discovery](/md-docs/images/Payer_SEND_ABORT_Discovery/Payer_SEND_ABORT_Discovery.svg)
-
-### Currency Conversion
-![Currency Conversion](/md-docs/images/Payer_SEND_ABORT_CurrencyConversion/Payer_SEND_ABORT_CurrencyConversion.svg)
-
-### Agreement
-![Agreement](/md-docs/images/Payer_SEND_ABORT_Agreement/Payer_SEND_ABORT_Agreement.svg)
-
-### Sender Confirmation
-![Sender Confirmatiom](/md-docs/images/Payer_SEND_ABORT_SenderConfirmation/Payer_SEND_ABORT_SenderConfirmation.svg)
-
-### Transfer Phase
-![Transfer](/md-docs/images/Payer_SEND_ABORT_TransferPhase/Payer_SEND_ABORT_TransferPhase.svg)
+![Transfer](./Payer_SEND_ABORT_TransferPhase.svg)
 
 ## Open API References
 These Open API references are designed to be readable for both software an review person. The show the detailed requirements and implementations of the API design.
@@ -103,5 +122,3 @@ These Open API references are designed to be readable for both software an revie
 - [API Snippets Open Api definition](https://github.com/mojaloop/api-snippets/blob/main/docs/fspiop-rest-v2.0-openapi3-snippets.yaml)
 - [Mojaloop Connector backend](https://mojaloop.github.io/api-snippets/?urls.primaryName=SDK%20Backend%20v2.1.0) - [Open Api definition](https://github.com/mojaloop/api-snippets/blob/main/docs/sdk-scheme-adapter-backend-v2_1_0-openapi3-snippets.yaml)
 - [Mojaloop Connector outbound](https://mojaloop.github.io/api-snippets/?urls.primaryName=SDK%20Outbound%20v2.1.0) - [Open Api definition](https://github.com/mojaloop/api-snippets/blob/main/docs/sdk-scheme-adapter-outbound-v2_1_0-openapi3-snippets.yaml)
-
-

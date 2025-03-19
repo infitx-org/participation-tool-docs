@@ -1,71 +1,78 @@
-# Inter scheme using national switches Design
-The proxy implementation method to connect schemes does the following.
-1. Leverages the trust relationship between scheme so that a transaction only has a single pre-funding requirement at the Payer's scheme.
-2. Ensures non-repudiation across schemes; removing the requirement for the cross-network proxy to take on responsibility for clearing; which removes costs
+# Interscheme
 
-The schemes are connected via a proxy participant, that is registered to act as a proxy in the scheme for adjacent but connected dfsps in other schemes. 
-Essentially, the two connected schemes behave as if they where a single scheme.
+Interscheme is the approach adopted by the Mojaloop community to connect schemes while preserving the three phases of a Mojaloop transfer and ensuring end-to-end non-repudiation. This means that the agreement reached during a transfer remains between the originating and receiving DFSP/FXP organizations, regardless of the routing path or the number of schemes involved.
 
-This design make the following assumptions
-1. No two connected participant have the same identifier
-1. Get \transfer request are resolved at the payee scheme
-1. Timeouts in non-payee schemes are  disabled (maybe enlarged)
+:::tip Non-repudiation 
+Ensuring non-repudiation across schemes means that the proxy is not involved in the agreement of terms which helps reduce costs.
+::: 
 
-<div style="page-break-after: always"></div>
+The initial implementation of this feature enables the connection of multiple Mojaloop schemes. Over time, this ecosystem is expected to expand as additional national schemes adopt this protocol and new connectors are developed to enhance interoperability.
+
+To support this effort, Mojaloop introduced a new proxy participant organization. The proxy adapter serves as the implementation of the Mojaloop-to-Mojaloop connection component.
+
+## What is a Proxy
+Schemes are connected via a proxy participant, which is registered to act as an intermediary within the scheme for adjacent DFSPs/FXPs in other schemes.
+
+## Dynamic Routing of Parties
+This implementation makes use of a dynamic routing. This meaning that no initial and ongoing maintenance of party identifiers is required between schemes. The system makes use of a broadcast to scheme discovery that identifier and caches the organisation associated with a party identifier.
+
+## Assumptions
+This approach is based off the following assumptions:
+1. No two connected participants share the same identifier.
+1. Each connected scheme is responsible for routing party identifiers within its own system. (In Mojaloop, this means each scheme maintains the oracles needed to route payments for participant parties in its network.)
 
 ## General Patterns
 There are certain general patterns that emerge
 ### Happy Path Patterns
-![Happy Path Patterns](./Proxy%20pattern%20-%20Happy%20path.png)
-
-<div style="page-break-after: always"></div>
+![Happy Path Patterns](./Interscheme-Happypath.svg)
 
 ### Error Patterns
-![Error Patterns](./Proxy%20pattern%20-%20Unhappy%20path.png)
+![Error Patterns](./Interscheme-ErrorCases.svg)
 
-<!-- 
-## Detailed Designs
-1. [Discovery - On Demand Implementation](./Discovery.md)
-2. [P2P](./P2P.md)
--->
-## Detailed Design of on Demand Discovery
-
+## Interscheme On Demand Discovery Design
 The discovery flows are summarized as follows:
 1. On Demand loading of cross network identifiers - using Oracles for identifier lookups in local scheme
 2. On Demand loading for all identifiers
 
-### On Demand Discovery using local oracles
+### Using Oracles to Cache Identifiers
 - Scheme uses Oracles to map local identifiers to participants of the scheme
 - Identifiers for other schemes are discovered via a depth first search, but asking all participants. Proxy participant then forward the request to the connected scheme
 - This diagram shows two connected schemes, but this design work for any number of connected schemes.
 
-![Proxy pattern - On Demand Discovery with Oracles](Proxy%20pattern%20-%20On%20Demand%20Discovery%20-%20using%20Oracles.png)
+![Interscheme - On Demand Discovery Sequence Diagram](./Interscheme-OnDemandDiscovery.svg)
 
 
 ### On Demand Discover with incorrectly cached results
 - When an identifier moved to another dfsp provider, then the store cache for that participant will route to an unsuccessful get \parties call.
+- Self heal if there is an error routing the payment or proxy cache reference is lost
 
 Here is a sequence diagram show how that gets updated.
 #### Sequence Diagram
-![Invalid Cache](Proxy%20pattern%20-%20On%20Demand%20Discovery%20-%20Identifier%20Cache%20Invalid.png)
+![Interscheme - Managing Stale Cache](./Interscheme-StalePartyIdentifierCache.svg)
 
-## P2P flow across network using Proxy
-This design make the following assumptions
-1. No two connected participant have the same identifier
-1. No limit checks are done against proxy participants
-1. Get \transfers request are resolved at the payee scheme
-1. Timeouts in non-payee schemes are  disabled.
+## Interscheme - Agreement Phase
+The Agreement phase makes use of the proxy cache to route the messages.
+Here are the implementation details.
 
-### Sequence Diagram
-Here is a sequence diagram show the Agreement and Transfer stages of a transaction, and how the Get Transfer is resolved.
+![Interscheme - Agreement](./Interscheme-Agreement.svg)
 
-![P2P flow](./Proxy%20pattern%20-%20P2P.png)
+## Interscheme - Transfer Phase
+The Transfer phase makes use of the proxy cache to route the messages.
+Here are the implementation details.
 
-<div style="page-break-after: always"></div>
+![Interscheme - Transfers](./Interscheme-Transfer.svg)
+
+## Interscheme - GET Transfer 
+The GET Transfer is resolved locally to return the local schemes status of the transfer.
+Here are the implementation details.
+![Interscheme - GET Transfers](./Interscheme-GETTransfer.svg)
 
 ## Admin API - defining Proxy Participants
-![Admin API](./SettingUpProxys.png)
+This is how Proxies are defined.
+![Admin API](./SettingUpProxys.svg)
 
 ## Clearing Accounts for Inter-scheme FX transfers
+This diagram illustrated how the obligations are updated during transaction clearing.
+
 ![Clearing Accounts](./InterschemeAccounts-Clearing.png)
 
