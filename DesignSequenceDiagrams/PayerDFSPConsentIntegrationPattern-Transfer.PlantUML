@@ -21,6 +21,13 @@ note left
   Obtain Payer consent 
   on fees and Payee info
 end note
+alt Option to reserve funds prior to API call
+CBS->CBS: Reserve funds
+note left
+  Reserve funds in Payer account
+end note
+end
+
 CBS->CC: **PUT** /sendmoney/{transferId}
 note left
   If not already supported by CBS, 
@@ -30,10 +37,12 @@ note left
 end note
 activate CC #DarkBlue
 
+alt Option to reserve funds from integration
 CC->CBS: Reserve funds
 note left
   Reserve funds in Payer account
 end note
+end
 
 CC->MC: **PUT** /transfers
 

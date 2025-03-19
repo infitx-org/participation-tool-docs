@@ -29,6 +29,11 @@ note left
 end note
 activate CC #DarkBlue
 CC->MC: **POST** /transfers \n(AUTO_ACCEPT_PARTY = true,\n AUTO_ACCEPT_QUOTES = false)
+note left
+Include Payer Regulatory requirements in 
+   1. Quote extension 
+   2. Transfer extension 
+end note
 MC->Switch: **GET** /parties/{Type}/{ID}/{SubId}
 Switch->Switch: Determine Payee DFSP using oracle
 Switch->Switch: Lookup Payee Information from Payee DFSP using **GET** /parties
@@ -59,6 +64,7 @@ note left
  --> transfer amount and currency
  --> fees 
  --> payee DFSP
+ --> regulatory requirements for Payee 
 end note
 CC->MC: **PUT** /transfers {"acceptQuote": true}
 MC->Switch: **POST** /fxtransfers 

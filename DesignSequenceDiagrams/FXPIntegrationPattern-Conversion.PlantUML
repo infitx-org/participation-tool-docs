@@ -31,12 +31,12 @@ CC-->MC: Response
 deactivate CC
 alt If Success response
 MC->>Switch: **PUT** /fxTransfer
-Switch-->>MC: HTTP 200 OK
-
 note right
   ILP fullfillment 
   created by FXP
 end note
+Switch-->>MC: HTTP 200 OK
+
 Switch->>MC: **PATCH** /fxTransfer/{ID}
 MC-->>Switch: HTTP 200 OK
 MC->CC: **PUT** /fxTransfer/{ID}
