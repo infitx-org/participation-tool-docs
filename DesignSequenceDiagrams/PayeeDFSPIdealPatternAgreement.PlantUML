@@ -62,12 +62,8 @@ end note
     CC->CC: Build the transfer terms
     CC->CBS: Obtain Unique Customer \nReference
 note left
- Add Regulatory Information
+ Add regulatory information
 end note
-    note right 
-    Replace with CBS API
-        to calculate fees
-    end note
     CBS-->CC: Response
 
 CC-->MC: Response
