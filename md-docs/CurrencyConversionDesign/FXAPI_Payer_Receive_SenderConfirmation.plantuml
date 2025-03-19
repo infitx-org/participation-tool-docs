@@ -1,4 +1,4 @@
-@startuml
+@startuml FXAPI_Payer_Receive_SenderConfirmation
 
 !$simplified = false
 !$shortCutSingleFXP = false
@@ -21,33 +21,32 @@
 !$totalChargesSourceCurrency = "55"
 
 
-title Cross Currency Payment using Mojaloop FX APIs POC\nPayer DFSP requests conversion with RECEIVE amount
+title Currency Conversion with Amount Type RECEIVE
 actor "$senderName" as A1
 box "Payer DFSP" #LightBlue  
   participant "Payer CBS" as PayerCBS
   participant "Payer\nMojaloop\nConnector" as D1
 end box
 
-participant "Mojaloop Switch" as S1
+'participant "Mojaloop Switch" as S1
 
-box "Discovery Service" #LightYellow
-  participant "ALS Oracle" as ALS
-end box
+'box "Discovery Service" #LightYellow
+'  participant "ALS Oracle" as ALS
+'end box
 
-box "FX provider"  
-  participant "FXP\nConnector" as FXP
-  participant "Backend FX API" as FXPBackend
-end box
+'box "FX provider"  
+'  participant "FXP\nConnector" as FXP
+'  participant "Backend FX API" as FXPBackend
+'end box
 
-box "Payee DFSP" #LightBlue   
-  participant "Payee\nMojaloop\nConnector" as D2
-  participant "Payee CBS" as PayeeCBS
-end box
+'box "Payee DFSP" #LightBlue   
+'  participant "Payee\nMojaloop\nConnector" as D2
+'  participant "Payee CBS" as PayeeCBS
+'end box
 
-actor "$receiverName" as A2
+'actor "$receiverName" as A2
 autonumber
 
-== Sender Confirmation ==
 
 D1->PayerCBS:Here's the quote for the transfer\nIt expires at 2021-08-25T14:17:09.663+01:00
 PayerCBS->A1:Hi, $senderName: I can do the transfer.\nIt'll cost you $totalChargesSourceCurrency $payerCurrency in fees\n$fxpSourceAmount $payerCurrency will be deducted from your account,\nand $receiverName will receive\n$payeeReceiveAmount $payeeCurrency.\nLet me know if you want to go ahead

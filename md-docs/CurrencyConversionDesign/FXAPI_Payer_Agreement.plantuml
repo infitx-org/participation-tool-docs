@@ -1,9 +1,10 @@
-@startuml
+@startuml FXAPI_Payer_Agreement
 
 !$simplified = false
 !$shortCutSingleFXP = false
 !$hideSwitchDetail = false
 !$advancedCoreConnectorFlow = false
+!$senderName = "John"
 !$senderLastName = ""
 !$senderDOB = "1966-06-16"
 !$receiverName = "Yaro"
@@ -28,55 +29,50 @@
 !$fxpTargetAmount = "48000"
 !$totalChargesSourceCurrency = "55"
 !$totalChargesTargetCurrency = "10000"
-!$conversionRequestId = "828cc75f-1654-415e-8fcd-df76cc9329b9"
-!$conversionId = "581f68ef-b54f-416f-9161-ac34e889a84b"
+!$conversionRequestId = "828cc75f1654415..."
+!$conversionId = "581f68efb54f41..."
 !$homeTransactionId = "string"
-!$quoteId = "382987a8-75ce-4037-b500-c475e08c1727"
-!$transactionId = "d9ce59d4-3598-4396-8630-581bb0551451"
+!$quoteId = "382987a875ce403..."
+!$transactionId = "d9ce59d43598439..."
 !$quotePayerExpiration = "2021-08-25T14:17:09.663+01:00"
 !$quotePayeeExpiration = "2021-08-25T14:17:09.663+01:00"
-!$commitRequestId = "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
-!$determiningTransferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$transferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$fxCondition = "GRzLaTP7DJ9t4P-a_BA0WA9wzzlsugf00-Tn6kESAfM"
-!$condition = "HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks"
+!$commitRequestId = "77c9d78dc26a44748b3c99b96a"
+!$determiningTransferId = "d9ce59d4359843..."
+!$transferId = "d9ce59d43598439..."
+!$fxCondition = "GRzLaTP7DJ9t4P-a_B..."
+!$condition = "HOr22-H3AfTDHrSkP..."
 
-title Remittance Transfer using Mojaloop FX APIs POC\nPayer DFSP requests conversion with SEND amount
-actor "$senderName" as A1
+title Agreement Phase - Mojaloop Connector Integration
+'actor "$senderName" as A1
+'  participant "Payer CBS" as PayerCBS
 box "Payer DFSP" #LightBlue  
-  participant "Payer CBS" as PayerCBS
   participant "Core Connector" as PayerCC
   participant "Payer\nMojaloop\nConnector" as D1
 end box
 
 participant "Mojaloop Switch" as S1
 
-box "Discovery Service" #LightYellow
-  participant "ALS Oracle" as ALS
-end box
+'box "Discovery Service" #LightYellow
+'  participant "ALS Oracle" as ALS
+'end box
 
-box "FX provider"  
-  participant "FXP\nConnector" as FXP
-  participant "Backend FX API" as FXPBackend
-end box
+'box "FX provider"  
+'  participant "FXP\nConnector" as FXP
+'  participant "Backend FX API" as FXPBackend
+'end box
 
 box "Payee DFSP" #LightBlue   
   participant "Payee\nMojaloop\nConnector" as D2
   participant "Core Connector" as PayeeCC
 end box
 
-actor "$receiverName" as A2
+'actor "$receiverName" as A2
 autonumber
 
-== Agreement Phase ==
-
-
 !if ($advancedCoreConnectorFlow != true)
-PayerCC->D1: I want to get a quote from the FSP\nPUT /transfers
-note right of PayerCC
-{
-    "acceptConversion": true
-}
+PayerCC->D1: I want to get a quote from the FSP\n**PUT /transfers**
+note left
+{"acceptConversion": true}
 end note
 !else
 PayerCC->D1: I want to get a quote from the FSP\n**POST /quotes**
@@ -94,15 +90,6 @@ PayerCC->D1: I want to get a quote from the FSP\n**POST /quotes**
                         "fspId": "$payeeFSPID"
                     },
                     "name": "$receiverName",
-                    "personalInfo": {
-                        "complexName": {
-                        "firstName": "$receiverFirstName",
-                        "middleName": "$receiverMiddleName",
-                        "lastName": "$receiverLastName"
-                        },
-                        "dateOfBirth": "$receiverDOB",
-                        "kycInformation": "<Encrypted KYC Data>"
-                    },
                     "supportedCurrencies": [ "$payeeCurrency" ]
                 },
                 "payer": {
@@ -112,14 +99,6 @@ PayerCC->D1: I want to get a quote from the FSP\n**POST /quotes**
                         "fspId": "$payerFSPID"
                     },
                     "name": "$senderName",
-                    "personalInfo": {
-                        "complexName": {
-                        "firstName": "$senderFirstName",
-                        "middleName": "$senderMiddleName",
-                        "lastName": "$senderLastName"
-                        },
-                        "dateOfBirth": "$senderDOB"
-                    }
                 },
                 "amountType": "SEND",
                 "amount": {
@@ -135,56 +114,33 @@ PayerCC->D1: I want to get a quote from the FSP\n**POST /quotes**
 !endif
 
 
-D1->>S1:Please quote for a transfer which sends $fxpTargetAmount $payeeCurrency.\n**POST /quotes**
+D1->>S1:Please quote for a transfer which \nsends $fxpTargetAmount $payeeCurrency.\n**POST /quotes**
 !if ($simplified != true)
-note right of D1
-POST /quotes
-
-    {
-        "quoteId": "$quoteId",
-        "transactionId": "$transactionId",
-        "payee": {
-            "partyIdInfo": {
-                "partyIdType": "MSISDN",
-                "partyIdentifier": "$payeeMSISDN",
-                "fspId": "$payeeFSPID"
-            },
-            "name": "$receiverName",
-            "personalInfo": {
-                "complexName": {
-                "firstName": "$receiverFirstName",
-                "middleName": "$receiverMiddleName",
-                "lastName": "$receiverLastName"
-                },
-                "dateOfBirth": "$receiverDOB",
-                "kycInformation": "<Encrypted KYC Data>"
-            },
-            "supportedCurrencies": [ "$payeeCurrency" ]
-        },
-        "payer": {
-            "partyIdInfo": {
-                "partyIdType": "MSISDN",
-                "partyIdentifier": "$payerMSISDN",
-                "fspId": "$payerFSPID"
-            },
-            "name": "$senderName",
-            "personalInfo": {
-                "complexName": {
-                "firstName": "$senderFirstName",
-                "middleName": "$senderMiddleName",
-                "lastName": "$senderLastName"
-                },
-                "dateOfBirth": "$senderDOB"
-            }
-        },
-        "amountType": "SEND",
-        "amount": {
-            "currency": "$payeeCurrency",
-            "amount": "$fxpTargetAmount"
-        },
-        "converter": "PAYER",
-        "expiration": "$quotePayerExpiration"
-    }
+note left
+**POST /quotes**
+{
+    "quoteId": "$quoteId",
+    "transactionId": "$transactionId",
+    "payee": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "$payeeMSISDN",
+            "fspId": "$payeeFSPID"},
+        "name": "$receiverName",
+        "supportedCurrencies": [ "$payeeCurrency" ] },
+    "payer": {
+        "partyIdInfo": {
+            "partyIdType": "MSISDN",
+            "partyIdentifier": "$payerMSISDN",
+            "fspId": "$payerFSPID"},
+        "name": "$senderName"},
+    "amountType": "SEND",
+    "amount": {
+        "currency": "$payeeCurrency",
+        "amount": "$fxpTargetAmount"},
+    "converter": "PAYER",
+    "expiration": "$quotePayerExpiration"
+}
 end note
 !endif
 activate S1
@@ -200,7 +156,8 @@ D2-->>S1:202 I'll get back to you
 deactivate S1
 D2->PayeeCC:**POST /quoterequests**
 !if ($simplified != true)
-note right of D2
+note left
+**POST /quoterequests**
 {
     "quoteId": "$quoteId",
     "transactionId": "$transactionId",
@@ -208,41 +165,19 @@ note right of D2
         "partyIdInfo": {
             "partyIdType": "MSISDN",
             "partyIdentifier": "$payeeMSISDN",
-            "fspId": "$payeeFSPID"
-        },
+            "fspId": "$payeeFSPID"},
         "name": "$receiverName",
-        "personalInfo": {
-            "complexName": {
-            "firstName": "$receiverFirstName",
-            "middleName": "$receiverMiddleName",
-            "lastName": "$receiverLastName"
-            },
-            "dateOfBirth": "$receiverDOB",
-            "kycInformation": "<Encrypted KYC Data>"
-        },
-        "supportedCurrencies": [ "$payeeCurrency" ]
-    },
+        "supportedCurrencies": [ "$payeeCurrency" ]},
     "payer": {
         "partyIdInfo": {
             "partyIdType": "MSISDN",
             "partyIdentifier": "$payerMSISDN",
-            "fspId": "$payerFSPID"
-        },
-        "name": "$senderName",
-        "personalInfo": {
-            "complexName": {
-            "firstName": "$senderFirstName",
-            "middleName": "$senderMiddleName",
-            "lastName": "$senderLastName"
-            },
-            "dateOfBirth": "$senderDOB"
-        }
-    },
+            "fspId": "$payerFSPID"},
+        "name": "$senderName"},
     "amountType": "SEND",
     "amount": {
         "currency": "$payeeCurrency",
-        "amount": "$fxpTargetAmount"
-    },
+        "amount": "$fxpTargetAmount"},
     "converter": "PAYER",
     "expiration": "$quotePayerExpiration"
 }
@@ -251,7 +186,8 @@ end note
 PayeeCC->PayeeCC:OK, so I will charge $payeeFee $payeeCurrency for this.\nNow I create terms of the transfer
 PayeeCC-->D2:Here are the terms
 !if ($simplified != true)
-note right of D2
+note right
+**POST /quoterequests** response
 {
     "quoteId": "$quoteId",
     "transactionId": "$transactionId",
@@ -267,28 +203,22 @@ end note
 !endif
 D2->D2:Now I will sign the transaction object
 D2->>S1:Here's the signed quote
-note left of D2
-    **put /quotes/$quoteId**
-
-    {
-        "transferAmount": {
-            "currency": "$payeeCurrency",
-            "amount": "$targetAmount"
-        },
-        "payeeReceiveAmount": {
-            "currency": "$payeeCurrency",
-            "amount": "$payeeReceiveAmount"
-        },
-        "payeeFspFee": {
-            "currency": "$payeeCurrency",
-            "amount": "$payeeFee"
-        },
-        "expiration": "$payeeQuoteExpiration",
-        "ilpPacket": "
-            <This is encoded transaction object. It contains data from quote request and response.>
-        ",
-        "condition": "$condition"
-    }
+note right
+**put /quotes/$quoteId**
+{
+    "transferAmount": {
+        "currency": "$payeeCurrency",
+        "amount": "$targetAmount"},
+    "payeeReceiveAmount": {
+        "currency": "$payeeCurrency",
+        "amount": "$payeeReceiveAmount"},
+    "payeeFspFee": {
+        "currency": "$payeeCurrency",
+        "amount": "$payeeFee"},
+    "expiration": "$payeeQuoteExpiration",
+    "ilpPacket": "<This is encoded transaction object.>",
+    "condition": "$condition"
+}
 
 end note
 activate S1
@@ -296,11 +226,11 @@ activate S1
 S1-->>D2:200 Gotcha
 !endif
 deactivate D2
-S1->>D1:Here's the signed quote\n**PUT /quotes/382987a8-75ce-4037-b500-c475e08c1727**
+S1->>D1:Here's the signed quote\n**PUT /quotes/$quoteId**
 activate D1
 !if ($simplified != true)
 D1-->>S1:200 Gotcha
 !endif
 deactivate S1
-D1->D1:OK, I can see that there are going to be $payeeFee $payeeCurrency in charges.
+D1->D1:OK, I can see that there \nare going to be $payeeFee $payeeCurrency in charges.
 @enduml

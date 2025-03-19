@@ -1,9 +1,10 @@
-@startuml
+@startuml FXAPI_Discovery
 
 !$simplified = false
 !$shortCutSingleFXP = false
 !$hideSwitchDetail = false
 !$advancedCoreConnectorFlow = false
+!$senderName = "John"
 !$senderLastName = ""
 !$senderDOB = "1966-06-16"
 !$receiverName = "Yaro"
@@ -28,23 +29,23 @@
 !$fxpTargetAmount = "48000"
 !$totalChargesSourceCurrency = "55"
 !$totalChargesTargetCurrency = "10000"
-!$conversionRequestId = "828cc75f-1654-415e-8fcd-df76cc9329b9"
-!$conversionId = "581f68ef-b54f-416f-9161-ac34e889a84b"
+!$conversionRequestId = "828cc75f1654415e8fcddf76cc"
+!$conversionId = "581f68efb54f416f9161ac34e8"
 !$homeTransactionId = "string"
-!$quoteId = "382987a8-75ce-4037-b500-c475e08c1727"
-!$transactionId = "d9ce59d4-3598-4396-8630-581bb0551451"
+!$quoteId = "382987a875ce4037b500c475e0"
+!$transactionId = "d9ce59d4359843968630581bb0"
 !$quotePayerExpiration = "2021-08-25T14:17:09.663+01:00"
 !$quotePayeeExpiration = "2021-08-25T14:17:09.663+01:00"
-!$commitRequestId = "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
-!$determiningTransferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$transferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$fxCondition = "GRzLaTP7DJ9t4P-a_BA0WA9wzzlsugf00-Tn6kESAfM"
-!$condition = "HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks"
+!$commitRequestId = "77c9d78dc26a44748b3c99b96a"
+!$determiningTransferId = "d9ce59d4359843968630581bb0"
+!$transferId = "d9ce59d4359843968630581bb0"
+!$fxCondition = "GRzLaTP7DJ9t4P-a_B..."
+!$condition = "HOr22-H3AfTDHrSkP..."
 
-title Remittance Transfer using Mojaloop FX APIs POC\nPayer DFSP requests conversion with SEND amount
+title Discovery - Mojaloop Connector Integration
 actor "$senderName" as A1
-box "Payer DFSP" #LightBlue  
   participant "Payer CBS" as PayerCBS
+box "Payer DFSP" #LightBlue  
   participant "Core Connector" as PayerCC
   participant "Payer\nMojaloop\nConnector" as D1
 end box
@@ -55,17 +56,17 @@ box "Discovery Service" #LightYellow
   participant "ALS Oracle" as ALS
 end box
 
-box "FX provider"  
-  participant "FXP\nConnector" as FXP
-  participant "Backend FX API" as FXPBackend
-end box
+'box "FX provider"  
+'  participant "FXP\nConnector" as FXP
+'  participant "Backend FX API" as FXPBackend
+'end box
 
 box "Payee DFSP" #LightBlue   
   participant "Payee\nMojaloop\nConnector" as D2
   participant "Core Connector" as PayeeCC
 end box
 
-actor "$receiverName" as A2
+'actor "$receiverName" as A2
 autonumber
 
 A1->PayerCBS:I'd like to pay $receiverName\n$payerSendAmount $payerCurrency, please
@@ -73,7 +74,7 @@ PayerCBS->PayerCC: Initiate remittance transfer
 !if ($advancedCoreConnectorFlow != true)
     PayerCC->D1: **POST /transfers**
     !if ($simplified != true)
-        note right of PayerCC
+        note left
         {
             "homeTransactionId": "$homeTransactionId",
             "from": {
@@ -100,14 +101,12 @@ PayerCBS->PayerCC: Initiate remittance transfer
 PayerCC->D1: **GET /parties/MSISDN/$payeeMSISDN**
 !endif
 
-== Discovery Phase ==
 activate D1
 D1->>S1:I want to send to MSISDN $payeeMSISDN\n**GET /parties/MSISDN/$payeeMSISDN**
 activate S1
 !if ($simplified != true)
 S1-->>D1:202 I'll get back to you
 !endif
-deactivate D1
 S1->ALS:Who owns MSISDN $payeeMSISDN?
 activate ALS
 ALS-->S1:It's $payeeFSPID
@@ -116,16 +115,18 @@ S1->>D2:Do you own MSISDN $payeeMSISDN?
 activate D2
 !if ($simplified != true)
 D2-->>S1:202 I'll get back to you
+deactivate S1
 !endif
-D2->D2: Check Sanction list status & trigger a refresh of the status
-D2->PayeeCC: Check account and get currency type
+D2->PayeeCC: **GET** /parties
+PayeeCC->PayeeCC: Validate whether the party \n can receive the transfer
+PayeeCC->PayeeCC: Check account and\n get currency type
 !if ($simplified != true)
 PayeeCC-->D2: Result
 !endif
 deactivate S1
-D2->>S1:Yes, it's $receiverName. He can receive in $payeeCurrency\n**PUT /parties/MSISDN/$payeeMSISDN**
+D2->>S1:Yes, it's $receiverName.\n He can receive in $payeeCurrency\n**PUT /parties/MSISDN/$payeeMSISDN**
 !if ($simplified != true)
-note left of D2
+note right
     PUT /parties
     {
         "partyIdInfo": {
@@ -133,49 +134,32 @@ note left of D2
             "partyIdentifier": "$payeeMSISDN",
             "fspId": "$payeeFSPID"
         },
-        "merchantClassificationCode": "string",
-        "name": "$receiverName",
-        "personalInfo": {
-            "complexName": {
-            "firstName": "$receiverFirstName",
-            "middleName": "$receiverMiddleName",
-            "lastName": "$receiverLastName"
-            },
-            "dateOfBirth": "$receiverDOB",
-            "kycInformation": "<Encrypted KYC Data>"
+        "name": "$receiverName"
         },
         "supportedCurrencies": [ "$payeeCurrency" ]
     }
 end note
 !else
-note over D2
-    Payee Info with Encrypted KYC Data
-end note
 !endif
 activate S1
 !if ($simplified != true)
 S1-->>D2:200 Gotcha
 !endif
 deactivate D2
-S1->>D1:Yes, it's $receiverName. He can receive in $payeeCurrency\n**PUT /parties/MSISDN/$payeeMSISDN**
-activate D1
+S1->>D1:Yes, it's $receiverName. \nHe can receive in $payeeCurrency\n**PUT /parties/MSISDN/$payeeMSISDN**
 !if ($simplified != true)
 D1-->>S1:200 Gotcha
 !endif
 deactivate S1
 
 !if ($advancedCoreConnectorFlow != true)
-    D1->PayerCC: Here is the party information\nand supported currencies
-    note right of PayerCC
+    D1-->PayerCC: Here is the party information\nand supported currencies
+    note right
     {
         "transferId": "$transferId",
             "homeTransactionId": "$homeTransactionId",
             "from": {
-                "dateOfBirth": "$senderDOB",
                 "displayName": "$senderName",
-                "firstName": "$senderFirstName",
-                "middleName": "$senderMiddleName",
-                "lastName": "$senderLastName"
                 "fspId": "$payerFSPID",
                 "idType": "MSISDN",
                 "idValue": "$payerMSISDN"
@@ -185,14 +169,8 @@ deactivate S1
                 "idType": "MSISDN",
                 "idValue": "$payeeMSISDN",
                 "displayName": "$receiverName",
-                "firstName": "$receiverFirstName",
-                "middleName": "$receiverMiddleName",
-                "lastName": "$receiverLastName"
-                "dateOfBirth": "$receiverDOB",
-
                 "fspId": "$payeeFSPID"
                 "supportedCurrencies": [ "$payeeCurrency" ]
-                "kycInformation": "<Encrypted KYC Data>"
             },
             "amountType": "SEND",
             "currency": "$payerCurrency",
@@ -205,25 +183,14 @@ deactivate S1
                         "partyIdentifier": "$payeeMSISDN",
                         "fspId": "$payeeFSPID"
                     },
-                    "merchantClassificationCode": "string",
                     "name": "$receiverName",
-                    "personalInfo": {
-                        "complexName": {
-                        "firstName": "$receiverFirstName",
-                        "middleName": "$receiverMiddleName",
-                        "lastName": "$receiverLastName"
-                        },
-                        "dateOfBirth": "$receiverDOB",
-                        "kycInformation": "<Encrypted KYC Data>"
-                    },
                     "supportedCurrencies": [ "$payeeCurrency" ]
-                },
-                "headers": {}
+                }
             }
         }
     end note
 !else
-    D1->PayerCC: Here is the party information\nand supported currencies
+    D1-->PayerCC: Here is the party information\nand supported currencies
     !if ($simplified != true)
         note right of PayerCC
         {
@@ -234,30 +201,16 @@ deactivate S1
                         "partyIdentifier": "$payeeMSISDN",
                         "fspId": "$payeeFSPID"
                     },
-                    "merchantClassificationCode": "string",
                     "name": "$receiverName",
-                    "personalInfo": {
-                        "complexName": {
-                        "firstName": "$receiverFirstName",
-                        "middleName": "$receiverMiddleName",
-                        "lastName": "$receiverLastName"
-                        },
-                        "dateOfBirth": "$receiverDOB",
-                        "kycInformation": "<Encrypted KYC Data>"
-                    },
-                     "supportedCurrencies": [ "$payeeCurrency" ]
-                },
-                "headers": {}
+                    "supportedCurrencies": [ "$payeeCurrency" ]
+                }
             },
             "currentState": "COMPLETED"
         }
         end note
     !endif
 !endif
-
-PayerCC->PayerCBS:Here's are the receiver details
-PayerCBS->A1:Hi, $senderName: The number belongs to $receiverName \nLet me know if you want to go ahead
-A1->PayerCBS:Yes please, go ahead
-
-PayerCBS->PayerCC: Payer has accepted the party information
+deactivate D1
+PayerCC-->PayerCBS:Here's are the \nreceiver details
+PayerCBS->A1:Hi, $senderName: \nThe number belongs to $receiverName \nLet me know if you want to\n go ahead
 @enduml

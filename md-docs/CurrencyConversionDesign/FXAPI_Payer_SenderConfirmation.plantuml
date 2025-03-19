@@ -1,9 +1,10 @@
-@startuml
+@startuml FXAPI_Payer_SenderConfirmation
 
 !$simplified = false
 !$shortCutSingleFXP = false
 !$hideSwitchDetail = false
 !$advancedCoreConnectorFlow = false
+!$senderName = "John"
 !$senderLastName = ""
 !$senderDOB = "1966-06-16"
 !$receiverName = "Yaro"
@@ -28,113 +29,90 @@
 !$fxpTargetAmount = "48000"
 !$totalChargesSourceCurrency = "55"
 !$totalChargesTargetCurrency = "10000"
-!$conversionRequestId = "828cc75f-1654-415e-8fcd-df76cc9329b9"
-!$conversionId = "581f68ef-b54f-416f-9161-ac34e889a84b"
+!$conversionRequestId = "828cc75f1654415e8fcddf76cc"
+!$conversionId = "581f68efb54f416f9161ac34e8"
 !$homeTransactionId = "string"
-!$quoteId = "382987a8-75ce-4037-b500-c475e08c1727"
-!$transactionId = "d9ce59d4-3598-4396-8630-581bb0551451"
+!$quoteId = "382987a875ce4037b500c475e0"
+!$transactionId = "d9ce59d4359843968630581bb0"
 !$quotePayerExpiration = "2021-08-25T14:17:09.663+01:00"
 !$quotePayeeExpiration = "2021-08-25T14:17:09.663+01:00"
-!$commitRequestId = "77c9d78d-c26a-4474-8b3c-99b96a814bfc"
-!$determiningTransferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$transferId = "d9ce59d4-3598-4396-8630-581bb0551451"
-!$fxCondition = "GRzLaTP7DJ9t4P-a_BA0WA9wzzlsugf00-Tn6kESAfM"
-!$condition = "HOr22-H3AfTDHrSkPjJtVPRdKouuMkDXTR4ejlQa8Ks"
+!$commitRequestId = "77c9d78dc26a44748b3c99b96a"
+!$determiningTransferId = "d9ce59d4359843968630581bb0"
+!$transferId = "d9ce59d4359843968630581bb0"
+!$fxCondition = "GRzLaTP7DJ9t4P-a_B..."
+!$condition = "HOr22-H3AfTDHrSkP..."
 
-title Remittance Transfer using Mojaloop FX APIs POC\nPayer DFSP requests conversion with SEND amount
+title Payer DFSP requests conversion with SEND amount
 actor "$senderName" as A1
+participant "Payer CBS" as PayerCBS
+
 box "Payer DFSP" #LightBlue  
-  participant "Payer CBS" as PayerCBS
   participant "Core Connector" as PayerCC
   participant "Payer\nMojaloop\nConnector" as D1
 end box
 
-participant "Mojaloop Switch" as S1
+'participant "Mojaloop Switch" as S1
 
-box "Discovery Service" #LightYellow
-  participant "ALS Oracle" as ALS
-end box
+'box "Discovery Service" #LightYellow
+  'participant "ALS Oracle" as ALS
+'end box
 
-box "FX provider"  
-  participant "FXP\nConnector" as FXP
-  participant "Backend FX API" as FXPBackend
-end box
+'box "FX provider"  
+'  participant "FXP\nConnector" as FXP
+'  participant "Backend FX API" as FXPBackend
+'end box
 
-box "Payee DFSP" #LightBlue   
-  participant "Payee\nMojaloop\nConnector" as D2
-  participant "Core Connector" as PayeeCC
-end box
+'box "Payee DFSP" #LightBlue   
+'  participant "Payee\nMojaloop\nConnector" as D2
+'  participant "Core Connector" as PayeeCC
+'end box
 
-actor "$receiverName" as A2
+'actor "$receiverName" as A2
 autonumber
 
-== Sender Confirmation ==
 
-!if ($advancedCoreConnectorFlow != true)
+!if ($advancedCoreConnectorFlow != true)    
     D1-->PayerCC:Here's the quote for the transfer\nIt expires at $quotePayeeExpiration
-    note right of PayerCC
+    note right
+    **POST/PUT /transfers** response
     {
         "transferId": "$transferId",
             "homeTransactionId": "$homeTransactionId",
             "from": {
-                "dateOfBirth": "$senderDOB",
                 "displayName": "$senderName",
-                "firstName": "$senderFirstName",
-                "middleName": "$senderMiddleName",
-                "lastName": "$senderLastName"
                 "fspId": "$payerFSPID",
                 "idType": "MSISDN",
-                "idValue": "$payerMSISDN"
-            },
+                "idValue": "$payerMSISDN" },
             "to": {
                 "type": "CONSUMER",
                 "idType": "MSISDN",
                 "idValue": "$payeeMSISDN",
                 "displayName": "$receiverName",
-                "firstName": "$receiverFirstName",
-                "middleName": "$receiverMiddleName",
-                "lastName": "$receiverLastName"
-                "dateOfBirth": "$receiverDOB",
-
                 "fspId": "$payeeFSPID"
-                "supportedCurrencies": [ "$payeeCurrency" ]
-                "kycInformation": "<Encrypted KYC Data>"
-            },
+                "supportedCurrencies": [ "$payeeCurrency" ] },
             "amountType": "SEND",
             "currency": "$payerCurrency",
             "amount": "$payerSendAmount"
             "currentState": "**WAITING_FOR_QUOTE_ACCEPTANCE**",
-            "getPartiesResponse": {
-                <Same as the previous responses>
-            },
+            "getPartiesResponse": {<Same as the previous responses>},
             "conversionRequestId": "$conversionRequestId",
-            "fxQuotesResponse": {
-                <Same as the previous responses>
-            },
+            "fxQuotesResponse": {<Same as the previous responses>},
             "fxQuotesResponseSource": "$payeeFSPID",
             "quoteId": "$quoteId",
             "quoteResponse": {
                 "body": {
                     "transferAmount": {
                         "currency": "$payeeCurrency",
-                        "amount": "$targetAmount"
-                    },
+                        "amount": "$targetAmount"},
                     "payeeReceiveAmount": {
                         "currency": "$payeeCurrency",
-                        "amount": "$payeeReceiveAmount"
-                    },
+                        "amount": "$payeeReceiveAmount"},
                     "payeeFspFee": {
                         "currency": "$payeeCurrency",
-                        "amount": "$payeeFee"
-                    },
+                        "amount": "$payeeFee"},
                     "expiration": "$payeeQuoteExpiration",
-                    "ilpPacket": "
-                        <This is encoded transaction object. It contains data from quote request and response.>
-                    ",
-                    "condition": "$condition"
-                },
-                "headers": {}
-            },
+                    "ilpPacket": "<This is encoded transaction object.>",
+                    "condition": "$condition"},},
             "quoteResponseSource": "$payeeFSPID",
         }
     end note
