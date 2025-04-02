@@ -56,7 +56,7 @@ At this point the party information, the conversion terms, and the transfer term
 
 #### Transfer Phase
 Now that the terms of the transfer have been agreed to, the transfer can proceed.
-Both the Conversion and the transfer terms are comitted together.
+Both the Conversion and the transfer terms are committed together.
 ![Transfer](./PAYER_SEND_Transfer.svg)
 
 
