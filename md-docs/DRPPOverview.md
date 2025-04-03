@@ -68,6 +68,7 @@ Incoming payments from the perspective of a DFSP are payments that are destined 
 
 The core connector is built to support incoming payments. From the DFSP API, it requires the following information
 - How to get account information especially the name of the customer for a specific account number
+- How to validate that a specific account can receive a payment prior to committing funds
 - How to determine the cost of a transfer into a customer’s account
 - How to request a reservation of a funds for a customer before crediting to the account
 - How to send a disbursement request to credit a customer’s account with the reserved funds
