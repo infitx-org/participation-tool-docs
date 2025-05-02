@@ -234,8 +234,8 @@ The following examples illustrate common approaches to identifier selection and 
 
 ---
 
-#### MSISDN
-A mobile phone number in international format (e.g., `+256771234567`).
+#### MSISDN (e.g., `+256771234567`)
+A mobile phone number in international format.
 
 - **Pros**:
   - Familiar and easy for customers to remember and share.
