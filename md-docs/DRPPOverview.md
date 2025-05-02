@@ -232,6 +232,8 @@ Selecting the appropriate identifier type is essential for usability, reliabilit
 
 The following examples illustrate common approaches to identifier selection and formatting within the DRPP. Each approach has specific benefits and trade-offs depending on the use case, customer experience, and technical implementation.
 
+---
+
 #### MSISDN
 A mobile phone number in international format (e.g., `+256771234567`).
 
