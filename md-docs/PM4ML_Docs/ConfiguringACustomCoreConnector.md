@@ -8,132 +8,159 @@ This guide documents the step-by-step process of:
 ---
 
 
-### Step 1: Removing sim-backend (Mock DFSP)
+### Step 1: Replacing sim-backend (Mock DFSP)
 
 #### **Background:**
 sim-backend was a simulated DFSP used for testing purposes within the Mojaloop environment.
 #### **Action Taken:**
-- The sim-backend service was deprecated and removed from docker-compose.yml
-- Any references to sim-backend in test scripts, routes, or Mojaloop SDK configurations should also be eliminated or adjusted accordingly.
-
----
-
-### Step 2: Introducing The Core Connector (Airtel Zambia)
-
-#### **Background:**
-Airtel Zambia serves as a real DFSP integration. We replaced the mock simulation with a live core connector that interacts with Airtel’s APIs.
-#### **Configuraton:**
-A new service named airtel-zambia-connector was introduced in docker-compose.yml:
+- Add the actual core connector image (CORE_CONNECTOR_IMAG) and tag (CORE_CONNECTOR_TAG) in the .env file docker-compose/.env
 
 ```sh
-services:
-  airtel-zambia-connector:
-    image: mojaloop/mifos-core-connector:latest
-    ports:
-      - "3003:3003"
-      - "3004:3004"
-    command:
-      - sh
-      - -c
-      - "npm start"
-    environment:
-      FSP_ID: 'airtelzambia'
-      LEI: 'airtelzambia'
-      SDK_BASE_URL: 'http://localhost:4010'
-      ...
+GET_SERVICES_FXP_RESPONSE= # e.g, test-fxp
+PM4ML_ENABLED=true
+SUPPORTED_CURRENCIES= # e.g., MWK
+
+## Sim Backend
+CORE_CONNECTOR_IMAGE= # e.g, mojaloop/mtn-ug-core-connector
+CORE_CONNECTOR_TAG= # e.g, v1.25.0
 
 ```
+- In the docker-compose/docker-compose.yaml file coment out the sim-backend-ui environment if using a core connector as shown bellow.
+```sh
+ports:
+      # - "5052:4040"
+      # - "5051:5050"
+      # Use following if using a core connector
+      - "3003:3003"
+      - "3004:3004"
+```
+
+- Also in the docker-compose/docker-compose.yaml file coment out the sim-backend ports if using a core connector as shown bellow.
+```sh
+# NOTE: The following UI for sim backend can be enabled for debugging purpose
+  sim-backend-ui:
+    image: mojaloop/ml-testing-toolkit-ui:v16.0.4
+    ports:
+      - "6061:6060"
+    environment:
+      # For ttk as sim-backend
+      # - API_BASE_URL=http://localhost:5051
+      # For core connector
+      - API_BASE_URL=http://localhost:3003
+      - AUTH_ENABLED=FALSE
+```
+
+- If the core connector is not found it will default to using the ml-testing-toolkit (sim backend).
 ---
+
 ### Step 3: Creating a Shared Environment Block
 
 #### **Problem:**
 Each core connector (MTN, Airtel, etc.) required similar configurations like:
 
-- Server host/port settings
-- HTTP timeouts
-- API spec paths
-- Common transaction settings
+- FSP_ID
+- CONNECTOR_NAME
 
 #### **Solution:**
 We identified these shared variables and defined them as part of a shared environment config.
 
 ### Shared/Common Variables:
 
-| Variable                  | Purpose |
+| Variable                  | Example |
 |---------------------------|-------------|
-| SUPPORTED_ID_TYPE    | Identifier type (usually MSISDN) |
-| SERVICE_CHARGE       | Default charge (e.g., 0). |
-| EXPIRATION_DURATION    | Duration (in minutes) before a transaction expires |
-| HTTP_TIMEOUT| HTTP request timeout in milliseconds. |
-| SDK_SERVER_HOST / PORT | 	Host and port for SDK server |
-| DFSP_SERVER_HOST / PORT | Host and port for DFSP server |
-| DFSP_API_SPEC_FILE / SDK_API_SPEC_FILE | Paths to OpenAPI spec files. |
+| FSP_ID    | Identifier type (e.g., mtndfsp) |
+| CONNECTOR_NAME       | e.g.,MTN-UG |
+| FSP_ID    | e.g.,mtnuganda |
+| LEI| e.g.,mtnuganda |
 ---
 
 ### Final Shared Configuration Block:
 ```sh
-environment:
-  # Shared config
-  SUPPORTED_ID_TYPE: 'MSISDN'
-  SERVICE_CHARGE: 0
-  EXPIRATION_DURATION: 1
-  HTTP_TIMEOUT: 5000
-
-  SDK_SERVER_HOST: '0.0.0.0'
-  SDK_SERVER_PORT: 3003
-  DFSP_SERVER_HOST: '0.0.0.0'
-  DFSP_SERVER_PORT: 3004
-
-  DFSP_API_SPEC_FILE: './src/api-spec/core-connector-api-spec-dfsp.yml'
-  SDK_API_SPEC_FILE: './src/api-spec/core-connector-api-spec-sdk.yml'
+# Mojaloop Connector Config for sim-backend
+FSP_ID= #e.g., mtndfsp
+CONNECTOR_NAME= #e.g.,MTN-UG
+FSP_ID= #e.g.,mtnuganda
+LEI= #e.g.,mtnuganda
 
 ```
-
-This block was embedded directly in the docker-compose.yml for each core connector instead of depending on .env files.
-
 ---
-### Step 4: Customizing DFSP-Specific Configuration
-Each DFSP also required unique values such as:
-| Variable                  | Purpose |
+### Step 4: Customizing DFSP-Specific Configuration Variables
+The following variables are provided as a sample. Each DFSP requires unique values:
+| Variable                  | Example |
 |---------------------------|-------------|
-| FSP_ID   | DFSP Identifier |
-| SDK_BASE_URL       | The internal SDK service URL |
-| LEI    | Legal Entity Identifier (DFSP specific) |
----
-These were added below the shared variables in each core connector’s environment: section.
+| MTN_BASE_URL   | sandbox.momodeveloper.mtn.com |
+| MTN_COLLECTION_API_KEY       | b1207baca1d343b581cc21346904c707 |
+| MTN_COLLECTION_CLIENT_ID    | c87a6e02-aa8c-4eaf-827a-d5d90e744241 |
+| MTN_COLLECTION_SUBSCRIPTION_KEY    | 5f40c404bf0c4e4f9b37e533d4993dd7 |
+| MTN_DISBURSEMENT_API_KEY    | 1188de4fcff9436f826cd1151985d7fe |
+| MTN_DISBURSEMENT_CLIENT_ID    | 980fa27a-16dc-4432-b589-7733a02008cf |
+| MTN_DISBURSEMENT_SUBSCRIPTION_KEY    | 85ce32bfcd8a44aaab993ebac601ff46 |
+| MTN_TARGET_ENVIRONMENT    | sandbox |
+| SUPPORTED_ID_TYPE    | MSISDN |
+| CBS_NAME    | MTN |
+| X_COUNTRY    | UG |
+| SERVICE_CHARGE    | 0 |
+| EXPIRATION_DURATION    | 1 |
+| HTTP_TIMEOUT    | 5000 |
+| MTN_ENV    | staging |
+| DFSP_CURRENCY    | UGX |
 
-### Step 5: Final Docker Compose Example (Airtel Zambia)
+---
+### DFSP-Specific Configuration Block:
 ```sh
-environment:
-services:
-  airtel-zambia-connector:
-    image: mojaloop/mifos-core-connector:latest
-    ports:
-      - "3003:3003"
-      - "3004:3004"
-    command:
-      - sh
-      - -c
-      - "npm start"
-    environment:
-      # Shared config
-      SUPPORTED_ID_TYPE: 'MSISDN'
-      SERVICE_CHARGE: 0
-      EXPIRATION_DURATION: 1
-      HTTP_TIMEOUT: 5000
-      SDK_SERVER_HOST: '0.0.0.0'
-      SDK_SERVER_PORT: 3003
-      DFSP_SERVER_HOST: '0.0.0.0'
-      DFSP_SERVER_PORT: 3004
-      DFSP_API_SPEC_FILE: './src/api-spec/core-connector-api-spec-dfsp.yml'
-      SDK_API_SPEC_FILE: './src/api-spec/core-connector-api-spec-sdk.yml'
-      FSP_ID: 'airtelzambia'
-      SDK_BASE_URL: 'http://localhost:4010'
-      LEI: 'airtelzambia'
+# These are only provided as sample
+
+MTN_BASE_URL= #e.g.,sandbox.momodeveloper.mtn.com
+MTN_COLLECTION_API_KEY= #e.g.,b1207baca1d343b581cc21346904c707
+MTN_COLLECTION_CLIENT_ID= #e.g.,c87a6e02-aa8c-4eaf-827a-d5d90e744241
+MTN_COLLECTION_SUBSCRIPTION_KEY= #e.g.,5f40c404bf0c4e4f9b37e533d4993dd7
+MTN_DISBURSEMENT_API_KEY= #e.g.,1188de4fcff9436f826cd1151985d7fe
+MTN_DISBURSEMENT_CLIENT_ID= #e.g.,980fa27a-16dc-4432-b589-7733a02008cf
+MTN_DISBURSEMENT_SUBSCRIPTION_KEY= #e.g.,85ce32bfcd8a44aaab993ebac601ff46
+MTN_TARGET_ENVIRONMENT= #e.g.,sandbox
+SUPPORTED_ID_TYPE= #e.g.,MSISDN
+CBS_NAME= #e.g.,MTN
+X_COUNTRY= #e.g.,UG
+X_CURRENCY= #e.g.,EUR
+SERVICE_CHARGE= #e.g.,0
+EXPIRATION_DURATION= #e.g.,1
+HTTP_TIMEOUT= #e.g.,5000
+MTN_ENV= #e.g.,staging
+DFSP_CURRENCY= #e.g.,UGX
+
+```
+### Final Configuration Block:
+Here is what the final configuration block should look like:
+```sh
+# Mojaloop Connector Config for sim-backend
+FSP_ID= #e.g., mtndfsp
+CONNECTOR_NAME= #e.g.,MTN-UG
+FSP_ID= #e.g.,mtnuganda
+LEI= #e.g.,mtnuganda
+
+## CBS Config , env variables can change as per the core connector being used
+# These are only provided as sample
+MTN_BASE_URL= #e.g.,sandbox.momodeveloper.mtn.com
+MTN_COLLECTION_API_KEY= #e.g.,b1207baca1d343b581cc21346904c707
+MTN_COLLECTION_CLIENT_ID= #e.g.,c87a6e02-aa8c-4eaf-827a-d5d90e744241
+MTN_COLLECTION_SUBSCRIPTION_KEY= #e.g.,5f40c404bf0c4e4f9b37e533d4993dd7
+MTN_DISBURSEMENT_API_KEY= #e.g.,1188de4fcff9436f826cd1151985d7fe
+MTN_DISBURSEMENT_CLIENT_ID= #e.g.,980fa27a-16dc-4432-b589-7733a02008cf
+MTN_DISBURSEMENT_SUBSCRIPTION_KEY= #e.g.,85ce32bfcd8a44aaab993ebac601ff46
+MTN_TARGET_ENVIRONMENT= #e.g.,sandbox
+SUPPORTED_ID_TYPE= #e.g.,MSISDN
+CBS_NAME= #e.g.,MTN
+X_COUNTRY= #e.g.,UG
+X_CURRENCY= #e.g.,EUR
+SERVICE_CHARGE= #e.g.,0
+EXPIRATION_DURATION= #e.g.,1
+HTTP_TIMEOUT= #e.g.,5000
+MTN_ENV= #e.g.,staging
+DFSP_CURRENCY= #e.g.,UGX
 
 ```
 ---
-### Step 6: Maintenance & Scaling
+### Step 5: Maintenance & Scaling
 To add more core connectors (e.g., MTN Rwanda, Zamtel), repeat the following:
 
 - Update DFSP-specific services and image.
