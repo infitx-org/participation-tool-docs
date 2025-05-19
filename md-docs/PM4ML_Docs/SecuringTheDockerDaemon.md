@@ -196,7 +196,7 @@ export DOCKER_CONTENT_TRUST=1
 docker pull my_image
 ```
 
-## 10. Enable Cgroup Resource Limits
+## 10. Enable Ggroup Resource Limits
 
 ### Run a Container with Memory and CPU Limits
 Limit the memory and CPU usage for containers to avoid resource exhaustion.
