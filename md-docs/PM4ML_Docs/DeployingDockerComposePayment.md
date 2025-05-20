@@ -17,7 +17,22 @@ Before deploying the Payment Manager using Docker Compose, ensure the following 
 - **Docker Compose:** Version 1.29+ (Check Docker Compose release notes for details)
 
 ---
+## Public IP and DNS Configuration
+For seamless connectivity, the following environment variables must be properly set and configured:
 
+### **Public IP Configuration**
+- `WHITELIST_IP`: Defines the public IP range of the VM that is whitelisted for system access.
+  - Example: `WHITELIST_IP=203.0.113.0/24` (Allows access from this IP range).
+  - If not configured properly, unauthorized users may gain or be denied access.
+
+### **DNS Configuration**
+- `MOJALOOP_CONNECTOR_FQDN`: Specifies the Fully Qualified Domain Name (FQDN) of the Mojaloop Connector.
+  - Example: `MOJALOOP_CONNECTOR_FQDN=connector.pm4ml.example.com`
+  - This must be **publicly resolvable** (i.e., an external system must be able to resolve this domain to the correct public IP).
+
+- `CALLBACK_URL`: Defines the Virtual Machine’s domain name and SDK endpoint for communication.
+  - Example: `CALLBACK_URL=https://pm4ml.example.com/sdk-endpoint`
+  - This URL is used by external services or Mojaloop components to interact with the system.
 ## Installing Docker and Docker Compose
 
 ### Ubuntu/Linux Installation
@@ -214,3 +229,13 @@ environment:
 Now, Docker Compose will load variables from `.env` for security.
 
 ---
+## Docker Login
+USING WEB-BASED LOGIN
+
+the first step is to confirm where the image is hosted then run the following docker login command
+`docker login -u <your_username> --password-stdin` This allows you to provide the password via standard input, which is useful for scripts and automation.
+
+Use `docker login <registry_url>` This allows you to log in to a registry other than the default Docker Hub.
+
+for additional information about the login check https://docs.docker.com/reference/cli/docker/login/
+for additional information about the logout check https://docs.docker.com/reference/cli/docker/logout/
