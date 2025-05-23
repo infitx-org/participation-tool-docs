@@ -164,11 +164,13 @@ DFSP_CURRENCY= #e.g.,UGX
 The Core Connector acts as the crucial intermediary between the DFSP (like the Payment Manager) and the Mojaloop hub.
 
 - Replacing the sim-backend with a real core connector is the first step towards live hub connectivity.
-- The essential environment variables are the FSP_ID: The Financial Service Provider ID assigned by the Mojaloop scheme. This is the live, production ID, CONNECTOR_NAME: The specific name for your connector and the LEI: Legal Entity Identifier.
-- Hub Endpoints: The actual network addresses (URLs) of the live Mojaloop APIs.
-- Authentication Credentials: As mentioned above, the specific API keys, tokens, certificates, etc., required to authenticate with the hub.
-- Security Protocols: Details on TLS versions, encryption standards, and other security requirements.
-- Message Formats: Confirmation of the exact FSPIOP message formats expected by the live hub.
+- The essential environment variables are
+  - FSP_ID: The Financial Service Provider ID assigned by the Mojaloop scheme.
+  - CONNECTOR_NAME: The specific name for your connector and the LEI: Legal Entity Identifier.
+  - Hub Endpoints: The actual network addresses (URLs) of the live Mojaloop APIs.
+  - Authentication Credentials: Client ID and Client Secret are required to authenticate with the hub.
+  - Security Protocols: Details on TLS versions, encryption standards, and other security requirements.
+  - Message Formats: Confirmation of the message formats (FSPIOP / ISO20022) expected by the live hub.
 
 ##### The most critical information will come from the operator of the live Mojaloop hub itself
 ---
