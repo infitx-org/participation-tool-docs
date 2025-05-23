@@ -40,8 +40,8 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
 ### Summary of Core Connector’s Roles
 | Function                  | Description |
 |---------------------------|-------------|
-| Transaction Processing    | Handles outbound/inbound payments between a DFSP and Mojaloop. |
-| API Transformation       | Converts messages between DFSP APIs and Mojaloop FSPIOP API. |
+| Transaction Processing    | Handles outbound/inbound payments between the Payment Manager and DFSP Backend. |
+| API Transformation       | Converts messages between Payment Manager APIs and Core Backend system API. |
 | Security & Compliance    | Implements authentication, encryption, and regulatory checks. |
 | Error Handling & Logging | Manages transaction failures, logging, and retries. |
 | Performance Optimization | Uses caching, load balancing, and monitoring tools. |
