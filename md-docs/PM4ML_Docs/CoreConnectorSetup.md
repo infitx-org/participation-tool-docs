@@ -17,7 +17,7 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
   - Receives the response and sends it back to the Mojaloop Connector.
 
 #### 2. API Transformation & Interoperability
-- Converts data between the DFSP's Core Banking System API format and Mojaloop’s FSPIOP API format.
+- Converts data between the DFSP's Core Banking System API format and Mojaloop’s FSPIOP/ISO20022 API format.
 - Ensures message structure, encoding, and data formatting match the required standards (ISO20021).
 - Handles currency conversion if needed for multi-currency transactions.
 
