@@ -24,9 +24,9 @@ Set the following environment variables in a `.env` file or directly in `docker-
 - **AUTH_CLIENT_SECRET**: Defines the secret key used for authentication with the authorization server.
   - Example: `uvghb1OMl5l9vMXTvu2hp04rAExRjRS4`
 - **HUB_IAM_PROVIDER_URL**: Sets the Identity and Access Management (IAM) provider URL.
-  - Example: `https://keycloak.zm-uat.drpp-onprem.global`
+  - Example: `https://example.global`
 - **MCM_SERVER_ENDPOINT**: Defines the endpoint URL for the Mojaloop Connection Manager (MCM) server.
-  - Example: `https://mcm.zm-uat.drpp-onprem.global/pm4mlapi`
+  - Example: `https://mcm.server.global/pm4mlapi`
 - **CALLBACK_URL**: Specifies the Virtual Machine domain name.
   - Example: `https://pm4ml.example.com`
 - **WHITELIST_IP**: Specifies the public IP range of the VM that is whitelisted for system access.
@@ -36,7 +36,7 @@ Set the following environment variables in a `.env` file or directly in `docker-
 #### SDK Scheme Adapter Environment Variables
 - **API_TYPE**: Defines the API format for message processing.
   - Example: `iso20022`
-- **GET_SERVICES_FXP_RESPONSE**: Configures the test response for Foreign Exchange Processing.
+- **GET_SERVICES_FXP_RESPONSE**: Configures the test use for transfers which need currency conversion.
   - Example: `test-fxp`
 - **PM4ML_ENABLED**: Enables Payment Manager for Mojaloop (PM4ML) functionality.
   - Example: `true`

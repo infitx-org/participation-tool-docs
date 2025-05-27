@@ -21,7 +21,7 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
 - Ensures message structure, encoding, and data formatting match the required standards (ISO20021).
 - Handles currency conversion if needed for multi-currency transactions.
 
-#### 3. Security & Compliance Management
+<!-- #### 3. Security & Compliance Management
 - Ensures secure authentication (OAuth 2.0, JWT, API Keys).
 - Encrypts sensitive financial data during transmission.
 - Implements fraud detection mechanisms and transaction validation.
@@ -35,7 +35,7 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
 #### 5. Performance Optimization & Monitoring
 - Load balances transaction requests to handle high traffic.
 - Implements caching for frequently accessed data (e.g., customer details).
-- Integrates with monitoring tools (Grafana, Prometheus) for real-time tracking.
+- Integrates with monitoring tools (Grafana, Prometheus) for real-time tracking. -->
 
 ### Summary of Core Connector’s Roles
 | Function                  | Description |
@@ -54,19 +54,13 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
 Before building the Core Connector, ensure you have the required prerequisites and set up a development environment.
 
 ### Prerequisites
-- CBS Sandbox API – A test environment for the Core Banking System (CBS) API.
-- Access Credentials – API keys, OAuth tokens, or any required authentication for Mojaloop and CBS.
 - TypeScript Knowledge – The Core Connector is often developed in TypeScript for maintainability.
 - Beginner Docker Knowledge – Understanding how to containerize and deploy services using Docker.
 - Git Knowledge – Version control with GitHub/GitLab.
-- Mojaloop Knowledge – Understanding FSPIOP API, Mojaloop scheme, and transaction flows.
+- Mojaloop Knowledge – Understanding ISO20022 API, Mojaloop scheme, and transaction flows.
 - Windows Subsystem for Linux (WSL) – Required for Windows users to run Ubuntu efficiently.
 
 ### Step 1: Install Development Tools
-#### For Linux/macOS Users
-```bash
-sudo apt update && sudo apt install -y curl git docker.io docker-compose nodejs npm
-```
 
 #### For Windows Users (Using WSL)
 ```powershell

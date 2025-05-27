@@ -12,7 +12,7 @@ Before deploying the Payment Manager using Docker Compose, ensure the following 
 - **CPU:** 4 cores (8 cores recommended for optimal performance)
 - **Memory:** 8GB RAM (16GB recommended for large deployments)
 - **Storage:** At least 50GB of free space (more may be needed depending on transaction volume)
-- **OS Version:** Ubuntu 20.04+ / CentOS 8+ / Windows Server 2019+
+- **OS Version:** Ubuntu 20.04+ / CentOS 8+
 - **Docker Version:** Docker Engine 20.10+ (Check Docker's version page for the latest)
 - **Docker Compose:** Version 1.29+ (Check Docker Compose release notes for details)
 
@@ -31,7 +31,7 @@ For seamless connectivity, the following environment variables must be properly 
   - This must be **publicly resolvable** (i.e., an external system must be able to resolve this domain to the correct public IP).
 
 - `CALLBACK_URL`: Defines the Virtual Machine’s domain name and SDK endpoint for communication.
-  - Example: `CALLBACK_URL=https://pm4ml.example.com/sdk-endpoint`
+  - Example: `CALLBACK_URL=https://connector.pm4ml.example.com
   - This URL is used by external services or Mojaloop components to interact with the system.
 ## Installing Docker and Docker Compose
 
@@ -78,38 +78,6 @@ sudo chmod +x /usr/local/bin/docker-compose
 docker --version
 docker-compose --version
 ```
-
----
-
-### Windows Installation (Using Docker Desktop)
-
-#### 1. Download and Install Docker Desktop
-- Visit [Docker's official website](https://www.docker.com/products/docker-desktop/) and download Docker Desktop for Windows.
-
-#### 2. Enable WSL Backend (if required)
-Docker Desktop on Windows relies on WSL 2. If not enabled, follow these steps:
-- Open PowerShell as an administrator and run:
-```sh
-dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
-```
-
-#### 3. Enable Virtual Machine Feature
-Enable the Virtual Machine Platform optional feature:
-```sh
-dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
-```
-
-#### 4. Download and Install WSL2 Linux Kernel Update
-[Download the latest package here](https://learn.microsoft.com/en-us/windows/wsl/install-manual/)
-
-#### 5. Set WSL 2 as Default Version
-```sh
-wsl --set-default-version 2
-wsl.exe --update
-```
-
-#### 6. Restart Your System
-After completing the installation, restart your system to finalize the setup.
 
 ---
 
@@ -161,10 +129,6 @@ docker-compose down
 - **Restart the services:**
 ```sh
 docker-compose up -d
-```
-- **Rebuild after changes:**
-```sh
-docker-compose up --build -d
 ```
 - **Remove all containers & volumes (for a fresh setup):**
 ```sh

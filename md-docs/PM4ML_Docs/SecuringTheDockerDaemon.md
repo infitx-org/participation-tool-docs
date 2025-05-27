@@ -134,13 +134,6 @@ Restart Docker to apply logging configurations.
 sudo systemctl restart docker
 ```
 
-### Install Falco for Real-Time Security Monitoring
-Install Falco, a tool for monitoring security events in real time.
-
-```sh
-curl -s https://falco.org/install | sudo bash
-```
-
 ## 7. Keep Docker Updated
 
 ### Update Docker to the Latest Stable Version
@@ -157,7 +150,7 @@ After updating Docker, check the version to confirm the update was successful.
 docker --version
 ```
 
-## 8. Restrict Container Networking
+<!-- ## 8. Restrict Container Networking
 
 ### Create a User-Defined Network
 Isolate containers for more secure communication between them.
@@ -170,11 +163,11 @@ docker network create --driver bridge my_network
 
 ```sh
 docker run --network my_network my_container
-```
+``` -->
 
 ## 9. Scan Images for Vulnerabilities
 
-### Install Trivy for Image Scanning
+<!-- ### Install Trivy for Image Scanning
 Install Trivy, a vulnerability scanner for Docker images.
 
 ```sh
@@ -186,15 +179,15 @@ Use Trivy to scan Docker images for known vulnerabilities.
 
 ```sh
 trivy image my_image
-```
+``` -->
 
-### Enable Docker Content Trust (DCT)
+<!-- ### Enable Docker Content Trust (DCT)
 Ensure only signed images are used.
 
 ```sh
 export DOCKER_CONTENT_TRUST=1
 docker pull my_image
-```
+``` -->
 
 ## 10. Enable Ggroup Resource Limits
 

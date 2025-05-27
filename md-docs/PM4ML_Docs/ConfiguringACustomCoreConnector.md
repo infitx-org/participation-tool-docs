@@ -161,7 +161,7 @@ DFSP_CURRENCY= #e.g.,UGX
 ```
 ---
 ### Step 5: Connecting the Deployed Payment Manager to a Live Hub
-The Core Connector acts as the crucial intermediary between the DFSP (like the Payment Manager) and the Mojaloop hub.
+The Core Connector acts as the crucial intermediary between the Payment Manager and the Mojaloop hub.
 
 - Replacing the sim-backend with a real core connector is the first step towards live hub connectivity.
 - The essential environment variables are

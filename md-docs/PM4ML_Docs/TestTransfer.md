@@ -2,6 +2,8 @@
 
 This guide outlines the process for sending test transfers to verify connectivity across three transfer types: Outbound Transfers, Inbound Transfers, and FXP Transfers. The steps include how to initiate transfers, check results, and troubleshoot failures using the Testing Toolkit (TTK).
 
+this testing process is for local development and not for testing transfers when connected to live mojaloop switch. The process may vary when connected to mojaloop switch.
+
 ---
 
 ## 1. Pre-requisites
