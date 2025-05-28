@@ -6,6 +6,9 @@ This guide details the deployment and connection of the Mojaloop Payment Manager
 ## Prerequisites
 - **Docker and Docker Compose**: Installed on the deployment server.
 - **Payment Manager Repository**: Cloned or downloaded with a `docker-compose.yml` file supporting the portal profile.
+```sh
+https://github.com/pm4ml/on-premise-deploy.git
+```
 - **Hub Access**: Credentials and endpoint details from the hub operator.
 - **Network Access**: Localhost or server IP accessible on ports `4010`, `8081`, and other service-specific ports.
 

@@ -96,7 +96,7 @@ mkdir payment-manager && cd payment-manager
 
 ---
 
-## Build & Run the Containers
+## Run the Containers
 
 #### 1. Start the Services
 ```sh
@@ -174,21 +174,11 @@ Instead of hardcoding values in `docker-compose.yml`, use an `.env` file.
 ```sh
 nano .env
 ```
-
-#### 2. Add Environment Variables
+#### 2. refere to .env.example file for env variables that can be added
 ```sh
-POSTGRES_USER=user
-POSTGRES_PASSWORD=password
-POSTGRES_DB=payments
+on-premise-deploy/docker-compose/.env.example
 ```
 
-#### 3. Modify `docker-compose.yml` to Use `.env`
-```sh
-environment:
-  - POSTGRES_USER=${POSTGRES_USER}
-  - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-  - POSTGRES_DB=${POSTGRES_DB}
-```
 
 Now, Docker Compose will load variables from `.env` for security.
 

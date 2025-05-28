@@ -1,91 +1,80 @@
 # Configuring a custom core connectors
-
 ## Objective
 This guide documents the step-by-step process of:
-- Replacing the sim-backend (a mock backend) with actual Core Connector, a real DFSP implementation.
+- Configuring the sim-backend service to use a Core Connector, a real DFSP implementation, instead of the default mock backend.
 - Creating a custom configuration for managing shared environment variables used by all core connectors (MNOs, Banks, etc).
-- Integrating all configurations into docker-compose.yml for clean and maintainable deployments. 
+- Integrating all configurations into docker-compose.yml for clean and maintainable deployments.
 ---
-
-
-### Step 1: Replacing sim-backend (Mock DFSP)
-
+### Step 1: Configuring sim-backend to use a Core Connector
 #### **Background:**
-sim-backend was a simulated DFSP used for testing purposes within the Mojaloop environment.
+The sim-backend service can operate in two modes: as a simulated DFSP using the ml-testing-toolkit, or as a real core connector implementation. The service automatically switches between these modes based on the configured image.
 #### **Action Taken:**
-- Add the actual core connector image (CORE_CONNECTOR_IMAG) and tag (CORE_CONNECTOR_TAG) in the .env file docker-compose/.env
-
+- Add the core connector image (CORE_CONNECTOR_IMAGE) and tag (CORE_CONNECTOR_TAG) in the .env file docker-compose/.env
 ```sh
 GET_SERVICES_FXP_RESPONSE= # e.g, test-fxp
 PM4ML_ENABLED=true
 SUPPORTED_CURRENCIES= # e.g., MWK
-
 ## Sim Backend
 CORE_CONNECTOR_IMAGE= # e.g, mojaloop/mtn-ug-core-connector
 CORE_CONNECTOR_TAG= # e.g, v1.25.0
-
 ```
-- In the docker-compose/docker-compose.yaml file coment out the sim-backend-ui environment if using a core connector as shown bellow.
-```sh
-ports:
+- Create a separate `core-connector-config.env` file to configure the core connector environment variables. This file is used by the sim-backend service when running as a core connector.
+- The docker-compose.yaml file has been configured to use the core connector setup as shown below:
+```yaml
+sim-backend:
+    image: ${CORE_CONNECTOR_IMAGE:-mojaloop/ml-testing-toolkit}:${CORE_CONNECTOR_TAG:-v18.5.1}
+    env_file:
+        # - .env
+        - core-connector-config.env
+    ports:
       # - "5052:4040"
       # - "5051:5050"
       # Use following if using a core connector
       - "3003:3003"
       - "3004:3004"
-```
-
-- Also in the docker-compose/docker-compose.yaml file coment out the sim-backend ports if using a core connector as shown bellow.
-```sh
-# NOTE: The following UI for sim backend can be enabled for debugging purpose
-  sim-backend-ui:
-    image: mojaloop/ml-testing-toolkit-ui:v16.0.4
-    ports:
-      - "6061:6060"
+    volumes:
+      - ./core-connector-config/:/opt/app/core-connector-config/
     environment:
-      # For ttk as sim-backend
-      # - API_BASE_URL=http://localhost:5051
-      # For core connector
-      - API_BASE_URL=http://localhost:3003
-      - AUTH_ENABLED=FALSE
+      # Uncomment if using a core-connector for sim-backend
+      # SERVER CONFIGS
+      - DFSP_SERVER_HOST=0.0.0.0
+      - DFSP_SERVER_PORT=3004
+      - SDK_SERVER_HOST=0.0.0.0
+      - SDK_SERVER_PORT=3003
+      - DFSP_API_SPEC_FILE=./core-connector-config/core-connector-api-spec-dfsp.yml
+      - SDK_API_SPEC_FILE=./core-connector-config/core-connector-api-spec-sdk.yml
+      # Mojaloop Connector
+      - SDK_BASE_URL=http://sdk-scheme-adapter:4001
 ```
-
-- If the core connector is not found it will default to using the ml-testing-toolkit (sim backend).
+The key configuration changes include:
+- The sim-backend service uses environment file `core-connector-config.env` instead of the main `.env` file
+- Volume mounting for core connector configuration files
+- Server configuration environment variables for DFSP and SDK endpoints
+- API specification file paths for both DFSP and SDK interfaces
+- If no core connector image is specified (CORE_CONNECTOR_IMAGE is empty), the service will default to using the ml-testing-toolkit as a simulated backend.
 ---
-
-### Step 3: Creating a Shared Environment Block
-
+### Step 2: Creating the Core Connector Configuration File
 #### **Problem:**
-Each core connector (MTN, Airtel, etc.) required similar configurations like:
-
-- FSP_ID
-- CONNECTOR_NAME
-
+Each core connector (MTN, Airtel, etc.) requires specific configurations that need to be managed separately from the main environment variables.
 #### **Solution:**
-We identified these shared variables and defined them as part of a shared environment config.
-
-### Shared/Common Variables:
-
+We create a dedicated `core-connector-config.env` file that contains all the necessary environment variables for the core connector. This file is referenced by the sim-backend service in the docker-compose configuration.
+### Shared/Common Variables for core-connector-config.env:
 | Variable                  | Example |
 |---------------------------|-------------|
 | FSP_ID    | Identifier type (e.g., mtndfsp) |
 | CONNECTOR_NAME       | e.g.,MTN-UG |
-| FSP_ID    | e.g.,mtnuganda |
 | LEI| e.g.,mtnuganda |
 ---
-
-### Final Shared Configuration Block:
+### Shared Configuration Block for core-connector-config.env:
 ```sh
-# Mojaloop Connector Config for sim-backend
+# Mojaloop Connector Config for core connector
 FSP_ID= #e.g., mtndfsp
 CONNECTOR_NAME= #e.g.,MTN-UG
-FSP_ID= #e.g.,mtnuganda
 LEI= #e.g.,mtnuganda
-
 ```
 ---
-### Step 4: Customizing DFSP-Specific Configuration Variables
-The following variables are provided as a sample. Each DFSP requires unique values:
+### Step 3: Customizing DFSP-Specific Configuration Variables
+The following variables are provided as a sample and should be added to the `core-connector-config.env` file. Each DFSP requires unique values:
 | Variable                  | Example |
 |---------------------------|-------------|
 | MTN_BASE_URL   | sandbox.momodeveloper.mtn.com |
@@ -104,12 +93,10 @@ The following variables are provided as a sample. Each DFSP requires unique valu
 | HTTP_TIMEOUT    | 5000 |
 | MTN_ENV    | staging |
 | DFSP_CURRENCY    | UGX |
-
 ---
-### DFSP-Specific Configuration Block:
+### DFSP-Specific Configuration Block for core-connector-config.env:
 ```sh
 # These are only provided as sample
-
 MTN_BASE_URL= #e.g.,sandbox.momodeveloper.mtn.com
 MTN_COLLECTION_API_KEY= #e.g.,b1207baca1d343b581cc21346904c707
 MTN_COLLECTION_CLIENT_ID= #e.g.,c87a6e02-aa8c-4eaf-827a-d5d90e744241
@@ -127,18 +114,15 @@ EXPIRATION_DURATION= #e.g.,1
 HTTP_TIMEOUT= #e.g.,5000
 MTN_ENV= #e.g.,staging
 DFSP_CURRENCY= #e.g.,UGX
-
 ```
-### Final Configuration Block:
-Here is what the final configuration block should look like:
+### Final core-connector-config.env Configuration
+Here is what the complete `core-connector-config.env` file should look like:
 ```sh
-# Mojaloop Connector Config for sim-backend
+# Mojaloop Connector Config for core connector
 FSP_ID= #e.g., mtndfsp
 CONNECTOR_NAME= #e.g.,MTN-UG
-FSP_ID= #e.g.,mtnuganda
 LEI= #e.g.,mtnuganda
-
-## CBS Config , env variables can change as per the core connector being used
+## DFSP-Specific Config - env variables can change as per the core connector being used
 # These are only provided as sample
 MTN_BASE_URL= #e.g.,sandbox.momodeveloper.mtn.com
 MTN_COLLECTION_API_KEY= #e.g.,b1207baca1d343b581cc21346904c707
@@ -157,12 +141,10 @@ EXPIRATION_DURATION= #e.g.,1
 HTTP_TIMEOUT= #e.g.,5000
 MTN_ENV= #e.g.,staging
 DFSP_CURRENCY= #e.g.,UGX
-
 ```
 ---
-### Step 5: Connecting the Deployed Payment Manager to a Live Hub
-The Core Connector acts as the crucial intermediary between the Payment Manager and the Mojaloop hub.
-
+### Step 4: Connecting the Deployed Payment Manager to a Live Hub
+The Core Connector acts as the crucial intermediary between the Payment Manager and the core backend.
 - Replacing the sim-backend with a real core connector is the first step towards live hub connectivity.
 - The essential environment variables are
   - FSP_ID: The Financial Service Provider ID assigned by the Mojaloop scheme.
@@ -171,12 +153,5 @@ The Core Connector acts as the crucial intermediary between the Payment Manager 
   - Authentication Credentials: Client ID and Client Secret are required to authenticate with the hub.
   - Security Protocols: Details on TLS versions, encryption standards, and other security requirements.
   - Message Formats: Confirmation of the message formats (FSPIOP / ISO20022) expected by the live hub.
-
 ##### The most critical information will come from the operator of the live Mojaloop hub itself
 ---
-### Step 5: Maintenance & Scaling
-To add more core connectors (e.g., MTN Rwanda, Zamtel), repeat the following:
-
-- Update DFSP-specific services and image.
-- Update DFSP-specific environmental variables.
-- Ensure unique ports or mount volumes if needed.
