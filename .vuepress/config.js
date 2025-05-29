@@ -33,6 +33,10 @@ export default defineUserConfig({
         link: '/md-docs/TechnicalIntegration',
       },
       {
+        text: 'Deployment',
+        link: '/md-docs/PM4ML_Docs/Guide',
+      },
+      {
         text: 'Technical Reference',
         link: '/md-docs/Service',
       },
@@ -74,6 +78,20 @@ export default defineUserConfig({
             'CoreConnectorTestingHarness.md',
             'CoreConnectorTemplateDocs.md',
             'ISO20022AndMerchantPayments.md'
+          ]
+        },
+        {
+          text: 'Deployment',
+          collapsible: true,
+          children: [
+            '/md-docs/PM4ML_Docs/Guide.md',
+            '/md-docs/PM4ML_Docs/CoreConnectorSetup.md',
+            '/md-docs/PM4ML_Docs/DeployingDockerComposePayment.md',
+            '/md-docs/PM4ML_Docs/ConfiguringACustomCoreConnector.md',
+            '/md-docs/PM4ML_Docs/connectToLiveHub.md',
+            '/md-docs/PM4ML_Docs/SecuringTheDockerDaemon.md',
+            '/md-docs/PM4ML_Docs/firewallConfig.md',
+            '/md-docs/PM4ML_Docs/TestTransfer.md'
           ]
         },
         {

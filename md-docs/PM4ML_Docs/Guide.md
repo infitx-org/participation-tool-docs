@@ -1,41 +1,72 @@
-# PM4ML Documentation Guide
+# Payment Manager Deployment Guide
 
-## Objective
+## Overview
 
-This document provides a comprehensive overview of several key processes: setting up a development environment for a Core Connector, deploying a Payment Manager using Docker Compose, configuring custom core connectors, securing the Docker Daemon, connecting to a live Mojaloop hub, managing firewall configurations, and performing test transfers.
+This guide provides a comprehensive, end-to-end approach for deploying and securing the **Payment Manager**, a core component that facilitates integration between Digital Financial Service Providers (DFSPs) and the **Mojaloop payment hub**. The Payment Manager handles critical transaction workflows and cryptographic operations that uniquely identify the DFSP within the **Digital Retail Payment Platform (DRPP)**. As such, it must always be deployed **within the DFSP’s administrative boundary** and remain fully under the control of the DFSP.
 
+To accommodate diverse technical environments, the Payment Manager is packaged as a **modern containerized application**, supporting multiple deployment models including **cloud-based** and **on-premise** infrastructure.
 
-### 1: Core Connector Setup
+### Supported Deployment Options
 
-The [Core Connector Setup](CoreConnectorSetup.md) file details the configuration and deployment of a Core Connector, a crucial middleware component that facilitates communication between a DFSP's Core Banking System and the Mojaloop platform.
+Two primary deployment stacks are currently supported by the Mojaloop community:
+
+1. **Kubernetes Deployment**  
+   This option leverages Kubernetes, a production-grade orchestration platform that supports horizontal scaling, high availability, and declarative configuration. A Kubernetes-based version of the Payment Manager is included in the Mojaloop **Infrastructure-as-Code (IaC)** GitOps repository. This option is ideal for DFSPs with existing Kubernetes expertise and operational maturity.
+
+2. **Docker Compose Deployment** *(Detailed in this guide)*  
+   Docker Compose offers a lightweight, straightforward approach for managing containerized services using a simple YAML-based configuration. This guide focuses on deploying the Payment Manager using Docker Compose and is particularly suited for development environments, pilot phases, or DFSPs seeking a simplified deployment pathway. It can also serve as a reference for adapting to other Docker-based hosting solutions such as **Docker Swarm**.
+
+### Scope of the Guide
+
+This guide walks through the following key areas:
+
+- Deploying the Payment Manager using Docker Compose
+- Setting up and integrating a Core Connector
+- Securing the deployment environment (Docker daemon, firewall, access control)
+- Connecting the Payment Manager to a Mojaloop live hub
+- Running test transfers to verify system readiness
+
+## 1. Core Connector
+
+The **Core Connector** is middleware between a DFSP’s core banking system and the Mojaloop platform. It is responsible for:
+
+- Translating APIs and messages (e.g., ISO 20022)
+- Routing transactions securely and efficiently
+- Ensuring compliance and fault tolerance
+
+The [Core Connector Guide](CoreConnectorSetup.md) details the configuration and deployment of a Core Connector, a crucial middleware component that facilitates communication between a DFSP's Core Banking System and the Mojaloop platform.
 #### **Key Concepts:**
 - It explains the Core Connector's roles, including transaction processing and routing, API transformation, security and compliance, error handling, and performance optimization.
 
 #### **Development Environment Setup:**
 - The document provides step-by-step instructions for setting up a development environment, covering prerequisites like installing necessary tools (Docker, Node.js, TypeScript, Git), configuring environment variables, and running the Core Connector
 
-### 2: Deploying Docker Compose Payment Manager
+## 2. Deploying Payment Manager
 
-The [Deploying Docker Compose Payment](DeployingDockerComposePayment.md) file focuses on deploying a Payment Manager using Docker Compose, streamlining its integration with the Mojaloop system for secure payment processing.
-#### **Deployment Process:**
-- It outlines the prerequisites, including minimum machine requirements and software dependencies (Docker, Docker Compose).
+#### Purpose
 
-#### **Installation and Configuration:**
-- The document provides detailed instructions for installing Docker and Docker Compose on both Ubuntu/Linux and Windows systems. It also covers cloning the Payment Manager repository, building and running containers, managing deployments, and optional steps for remote server deployment.
+Simplify deployment of the Payment Manager in a portable and consistent way across environments.
 
-#### **Best Practices:**
-- The guide emphasizes the importance of using environment variables for secure configuration.
+#### Deployment Guide
+The [Deploying Docker Compose Payment Manager Guide](DeployingDockerComposePayment.md) focuses on deploying a Payment Manager using Docker Compose, streamlining its integration with the Mojaloop system for secure payment processing.
 
-### 3: Configuring a Custom Core Connector
+#### Best Practices
 
-The [Configuring A CustomCore Connector](ConfiguringACustomCoreConnector.md) file guides users through the process of replacing a mock backend ("sim-backend") with a real DFSP implementation (Core Connector) within the Mojaloop environment. It also details how to create custom configurations for managing shared and DFSP-specific environment variables and integrate them into docker-compose.yml.
-#### **Key Actions:**
-- Replacing the sim-backend, creating shared environment blocks for common variables (like FSP_ID and CONNECTOR_NAME), and customizing DFSP-specific configurations.
+- Use environment variables for sensitive configuration
+- Use Docker volumes for data persistence
 
-#### **Objective:**
-- Streamlining the configuration and deployment of core connectors for different institutions (MNOs, Banks) within the Mojaloop ecosystem.
+## 3. Deploying Core Connector
+The default deployment includes a simulated backend. 
+The [configuring a custom Core-Connector Guide](ConfiguringACustomCoreConnector.md) describes how to replace the mock backend (`sim-backend`) with your DFSP’s Core Connector.
 
-### 4: Securing the Docker Daemon
+#### Steps
+
+- Replace the `sim-backend` service in `docker-compose.yml`
+- Define shared and DFSP-specific environment variables
+- Use naming conventions (`FSP_ID`, `CONNECTOR_NAME`) for clarity and reusability
+- Validate integration by running connectivity tests to Mojaloop
+
+## 4: Securing the Docker Daemon
 
 The [Securing TheDocker Daemon](SecuringTheDockerDaemon.md) file provides essential security best practices for protecting the Docker Daemon and containerized applications.
 #### **Security Measures:**
@@ -44,23 +75,23 @@ The [Securing TheDocker Daemon](SecuringTheDockerDaemon.md) file provides essent
 #### **Goal:**
 - To harden the Docker environment against unauthorized access and potential security threats.
 
-### 5: Connecting the Payment Manager to a Live Hub
+## 5. Connecting to a Hub
 The [Connect To Live Hub](connectToLiveHub.md) file outlines the process of connecting the Mojaloop Payment Manager to a live hub using Docker Compose.
 - Prerequisites: It lists requirements such as Docker and Docker Compose installation, the Payment Manager repository, hub access credentials and endpoint details, and network access on specific ports.
 - Configuration: It details how to configure common and management API environment variables (e.g., `DFSP_ID`, `AUTH_CLIENT_ID`, `HUB_IAM_PROVIDER_URL`).
 - Troubleshooting & Security: The document also covers troubleshooting connection errors and using "Recreate" buttons to revoke and recreate TLS and JWS certificates for security updates.
-### 6: Firewall Configuration
+## 6: Firewall Configuration
 The [firewall Config](firewallConfig.md) file provides a comprehensive guide to configuring firewalls in Ubuntu and AWS EC2 instances.
 - Ubuntu (UFW): It explains how to install, enable, and use Uncomplicated Firewall (UFW) to allow and deny specific ports, IP addresses, and manage rules.
 - AWS (Security Groups): It describes how to configure AWS Security Groups to control inbound and outbound traffic for EC2 instances.
 - Interaction: The document highlights the interaction between UFW and AWS Security Groups and provides troubleshooting tips for common firewall issues.
-### 6: Test Transfer Process
+## 7: Test Transfer Process
 The [Test Transfer](TestTransfer.md) file outlines the process for sending test transfers to verify connectivity across different transfer types: Outbound, Inbound, and FXP Transfers.
 - Prerequisites: It notes that the Mojaloop Testing Toolkit (TTK) should be running and required test collection files should be available.
 - Test Execution Workflow: The document provides steps for executing tests using the TTK Admin UI, including navigating to the Test Runner, using the Collection Manager to select test cases, and reviewing results.
 - Optional Configuration: It includes instructions for configuring the ISO 20022 message format if applicable.
 - Troubleshooting: It offers guidance on accessing logs via both the UI and CLI for troubleshooting failures.
-```
 
+::: tip Summary
 In summary, these documents collectively provide a robust framework for setting up, deploying, securing, and integrating a Payment Manager and Core Connector within the Mojaloop ecosystem, with a clear path towards connecting to live hubs and ensuring system integrity.
-
+:::

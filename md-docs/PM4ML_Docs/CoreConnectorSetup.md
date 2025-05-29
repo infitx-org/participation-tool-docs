@@ -1,4 +1,4 @@
-# Investigate Steps to Configure and Deploy a Core Connector
+# Core Connector Guide
 
 ## Understanding the Core Connector Role
 The Core Connector acts as middleware between the DFSP (Digital Financial Services Provider) Core Banking System and Mojaloop, ensuring smooth transaction processing, security, and compliance.
@@ -21,22 +21,6 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
 - Ensures message structure, encoding, and data formatting match the required standards (ISO20021).
 - Handles currency conversion if needed for multi-currency transactions.
 
-<!-- #### 3. Security & Compliance Management
-- Ensures secure authentication (OAuth 2.0, JWT, API Keys).
-- Encrypts sensitive financial data during transmission.
-- Implements fraud detection mechanisms and transaction validation.
-- Enforces regulatory compliance (e.g., AML/KYC checks).
-
-#### 4. Error Handling & Logging
-- Catches and logs failed transactions, providing detailed error responses.
-- Implements retry mechanisms for temporary failures.
-- Maintains an audit trail for financial transactions.
-
-#### 5. Performance Optimization & Monitoring
-- Load balances transaction requests to handle high traffic.
-- Implements caching for frequently accessed data (e.g., customer details).
-- Integrates with monitoring tools (Grafana, Prometheus) for real-time tracking. -->
-
 ### Summary of Core Connector’s Roles
 | Function                  | Description |
 |---------------------------|-------------|
@@ -47,8 +31,6 @@ The Core Connector acts as middleware between the DFSP (Digital Financial Servic
 | Performance Optimization | Uses caching, load balancing, and monitoring tools. |
 | Message Queue Processing | Handles high-volume transactions asynchronously. |
 | Reconciliation & Settlement | Assists in transaction tracking and dispute resolution. |
-
----
 
 ## Setting Up a Development Environment for the Core Connector
 Before building the Core Connector, ensure you have the required prerequisites and set up a development environment.
@@ -138,8 +120,6 @@ npm install --save-dev typescript ts-node nodemon @types/node @types/express
 ```bash
 npm list
 ```
-
----
 
 ## Next Steps After Cloning the Core Connector Repository
 

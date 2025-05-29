@@ -5,7 +5,6 @@ Configuring a firewall is essential for securing network traffic and preventing 
 
 This document provides step-by-step guidance for configuring firewalls in both **Ubuntu** and **AWS EC2 (t2.large)** instances.
 
----
 
 # Part 1: Firewall Configuration in Ubuntu
 
@@ -148,7 +147,6 @@ or
 sudo ss -tulnp
 ```
 
----
 
 # Part 2: Firewall Configuration in AWS EC2 (t2.large)
 
@@ -162,7 +160,6 @@ Firewall settings and configurations may vary based on your cloud provider and d
 
 Security Groups (SGs) are **stateful virtual firewalls** operating at the instance level within a Virtual Private Cloud (VPC). They control inbound and outbound traffic and are critical for securing cloud infrastructure.
 
----
 
 ### 1. Accessing Security Groups
 
@@ -170,7 +167,6 @@ Security Groups (SGs) are **stateful virtual firewalls** operating at the instan
 - Navigate to:  
   `EC2 Dashboard > Network & Security > Security Groups`.
 
----
 
 ### 2. Creating or Modifying a Security Group
 
@@ -180,7 +176,6 @@ Security Groups (SGs) are **stateful virtual firewalls** operating at the instan
 
 > 🧩 SGs are scoped to VPCs; ensure you are working within the correct VPC context.
 
----
 
 ### 3. Configuring Inbound Rules
 
@@ -200,7 +195,6 @@ Click **Inbound rules > Edit inbound rules** to define allowed inbound traffic.
 
 > ✅ Acceptable for public-facing web applications. Use WAF or ALB for additional protection.
 
----
 
 ### 4. Configuring Outbound Rules
 
@@ -212,7 +206,6 @@ Outbound traffic is **allowed by default** in AWS Security Groups.
 
 > 🔐 Best Practice: Limit outbound access to essential services only (e.g., S3, RDS, specific IPs) to reduce attack surface.
 
----
 
 ## Verifying Security Group Assignments
 
@@ -223,7 +216,6 @@ To validate SG rules and assignments:
 - Confirm that the correct **Security Groups** are attached.
 - Cross-check **inbound** and **outbound** rules against your access policy.
 
----
 
 ## Combining UFW with AWS Security Groups
 
@@ -237,7 +229,6 @@ When using **host-based firewalls** (e.g., UFW on Ubuntu) in conjunction with **
 - Example: If the Security Group allows SSH (22) from 203.0.113.50, but UFW blocks it, access will still be denied.
 - Run `sudo ufw status` to ensure UFW rules are correctly configured.
 
----
 
 # Troubleshooting
 
@@ -261,7 +252,6 @@ When using **host-based firewalls** (e.g., UFW on Ubuntu) in conjunction with **
 - **Incorrect Security Group assigned:** Ensure your EC2 instance is associated with the correct Security Group.
 -Subnet-level blockage (NACLs): Check Network ACLs for conflicting deny rules, particularly for ephemeral ports or custom ranges.
 
----
 
 # Conclusion
 This document provides a comprehensive guide to configuring Ubuntu’s firewall using UFW, as well as managing firewall rules using AWS Security Groups for EC2 (t2.large) instances. Proper firewall configuration enhances security by controlling network access efficiently at both the OS and cloud network levels.

@@ -1,9 +1,5 @@
-# Deploying Docker Compose Payment Manager
-
-## Objective
-Deploy the Payment Manager using Docker Compose to enable seamless integration with the Mojaloop system, ensuring secure and reliable payment processing.
-
----
+# Deploying Payment Manager
+This section provides step-by-step guidance for deploying the **Payment Manager** using **Docker Compose**, a lightweight tool for orchestrating containerized services. This method enables DFSPs to quickly stand up the Payment Manager stack for integration with the Mojaloop system, supporting secure, configurable deployments suitable for development, testing, or small-scale production use. While this guide focuses on Docker Compose, it also serves as a reference for adapting the deployment to other container platforms such as Docker Swarm.
 
 ## Prerequisites
 Before deploying the Payment Manager using Docker Compose, ensure the following requirements are met:
@@ -16,7 +12,6 @@ Before deploying the Payment Manager using Docker Compose, ensure the following 
 - **Docker Version:** Docker Engine 20.10+ (Check Docker's version page for the latest)
 - **Docker Compose:** Version 1.29+ (Check Docker Compose release notes for details)
 
----
 ## Public IP and DNS Configuration
 For seamless connectivity, the following environment variables must be properly set and configured:
 
@@ -79,7 +74,6 @@ docker --version
 docker-compose --version
 ```
 
----
 
 ## Clone the Payment Manager Repository
 
@@ -94,7 +88,6 @@ Or, manually create a new directory:
 mkdir payment-manager && cd payment-manager
 ```
 
----
 
 ## Run the Containers
 
@@ -135,7 +128,6 @@ docker-compose up -d
 docker-compose down -v
 ```
 
----
 
 ## (Optional) Run on a Remote Server
 
@@ -165,7 +157,6 @@ docker-compose up -d
 sudo ufw allow 5000
 ```
 
----
 
 ## Setup Environment Variables (Best Practice)
 Instead of hardcoding values in `docker-compose.yml`, use an `.env` file.
@@ -182,7 +173,6 @@ on-premise-deploy/docker-compose/.env.example
 
 Now, Docker Compose will load variables from `.env` for security.
 
----
 ## Docker Login
 USING WEB-BASED LOGIN
 

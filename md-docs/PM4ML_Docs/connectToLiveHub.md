@@ -1,4 +1,4 @@
-# Connecting Mojaloop Payment Manager to a Live Hub via Docker Compose
+# Connecting to a Hub
 
 ## Overview
 This guide details the deployment and connection of the Mojaloop Payment Manager to a live hub using Docker Compose. It includes configuring environment variables, running the services, and verifying functionality via health checks and the UI.

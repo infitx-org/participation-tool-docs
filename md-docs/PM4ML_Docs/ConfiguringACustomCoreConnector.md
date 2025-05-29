@@ -1,10 +1,10 @@
-# Configuring a custom core connectors
+# Configuring the core connectors
 ## Objective
 This guide documents the step-by-step process of:
 - Configuring the core connector service using profile-based deployment for production-ready DFSP implementations
 - Creating a custom configuration for managing shared environment variables used by all core connectors (MNOs, Banks, etc)
 - Utilizing docker-compose profiles for clean and maintainable deployments 
----
+
 ### Step 1: Configuring sim-backend to use a Core Connector
 #### **Background:**
 The docker-compose architecture now supports profile-based deployments with dedicated services:
@@ -96,7 +96,7 @@ The key configuration changes include:
 | sim-backend-ui | sim-backend | 6060 | 6061 | Sim backend UI |
 
 - If no core connector image is specified (CORE_CONNECTOR_IMAGE is empty), the service will default to using the ml-testing-toolkit as a core connector.
----
+
 ### Step 2: Creating the Core Connector Configuration File
 #### **Problem:**
 Each core connector requires specific configurations that need to be managed separately from the main environment variables.
@@ -108,7 +108,7 @@ We create a dedicated `core-connector-config.env` file that contains all the nec
 | FSP_ID    | Identifier type (e.g., dfsp1) |
 | CONNECTOR_NAME       | e.g.,DFSP-UG |
 | LEI| e.g.,dfspuganda |
----
+
 ### Shared Configuration Block for core-connector-config.env:
 ```sh
 # Mojaloop Connector Config for core connector
@@ -116,7 +116,7 @@ FSP_ID= #e.g., dfsp1
 CONNECTOR_NAME= #e.g.,DFSP-UG
 LEI= #e.g.,dfspuganda
 ```
----
+
 ### Step 3: Customizing DFSP-Specific Configuration Variables
 The following variables are provided as a sample and should be added to the `core-connector-config.env` file. Each DFSP requires unique values:
 | Variable                  | Example |
@@ -137,7 +137,7 @@ The following variables are provided as a sample and should be added to the `cor
 | HTTP_TIMEOUT    | 5000 |
 | ENV    | staging |
 | DFSP_CURRENCY    | UGX |
----
+
 ### DFSP-Specific Configuration Block for core-connector-config.env:
 ```sh
 # These are only provided as sample
@@ -186,7 +186,7 @@ HTTP_TIMEOUT= #e.g.,5000
 ENV= #e.g.,staging
 DFSP_CURRENCY= #e.g.,UGX
 ```
----
+
 ### Step 4: Testing the core connector
 to test the core connector:
 - Open ttk
