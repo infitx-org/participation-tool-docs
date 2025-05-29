@@ -34,7 +34,7 @@ export default defineUserConfig({
       },
       {
         text: 'Deployment',
-        link: '/md-docs/PM4ML_Docs/Guide',
+        link: '/md-docs/PM4ML_Docs/Overview',
       },
       {
         text: 'Technical Reference',
@@ -84,16 +84,34 @@ export default defineUserConfig({
           text: 'Deployment',
           collapsible: true,
           children: [
-            '/md-docs/PM4ML_Docs/Guide.md',
-            '/md-docs/PM4ML_Docs/CoreConnectorSetup.md',
-            '/md-docs/PM4ML_Docs/DeployingDockerComposePayment.md',
-            '/md-docs/PM4ML_Docs/ConfiguringACustomCoreConnector.md',
-            '/md-docs/PM4ML_Docs/connectToLiveHub.md',
-            '/md-docs/PM4ML_Docs/SecuringTheDockerDaemon.md',
-            '/md-docs/PM4ML_Docs/firewallConfig.md',
-            '/md-docs/PM4ML_Docs/TestTransfer.md'
-          ]
-        },
+          {
+            text: 'Overview',
+            link: '/md-docs/PM4ML_Docs/Overview.md'
+          },
+          {
+            text: 'Docker Compose',
+            collapsible: true,
+            children: [
+              '/md-docs/PM4ML_Docs/Guide.md',
+              '/md-docs/PM4ML_Docs/CoreConnectorSetup.md',
+              '/md-docs/PM4ML_Docs/DeployingDockerComposePayment.md',
+              '/md-docs/PM4ML_Docs/ConfiguringACustomCoreConnector.md',
+              '/md-docs/PM4ML_Docs/connectToLiveHub.md',
+              '/md-docs/PM4ML_Docs/SecuringTheDockerDaemon.md',
+              '/md-docs/PM4ML_Docs/firewallConfig.md',
+              '/md-docs/PM4ML_Docs/TestTransfer.md'
+            ]
+          },
+//          {
+//            text: 'Kubernetes',
+//            collapsible: true,
+//            children: [
+              // Add Kubernetes-related docs here, e.g.:
+              // '/md-docs/PM4ML_Docs/KubernetesGuide.md'
+//            ]
+//          } 
+        
+        ]},
         {
           text: 'Technical Reference',
           collapsible: true,
