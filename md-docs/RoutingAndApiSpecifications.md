@@ -18,7 +18,7 @@ and assign it a function as a route handler in the core connector routes file.
 
 Let us try to implement a route that handles an http request like this and returns `Hello World`. It will be a GET request at `/` that just returns a `200 OK` response.
 
-> #### Before following this example tutorial, make sure you have created a new core connector based on the template. Follow the instructions [here](../README.md#creating-a-new-connector) to create a new one.
+> #### Before following this example tutorial, make sure you have created a new core connector based on the template. Follow the instructions [here](https://github.com/mojaloop/ml-reference-connectors?tab=readme-ov-file#creating-a-new-connector) to create a new one.
 
 Consider this api specification for the route that we want to implement .
 
