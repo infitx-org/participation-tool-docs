@@ -40,7 +40,7 @@ Follow these steps to execute transfer tests using the TTK:
 6. **Execute Transfer Test(s):**
    - Click the *Run* button to execute selected tests
 
-   ![Test Run Button](./images/Test_run_button.png)
+   ![Test Run Button](./images/test_run_button.png)
 
 > 🔁 Action Required for ISO 20022 Tests: Complete the [ISO 20022 Setup](#3-iso-20022-message-format-optional-configuration) steps prior to test execution..
 
