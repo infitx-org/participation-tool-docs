@@ -37,6 +37,10 @@ export default defineUserConfig({
         link: '/md-docs/PM4ML_Docs/Overview',
       },
       {
+        text: 'Payment Manager User Guide',
+        link: '/md-docs/PaymentManager.md',
+      },
+      {
         text: 'Technical Reference',
         link: '/md-docs/Service',
       },
@@ -126,6 +130,17 @@ export default defineUserConfig({
             'ErrorHandling.md',
             'IntegrationAccounts.md',
             'RequestHandling.md'
+          ]
+        },
+        {
+          text: 'Payment Manager User Guide',
+          collapsible: true,
+          // prefix will be prepended to relative paths
+          children: [
+            'PaymentManager.md',
+            'PM4ML_TransferOverview.md',
+            'PM4ML_FXConversionsOverview.md',
+            'PM4MLTechnicalDashboard.md'
           ]
         },
         {
