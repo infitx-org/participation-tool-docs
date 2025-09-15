@@ -1,5 +1,5 @@
 
-# Payment Manager's Transfers Overview Guide
+# Transfers Overview Guide
 
 The Business Dashboard page (accessible from the left-hand navigation pane) currently contains only mock data and the related functionality is not available yet. It is planned to be added in a future version of the product.
 
@@ -25,50 +25,117 @@ Use the Basic Find a Transfer tab to find a transfer based on its Transfer ID:
 1. Click the **Find Transfers** button.
 ![basic find a transfer result](./images/basic_find_a_transfer_results.png)
 1. To find out more information about the transfer, click the transfer item once.
-The **Transfer Details** window pops up showing detailed information about the transfer on a **Basic Information** tab and a **Technical Details** tab.
+The **Transfer Details** window pops up showing detailed information about the transfer.
 
-The Basic Information tab displays the following information:
-- **Transfer ID:** The unique identifier of the transfer.
-- **Transfer State:** Indicates if the transfer has succeeded, is pending, or an error has occurred.
-- **Batch:** The unique identifier of the settlement batch in which the transfer was settled. If the transfer has not been settled yet, it says N/A.
-- **Date Submitted:** The date and time when the transfer was initiated, expressed as an ISO-8601 formatted timestamp. A more readable version of the format is yyyy-MM-ddTHH:mm:ss.SSS[±HH:MM]
-If the time is in UTC, there is a Z added directly after the time without a space. For example, "09:30 UTC" is represented as 09:30:00:000Z.
-If the time is not in UTC, a UTC offset is appended to the time in the place of Z, in the form: [±HH:MM]. For example, "09:30 in New York" is 09:30:00:000−05:00, or "09:30 in Yangon" is 09:30:00:000+06:30.
-- **Amount:** The transfer amount.
-- **Currency:** The transfer currency.
-- **Sender:** The payer of the transfer.
-- **Sender Details:** The unique identifier of the payer (typically, a MISIDN, that is, a mobile number).
-- **Recipient:** The payee of the transfer.
-- **Recipient Details:** The unique identifier of the payee (typically, a MISIDN, that is, a mobile number).
-- **Institution:** The identifier of the DFSP serving the payee.
-- **Direction:** The direction of the transfer (outbound or inbound from the perspective of the DFSP inspecting the transfer).
+### Transfer Details
+The details of the transfer are available on the transfer details tab.
 
-![basic info transfer details](./images/transfer_details_basic_info_success.png)
+![Transfer details](./images/transfer_details.png)
 
-![transfer error](./images/transfer_error.png)
+- **Transfer ID:** The unique identifier of the transfer (This is a ULID identifier for example, 01N42FNRVSNOPKKEBBIJV).
+- **Transfer State:** Indicates the current state of the transfer. Possible values are:
+  - **RECEIVED** - Next ledger has received the transfer
+  - **RESERVED** - Next ledger has reserved the transfer  
+  - **COMMITTED** - Next ledger has successfully performed the transfer
+  - **ABORTED** - Next ledger has aborted the transfer due to a rejection or failure to perform the transfer
+- **Direction:** The direction of the transfer (OUTBOUND or INBOUND from the perspective of the DFSP inspecting the transfer).
+- **Transaction Type:** The type of transaction being performed. Possible values are:
+  - **DEPOSIT** - Used for performing a Cash-In (deposit) transaction. In a normal scenario, electronic funds are transferred from a Business account to a Consumer account, and physical cash is given from the Consumer to the Business User
+  - **WITHDRAWAL** - Used for performing a Cash-Out (withdrawal) transaction. In a normal scenario, electronic funds are transferred from a Consumer's account to a Business account, and physical cash is given from the Business User to the Consumer
+  - **TRANSFER** - Used for performing a P2P (Peer to Peer, or Consumer to Consumer) transaction
+  - **PAYMENT** - Usually used for performing a transaction from a Consumer to a Merchant or Organization, but could also be for a B2B (Business to Business) payment. The transaction could be online for a purchase in an Internet store, in a physical store where both the Consumer and Business User are present, a bill payment, a donation, and so on
+  - **REFUND** - Used for performing a refund of transaction
+- **Send Amount:** The amount being sent in the original currency.
+- **Send Currency:** The currency of the amount being sent (for example, ZMW).
+- **Date Submitted:** The date and time when the transfer was initiated (for example, 2025-09-12T17:30:52.669Z).
+- **Receive Amount:** The amount that will be received after conversion.
+- **Receive Currency:** The currency of the amount being received (for example, MWK).
+- **Conversion Submitted:** The date and time when the currency conversion was submitted.
+- **Sender Details:** The unique identifier of the payer (for example, MSISDN 1666555100).
+- **Recipient Details:** The unique identifier of the payee (for example, MSISDN 1666555100).
+- **Recipient Currencies:** The supported currencies for the recipient (for example, MWK).
+- **Recipient Institution:** The identifier of the DFSP serving the payee (for example, test-mwk-dfsp).
+- **Conversion Type:** The type of conversion being performed (for example, Payer DFSP conversion).
+- **Conversion Institution:** The institution handling the conversion (for example, test-fxp).
+- **Conversion State:** The current state of the conversion process (for example, COMMITTED).
 
-The **Technical Details** tab also displays information about the Payer and Payee party of the transfer. On clicking the **Payer Information** or **Payee Information** button, a window pops up that displays the following details:
-- **Id Type:** The type of payer/payee identifier used (for example, MSISDN).
-- **Id Value:** The value of the payer/payee identifier (for example, digits of a mobile number).
-- **Display Name:** The display name of a payer/payee, which may not be the full name of the party.
-- **First Name:** The first name of a payer/payee.
-- **Middle Name:** The middle name of a payer/payee.
-- **Last Name:** The last name of a payer/payee.
-- **Date Of Birth:** The date of birth of a payer/payee.
-- **Merchant Classification Code:** The unique identifier of a merchant (relevant in the case of person-to-business transfers).
-- **FSP Id:** The unique identifier of the DFSP serving the payer/payee.
-- **View Extension List:** This option is only active when an extension list is present in the party object in the quote request body.
+### Transfer Terms
+The Transfer Terms tab displays the financial terms and conditions agreed upon for the transfer, including both transfer terms and conversion terms (when applicable).
 
+![Transfer terms](./images/transfer_terms.png)
+
+- **Transfer Amount:** The obligations amount to be transferred between participant (I.e. clearing amount).
+- **Payee Receive Amount:** The amount the payee will receive after fees (for example, 51 MWK).
+- **Payee DFSP Fee:** The fee charged by the payee's DFSP these fees have already been included in the transfer amount.
+- **Payee DFSP Commission:** Any commission applied by the payee's DFSP. This will have already been included in the transfer amount.
+- **Expiry Date Time:** The expiration date and time for the transfer terms (for example, 2025-09-12T17:31:58.696Z).
+
+**Conversion Terms (when currency conversion is involved):**
+- **Source Amount:** The amount in the source currency.  This is a clearing amount and already includes fees.
+- **Target Amount:** The equivalent amount in the target currency. This is a clearing amount and already includes fees.
+- **Source Charges:** Any charges applied to the source currency amount. This is an information field as it is already included in the source amount.
+- **Target Charges:** Any charges applied to the target currency amount. This is an information field as it is already included in the target amount.
+- **Exchange Rate:** The exchange rate used for the conversion (for example, 51.0000). This is an optional information field.
+- **Expiry Date Time:** The expiration date and time for the conversion terms (for example, 2025-09-12T17:31:55.085Z).
+
+
+### Transfer Parties
+The Transfer Parties tab displays detailed information about both the payer and payee involved in the transfer. 
+
+![Transfer parties](./images/transfer_parties.png)
+
+**Payer Details:**
+- **Payee Identifier:** The unique identifier of the payer (for example, 1666555100).
+- **Payee Identifier Type:** The type of identifier used for the payer (for example, MSISDN).
+- **First Name:** The first name of the payer (for example, Firstname-Test).
+- **Middle Name:** The middle name of the payer (for example, Middlename-Test).
+- **Last Name:** The last name of the payer (for example, Lastname-Test).
+
+**Payee Details:**
+- **Payee Identifier:** The unique identifier of the payee (for example, 1666555100).
+- **Payee Identifier Type:** The type of identifier used for the payee (for example, MSISDN).
+- **First Name:** The first name of the payee.
+- **Middle Name:** The middle name of the payee.
+- **Last Name:** The last name of the payee.
+
+### Transfer Technical Details
+The Technical Details tab provides low-level technical information about the transfer, including various system identifiers and access to detailed message sequences.
+
+![Transfer technical details](./images/transfer_technical_details.png)
+
+
+**Technical Identifiers:**
+- **Scheme Transfer ID:** The unique identifier used within the scheme for this transfer (for example, 01N42FNRVSNOPKKEBBIJNBSSA).
+- **Transaction ID:** The unique transaction identifier (for example, 01N42FNRVSNOPKKEBBIJNBSSA).
+- **Quote ID:** The unique identifier for the quote associated with this transfer (for example, 01N42FNW72XOPKTF0M2YWWOZE).
+- **Home Transfer ID:** The internal transfer identifier used by the home institution (for example, 12345).
+- **Transfer State:** The current state of the transfer (for example, succeeded).
+- **Conversion Request ID:** The unique identifier for the currency conversion request (for example, 01N42FNT7DGX9DSSNHKK74C72).
+- **Conversion State:** The current state of the conversion process. Possible values are:
+  - **RECEIVED** - Next ledger has received the conversion
+  - **RESERVED** - Next ledger has reserved the conversion
+  - **COMMITTED** - Next ledger has successfully performed the conversion
+  - **ABORTED** - Next ledger has aborted the conversion due to a rejection or failure to perform the conversion
+- **Commit Request ID:** The unique identifier for the commit request (for example, 01N42FNT7DGX9DSSNHKK74C73).
+
+**Party Information:**
+The tab provides buttons to view detailed party information:
+- **Payer Information:** Displays detailed information about the payer party.
+- **Payee Information:** Displays detailed information about the payee party.
 ![payee party](./images/payee_party.png)
 
-In addition to party information, details about the transfer message sequence are also available by clicking these buttons:
-- **Party Lookup Response:** Displays a **Party Lookup Response** pop-up window, which provides the API response message that is returned to a party lookup request. This option is only active when a GET /parties response can be found for the transfer (that is, for sending DFSPs).
-- **Quote Request:** Displays a **Quote Request** pop-up window, which provides the API request message that is sent to request a quote.
- - **Quote Response:** Displays a **Quote Response** pop-up window, which provides the API response message that is returned to a quote request.
-- **Transfer Prepare:** Displays a **Transfer Request** pop-up window, which provides the API request message that is sent to request a transfer.
-- **Transfer Fulfil:** Displays a **Transfer Fulfil** pop-up window, which provides the API response message that is returned to a transfer request.
-
-![quote response](./images/quote_response.png)
+**View Message Details:**
+The tab provides access to view the actual API messages exchanged during the transfer process:
+- **Party Lookup Response:** View the API response for party lookup requests.
+- **Quote Request:** View the quote request message sent to request pricing terms.
+- **Quote Response:** View the quote response message containing the pricing terms.
+- **Transfer Prepare:** View the transfer preparation request message.
+- **Transfer Fulfil:** View the transfer fulfillment response message.
+- **FX Quote Request:** View the foreign exchange quote request (when applicable).
+- **FX Quote Response:** View the foreign exchange quote response (when applicable).
+![agreement response](./images/quote_response.png)
+- **FX Transfer Prepare:** View the FX transfer preparation request (when applicable).
+- **FX Transfer Fulfil:** View the FX transfer fulfillment response (when applicable).
 
 <div style="page-break-after: always"></div>
 

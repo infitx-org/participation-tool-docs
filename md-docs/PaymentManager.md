@@ -36,7 +36,7 @@ Payment Manager for Mojaloop provides functionality to simplify both of these st
 
 The following diagram provides a high-level view of the integration between a Mojaloop Real-Time Payment System and a DFSP’s Core Backend.
 
-![Payment Manager Architecture](./images/payment_manager_architecture.png)
+![Payment Manager Architecture](./images/payment_manager_architecture.svg)
 
 Payment Manager provides the following components:
 
