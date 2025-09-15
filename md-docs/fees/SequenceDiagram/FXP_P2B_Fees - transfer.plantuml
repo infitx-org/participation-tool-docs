@@ -1,0 +1,24 @@
+@startuml FXP_P2B_Fees - transfer
+title FXP Transaction Fee - P2B Merchant Payment with Currency Conversion
+skinparam monochrome true
+autonumber
+
+participant "Mojaloop Connector" as MC
+participant "Core Connector" as CC
+participant "FXP" as FXP
+
+== Incoming FX Conversion Request ==
+note over MC: Agreement in Place; executing FX conversion request\nfor merchant payment (ZMW → MWK)
+
+
+MC -> CC: FX conversion execution
+CC -> FXP: Execute conversion\n1795 ZMW → 2000 MWK
+
+FXP -> FXP: Perform currency conversion\n**Deduct FXP fee: 100 ZMW**\nConvert: 1695 ZMW → 2000 MWK
+
+FXP -> CC: Conversion completed
+CC -> MC: FX conversion successful
+
+note over FXP: FXP earns **100 ZMW fee**\nfor converting 1695 ZMW to 2000 MWK
+
+@enduml
