@@ -14,7 +14,7 @@ PayerFSP -> PayerFSP: **Calculate transaction fee (5 ZMW)**
 PayerFSP -> PayerFSP: Deduct fee from amount\n(500 **- 5** = 495 ZMW)
 
 PayerFSP -> CC: POST /sendmoney
-note right
+note left
 {
   "amount": "495",
   "currency": "ZMW",
