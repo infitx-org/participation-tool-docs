@@ -12,13 +12,13 @@ note over MC: Agreement in Place; executing FX conversion request\nfor merchant 
 
 
 MC -> CC: FX conversion execution
-CC -> FXP: Execute conversion\n1795 ZMW → 2000 MWK
+CC -> FXP: Execute conversion\n680 ZMW → 50500 MWK
 
-FXP -> FXP: Perform currency conversion\n**Deduct FXP fee: 100 ZMW**\nConvert: 1695 ZMW → 2000 MWK
+FXP -> FXP: Perform currency conversion\nConvert: 680 ZMW → 51005 MWK\n**Deduct FXP fee: 505 MWK**
 
 FXP -> CC: Conversion completed
 CC -> MC: FX conversion successful
 
-note over FXP: FXP earns **100 ZMW fee**\nfor converting 1695 ZMW to 2000 MWK
+note over FXP: FXP earns **505 MWK fee**\nfor converting 680 ZMW to 50500 MWK
 
 @enduml

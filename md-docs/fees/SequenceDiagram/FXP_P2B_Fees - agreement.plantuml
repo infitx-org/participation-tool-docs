@@ -32,7 +32,7 @@ end note
 note over CC: Core Connector processes FX quote request\nand calculates FXP fees
 
 CC -> FXP: Request FX conversion quote
-FXP -> FXP: Calculate conversion with fees\nExchange rate: 1.18 MWK/ZMW\n**FXP fee: 100 ZMW**
+FXP -> FXP: Calculate conversion with fees\nExchange rate: 75 MWK/ZMW\n**FXP fee: 505 MWK**
 
 FXP -> CC: FX quote response with fees
 
